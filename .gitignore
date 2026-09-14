@@ -1,0 +1,16 @@
+Library/
+Temp/
+Obj/
+Build/
+Builds/
+Logs/
+UserSettings/
+.vs/
+.vscode/
+*.csproj
+*.sln
+*.slnx
+*.log
+*.apk
+*.aab
+Validation/

@@ -1,0 +1,18 @@
+# Game Design
+8×8 보드에 하단 랜덤 블록 3개를 드래그 배치한다. 완성한 가로/세로 라인을 제거하고 점수를 얻는다.
+3개를 모두 사용하면 다시 공급한다. 남은 블록 중 하나도 배치할 수 없으면 Game Over.
+레벨 없이 Local Best Score에 도전한다.
+
+## v1.0
+Home / Game / Game Over, Board, Random Block 3개, Drag & Drop, Placement Validation, Line Clear, Score, Combo, Local Best, Restart, Sound, Vibration, Simple Glow, Star Particle, Combo Animation, 한국어/영어, AdMob Rewarded/Interstitial.
+광고는 Core 플레이 테스트 이후 별도 Sprint.
+
+Combo는 연속 Line Clear 횟수. 1/2: 별 피드백, 3: STAR COMBO, 4+: COSMIC COMBO.
+새 규칙이나 특수 블록 효과는 없다. 점수 공식은 Core Sprint에서 결정.
+
+## 제외
+Login, Server, Backend, Online Ranking, Database, IAP, Shop, Stage/Level, Account, Cloud Save, Battle Pass, Daily Mission, Achievement, Social, Special/Star Block, Character Animation, 3D, Cutscene.
+
+## Sprint 0
+빈 보드 표시와 bool Cell 상태 API만 구현. 블록 생성/랜덤/드래그/배치 검사/라인 제거/점수/Combo/Game Over는 구현하지 않는다.
+
