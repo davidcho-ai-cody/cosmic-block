@@ -18,6 +18,13 @@ namespace CosmicBlock.Blocks
                                                                       Rect.rect.yMax - cellSize / 2));
         public void Initialize(BlockShape shape, BoardView board, RectTransform dragLayer, GameSession session)
         {
+            GetComponent<BlockDragHandler>().ResetForReuse();
+            if (visuals != null) foreach (var visual in visuals)
+            {
+                if (visual == null) continue;
+                visual.gameObject.SetActive(false);
+                Destroy(visual.gameObject);
+            }
             Shape = shape; IsConsumed = false;
             GetComponent<Image>().color = new Color(0, 0, 0, .001f);
             GetComponent<Image>().raycastTarget = true;
@@ -32,6 +39,7 @@ namespace CosmicBlock.Blocks
                 visuals[i].raycastTarget = false;
             }
             GetComponent<BlockDragHandler>().Configure(board, dragLayer, session);
+            gameObject.SetActive(true);
             FitSlot();
         }
         public void SetGeometry(float size, float spacing)

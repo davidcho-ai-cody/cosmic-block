@@ -1,19 +1,18 @@
 # Current Task
-Sprint 1 — Block Placement 완료.
+Sprint 2 — Core Game Loop 완료.
 
-## 구현/검증 완료
-- 8종 Cell Offset Shape, 초기 랜덤 블록 3개, 하단 슬롯 3개.
-- Mouse/Touch uGUI 드래그, finger offset, Board 좌표 변환, 유효/무효 미리보기.
-- BoardModel.CanPlace/TryPlace: 모든 범위/점유 검사 후 상태 변경. 실패 시 변경 없음.
-- 성공 시 해당 Piece 소비/슬롯 비우기. 실패/취소 시 원래 슬롯 복귀.
-- 동시 포인터 보호, 포커스/일시정지 취소, 비활성화 시 다음 프레임 안전 복귀.
-- 기존 Game Scene을 Unity API로 확장; 64 Cell/참조/기술 기준 보존.
-- Cell spacing 8 → 12, padding 8 유지.
-- 배치 Test 1~8 및 seed/경계/원자성 검증 PASS.
-- Play Mode의 synthetic uGUI mouse/touch-id events와 UI raycast 테스트 PASS.
-- 1080×1920 / 1080×2400 / 1080×1440 렌더, 정사각형 보드/64 좌표 매핑/슬롯 SafeArea 내부 검사 PASS.
-- 긴 화면은 SafeArea inset을 모사했다. Android 실기기 터치와 실제 노치 검증은 아직 미실행.
+## 구현
+- Row/Column/여러 Line 동시 제거, 교차 Cell 중복 제거.
+- Placement/Line/Combo 점수, Local Best 저장, Score/Best/Combo 표시.
+- 초기 3개 소비 후 새 랜덤 3개 공급. Piece/슬롯을 재사용하고 이전 Visual 제거.
+- 남은 Shape 전체를 8×8 anchor로 검색하여 Game Over 판정.
+- Playing/Resolving/GameOver, 입력 잠금, Game Over Panel, Retry.
+- 기존 Game Scene을 Editor API로 확장. Portrait/SafeArea/spacing 12 유지.
+- 광고 버튼은 비활성 Placeholder. SDK/효과/사운드/최종 아트 구현 없음.
 
-현재 단계에서 수동 Unity 작업 없음. 사용자 육안/실입력 QA 절차: README.md.
-Line Clear/Score/Combo/Game Over/새 Block Set/광고/효과 구현 없음.
+## 검증
+Unity 컴파일/Scene 확장/라인·점수 domain 검증 완료.
+Test 1~13, 반복 재공급/Visual cleanup/입력 잠금/Retry/Best 저장 및 여러 화면비 Play Mode 검증 PASS. 상세 결과는 DEVLOG와 Validation/sprint2.txt에 기록.
+현재 단계에서 수동 Unity 구성 작업 없음. README의 직접 QA를 진행할 수 있다.
+실기기 Touch/실제 노치/APK·AAB는 이번 검증에 포함하지 않는다.
 다음 Sprint 사용자 승인 대기.

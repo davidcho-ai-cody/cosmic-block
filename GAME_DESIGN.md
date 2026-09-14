@@ -8,7 +8,7 @@ Home / Game / Game Over, Board, Random Block 3개, Drag & Drop, Placement Valida
 광고는 Core 플레이 테스트 이후 별도 Sprint.
 
 Combo는 연속 Line Clear 횟수. 1/2: 별 피드백, 3: STAR COMBO, 4+: COSMIC COMBO.
-새 규칙이나 특수 블록 효과는 없다. 점수 공식은 Core Sprint에서 결정.
+새 규칙이나 특수 블록 효과는 없다. 점수 공식은 아래 Sprint 2 규칙으로 확정.
 
 ## 제외
 Login, Server, Backend, Online Ranking, Database, IAP, Shop, Stage/Level, Account, Cloud Save, Battle Pass, Daily Mission, Achievement, Social, Special/Star Block, Character Animation, 3D, Cutscene.
@@ -26,3 +26,17 @@ Login, Server, Backend, Online Ranking, Database, IAP, Shop, Stage/Level, Accoun
 - 성공: 점유 갱신/해당 Piece 소비/슬롯 비움. 배치한 블록 재이동 불가.
 - 실패/취소: 보드 변경 없이 원래 슬롯으로 snap 복귀. 비활성화 취소는 Unity lifecycle 충돌을 피하여 다음 프레임 복귀.
 - 초기 3개 모두 소비 후 빈 슬롯 유지. Line Clear/Score/Combo/Game Over/새 Set 공급 없음.
+
+## Sprint 2 — 현재 Core Game Rules
+Sprint 1의 '재공급/Score/Line Clear 없음'은 당시 제한이며, 현재 다음 규칙으로 확장되었다.
+- 모든 완성 Row/Column을 제거 전 수집하고 교차 Cell은 한 번만 제거. 다중 Row/Column 동시 지원.
+- 유효 Placement Cell당 +10, 완료 Line당 +100.
+- Combo = 연속 'Line Clear가 발생한 유효 Placement' 횟수. 여러 Line을 한 번에 제거해도 Combo는 +1.
+- Combo bonus: Clear 있을 때 max(0,Combo−1)×50. Combo1 +0 / 2 +50 / 3 +100 / 4 +150.
+- Clear 없는 유효 배치는 Combo0. Invalid/Cancel은 점수/Combo/점유/슬롯 변화 없음.
+- Best: Current>Best일 때 PlayerPrefs local 즉시 저장. Retry/게임 재시작 시 유지.
+- 슬롯 3개 모두 소비 후 새 랜덤 3개 공급. 한 개/두 개만 소비하면 기존 남은 Shape 유지.
+- 최종 Clear/재공급 완료 후 남은 Shape 모두의 64 anchor를 검색. 하나라도 가능하면 Playing; 모두 불가능하면 GameOver.
+- Resolving 중/게임 종료 후 배치 입력 차단. 동기 처리 후 Playing 또는 GameOver.
+- Retry는 현재 Session의 보드/Score/Combo/슬롯/State/UI reset, Scene reload 없음.
+- 광고 Continue는 비활성 Placeholder. 특수 블록/게임 규칙 추가 없음.

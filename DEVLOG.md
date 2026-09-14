@@ -35,3 +35,26 @@
 - Unity 자동화 완료: 현재 단계에서 수동 Unity 작업 없음. 기술 기준/패키지/기존 SampleScene 보존, 의존성 추가 없음.
 - 다음 후보: Line Clear → Score → Combo → New Block Set → Game Over Detection. 승인 전 진행하지 않는다.
 - 최종 재검증: Scene upgrade 반복 실행 후 슬롯 중복 없음; domain/Play Mode 전체 PASS, 런타임 오류 없음. 긴/짧은 화면 비교 이미지도 육안 확인. 검증된 Sprint 1을 gameplay: add block drag and placement로 커밋.
+
+## 2026-09-14 — Sprint 2 / Core Game Loop
+- 기준 061ed6e, main, 시작 clean. git remote -v 결과 없음. 원격 저장소 생성/force push 없음.
+- BoardModel/BoardView/Shape/Drag/슬롯 구조 유지. GameSession에 Core Loop를 집중하여 Manager 추가 최소화.
+- ClearCompletedLines: Row/Column을 모두 수집 후 unique union clear. 결과 rows/columns/unique cells 제공.
+- 점수 상수 ScoreRules(Cell10/Line100/ComboStep50), Combo 연속 Clear 정의. 실패/취소 불변.
+- Best key CosmicBlock.BestScore, PlayerPrefs 기록 초과 시 SetInt/Save; 시작 GetInt, Retry 유지.
+- Playing/Resolving/GameOver. handler를 먼저 복귀/종료하고 중앙 TryPlacePiece 호출하여 Set refill과 consume 충돌 방지.
+- 슬롯 root 재사용, 이전 Cell image 비활성화/Destroy 후 새 Shape 표시. 3개 모두 소비할 때만 공급.
+- Clear→Score/Combo/Best→Consume→Refill→Remaining search 순서. Clear 전 Game Over 판정 없음.
+- GameHud 및 Sprint2Builder로 기존 Scene에 Score/Combo/Game Over/Retry/ad placeholder 자동 연결.
+- 개발용 ContextMenu로 동시 Clear/연속 Combo/Game Over 재현. Release에서 제외.
+- domain Row/Column/교차15/다중 rows/columns/4-line28/전체64/점수/전수 검색 PASS.
+- Play Mode 검증 중 레이아웃 갱신 전 Retry world 좌표를 사용한 테스트 오류를 발견하고 갱신 후 현재 위치를 계산하도록 수정.
+- Best 검증은 별도 테스트 namespace key로 실행/복원하여 실제 플레이어 기록을 변경하지 않는다.
+- 패키지/Unity/SDK/Portrait/SafeArea/spacing 변경 없음. 광고/효과/사운드/최종 아트 구현 없음.
+- 모달 활성화 직후 Graphic depth=-1인 Unity UI lifecycle을 확인. 실제 렌더 프레임을 기다린 뒤 Retry raycast/onClick 검증 PASS. 게임 코드의 입력 오류가 아니라 같은 프레임에 수행한 테스트 타이밍 문제였다.
+- Test 1~13 PASS: Row/Column/다중/동시 clear, Score/Combo, 새 Set, 남은 블록 전체 검색, Game Over, Retry, Best 저장.
+- UI/추가 검증 PASS: 1080×1920, 1080×2400(모사 inset), 1080×1440; 모델/64 mapping/Slot/Card bounds, invalid/cancel 불변, 12회 추가 재공급, 이전 Visual 제거, 잔상/게임 런타임 오류 없음.
+- Score/Combo 및 Game Over의 9:16/짧은 화면 PNG를 육안 검토. 실제 Android touch/노치/APK·AAB는 미실행.
+- 현재 단계에서 수동 Unity 구성 작업 없음. 사용자 직접 QA 및 Debug 메뉴 재현 방법은 README.
+- Remote 없음: Local Commit만 수행하며 Remote Push는 미완료(대상 없음). 원격 저장소를 임의 생성하지 않는다.
+- 최종 Scene upgrade 반복 실행/전체 Play Mode 검증 PASS. 게임/문서를 gameplay: complete core game loop로 Local Commit.

@@ -58,10 +58,18 @@ namespace CosmicBlock.Blocks
             if (!IsDragging || eventData.pointerId != pointerId) return;
             Move(eventData);
             board.ClearPreview();
-            bool placed = hasAnchor && board.Model.TryPlace(piece.Shape, anchor.x, anchor.y);
-            Finish(placed);
+            bool attempt = hasAnchor;
+            Vector2Int target = anchor;
+            // Restore/release before the session consumes and possibly refills this same piece.
+            Finish(false);
+            if (attempt) session.TryPlacePiece(piece, target.x, target.y);
         }
         public void OnCancel(BaseEventData eventData) => CancelDrag();
+        public void ResetForReuse()
+        {
+            CancelDrag();
+            if (pendingReturn) RestoreToSlot();
+        }
         public void CancelDrag()
         { if (IsDragging) { if (board != null) board.ClearPreview(); Finish(false); } }
         private void Finish(bool placed, bool deferReturn = false)

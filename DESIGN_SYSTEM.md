@@ -28,3 +28,12 @@ v1.0 규모에서는 key 기반 작은 자체 한국어/영어 테이블을 우�
 - BlockArea: SafeArea anchor (0.04,0.025)~(0.96,0.19), slot 간격 24/패딩 12, 동일 폭 3개.
 - DragLayer는 전체 Canvas를 덮고 포인터 위 offset 110 (GameSession에서 한 곳 조절).
 - 9:16/긴 화면/짧은 화면 및 모사 SafeArea inset 검증 완료. 실제 Android 노치/터치 UX는 별도 확인.
+
+## Sprint 2 — Core UI Placeholder
+- Score/Best: 기존 상단 Text를 실제 숫자로 연결, SafeArea Y=0.86. 한 줄, 천 단위 구분, font max36/min18 best fit.
+- Combo: SafeArea anchor (0.05,0.795)~(0.95,0.835), font max32. 0이면 빈 Text, 1/2는 COMBO N, 3 STAR COMBO 3, 4+ COSMIC COMBO N.
+- 현재 폰트의 emoji 글리프 문제를 피하여 영어 Text로 피드백. 최종 현지화/폰트/표현은 후속 Sprint.
+- Game Over: SafeArea 전체 반투명 Navy 입력 차단 overlay. Card anchor (0.07,0.12)~(0.93,0.88).
+- Card: GAME OVER, Current Score/Best, RETRY, disabled WATCH AD TO CONTINUE/COMING LATER.
+- Retry는 실제 Session reset. 광고 버튼 이벤트/SDK 없음.
+- Board/Tray/SafeArea/spacing12/padding8 유지. Animation/Particle/Glow/Art/Sound 없음.

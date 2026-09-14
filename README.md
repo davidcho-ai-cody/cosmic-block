@@ -3,76 +3,84 @@ PLAY YOUR NEXT WORLD의 첫 Android 출시작.
 The primary goal of COSMIC BLOCK v1.0 is shipping.
 
 ## 현재 상태
-Sprint 0(d85d878) 기반으로 Sprint 1 Block Placement 완료.
-하단 랜덤 블록 3개를 드래그하여 8×8 보드에 배치한다. 실패 시 원래 슬롯으로 복귀한다.
-세 개를 모두 사용하면 슬롯은 빈 상태로 남는다. 라인 제거/점수/Combo/Game Over/광고는 아직 없다.
+Sprint 0(d85d878), Sprint 1(061ed6e)에 이어 Sprint 2 Core Game Loop 구현.
+블록 배치 → 가로/세로 동시 제거 → Score/Combo/Best → 소비 → 3개 재공급 → 남은 블록 배치 가능 여부 검사.
+Game Over에서는 Retry만 가능하며 광고 버튼은 비활성 Placeholder다.
 
 ## 시작
-Unity Hub → Add → 이 프로젝트 폴더 → Unity 6000.5.8f1로 열기.
+Unity Hub → Add → 이 프로젝트 폴더 → Unity 6000.5.8f1.
 Project 창 → Assets → Scenes → Game.unity 더블클릭 → Play.
-Game Scene 및 슬롯/참조는 자동화로 이미 구성되어 있다. 현재 단계에서 수동 Unity 작업 없음.
+UI/Inspector 참조는 이미 Editor 자동화로 구성되어 있다. 현재 단계에서 수동 Unity 구성 작업 없음.
 
 ## 기술 기준
-- 설치 Editor와 프로젝트 버전: Unity 6000.5.8f1 고정. 업그레이드 없음; LTS로 단정하지 않는다.
-- URP 17.6.0 / 기존 2D Renderer, uGUI 2.5.0, Input System 1.20.0 (activeInputHandler=1).
-- Portrait, Canvas 1080×1920, SafeArea 하위 UI, 정사각형 보드.
-- Android Build Support/SDK/NDK/OpenJDK 확인. SDK platforms 34/36/37.0.
-- Target API 36 명시, minSdk 26 유지.
-- Google Play 기준 확인(2026-09-14): https://support.google.com/googleplay/android-developer/answer/11926878?hl=en
-- Unity 6.5 최소 Android 기준: https://discussions.unity.com/t/planned-breaking-changes-in-unity-6-5-updated-2026-03-27/1694205
-- 기존 SampleScene/Settings Asset 보존. 외부 의존성 추가 없음.
+Unity 6000.5.8f1, URP 17.6.0/기존 2D Renderer, uGUI 2.5.0, New Input System 1.20.0 유지.
+Portrait, Canvas 1080×1920, SafeArea, 8×8 정사각형. Grid spacing 12/padding 8.
+Android Target 36/minSdk 26. SDK/NDK/OpenJDK 설치 확인. Sprint 2에서 버전/SDK/패키지 변경 없음.
+Google Play API 기준 확인(2026-09-14): https://support.google.com/googleplay/android-developer/answer/11926878?hl=en
+기존 SampleScene/Settings/Board/Drag 구조 보존. 외부 의존성 추가 없음.
 
-## Architecture / 주요 파일
-- Assets/Scripts/Board/BoardModel.cs: bool[8,8], CellChanged, CanPlace/TryPlace.
-- Assets/Scripts/Board/BoardView.cs: 64 Image, 실제 Grid 중심/간격 기반 좌표 변환, preview.
-- Assets/Scripts/Core/GameSession.cs: 모델 소유, 초기 슬롯 공급, 활성 drag 하나로 제한.
-- Assets/Scripts/Blocks/BlockShape.cs: 불변 offset 집합과 bounding dimensions.
-- Assets/Scripts/Blocks/BlockCatalog.cs: 8종 pool과 System.Random 기반 BlockGenerator.
-- Assets/Scripts/Blocks/BlockPiece.cs: Shape의 Image 표시, 슬롯/드래그 geometry, 소비 상태.
-- Assets/Scripts/Blocks/BlockDragHandler.cs: uGUI mouse/touch 이벤트, 이동/미리보기/배치/복귀/취소.
-- Assets/Scripts/UI/SafeArea.cs: Screen.safeArea → anchor.
-- Assets/Scripts/UI/SquareBoardLayout.cs: min(SafeArea 너비−48, 높이×0.58).
-- Assets/Editor/Sprint1Builder.cs: 기존 Game Scene 확장 및 domain test.
-- Assets/Editor/Sprint1PlayProbe.cs: 배치 전용 Play Mode/입력 callback/화면비 렌더 검증.
-- Assets/Scenes/Game.unity: 기존 64 Cell 및 새 BlockArea/Slot_0~2/DragLayer.
-- .meta는 Unity가 생성한 참조용 파일. .gitignore는 Library/Temp/Logs/Validation/빌드 출력을 제외한다.
-- 루트 문서: PRODUCT_VISION / GAME_DESIGN / DESIGN_SYSTEM / ROADMAP / CURRENT_TASK / NEXT_TASK / DEVLOG / BACKLOG.
+## 코드/변경 파일
+- BoardModel: 점유/배치 검사/전수 검색, ClearCompletedLines로 완성 Row/Column을 먼저 수집 후 일괄 제거.
+- LineClearResult: ClearedRows/ClearedColumns/UniqueClearedCells/LineCount. 교차 Cell은 한 번.
+- BoardView: 기존 64 Image/좌표 mapping/preview 재사용. Clear event로 Cell 표시 갱신.
+- GameSession: Core Loop 순서/상태/Score/Combo/Best/Set 공급/Game Over/Retry.
+- ScoreRules: placed cell 10, line 100, Combo bonus step 50을 한 곳 관리.
+- BlockShape/BlockCatalog/BlockGenerator: 기존 8종 offset pool/독립 랜덤 선택/seed 재사용.
+- BlockPiece: 반복 공급 시 기존 Cell Visual 비활성화/삭제 후 새 Shape 표시, 같은 슬롯 root 재사용.
+- BlockDragHandler: drag를 먼저 종료/복귀한 뒤 GameSession.TryPlacePiece 호출. 재공급한 root를 다시 숨기지 않는다.
+- GameHud: Score/Best/Combo/Game Over 표시 및 Retry 버튼 연결.
+- Sprint2Builder: 기존 Scene의 Score/Combo/Panel/Button/Hud 참조 자동 연결.
+- Sprint2PlayProbe: Test 1~13, synthetic Mouse/Touch uGUI 이벤트, 반복 재공급/입력 잠금/Retry/화면비 렌더.
+- Game.unity 및 관련 .meta: Unity API가 생성/연결. Scene YAML 직접 편집 없음.
+- CURRENT_TASK/NEXT_TASK/DEVLOG/GAME_DESIGN/DESIGN_SYSTEM/ROADMAP/README: 인수인계/결정/검증/QA.
 
-## Coordinate / Drag
-원점 좌상단, x 오른쪽, y 아래쪽. Shape offset과 Board cell 좌표를 합하여 판정한다.
-포인터를 Canvas local 좌표로 바꾸고 Piece 중심을 위로 띄운다.
-GameSession Inspector → Drag Finger Offset = 110 Canvas 단위 (조절 위치 한 곳).
-Piece bounding-box 좌상단 Cell 중심을 Screen→Board local로 변환하고 실제 첫 Cell 중심과 Grid pitch로 가장 가까운 anchor를 계산한다.
-그 anchor에 drag visual을 snap하고 동일 좌표로 preview 및 최종 drop을 처리한다.
-Reverse L은 (0,0)이 비어 있어도 bounding-box 좌상단이 anchor다.
-블록 원점이 보드 밖이면 preview를 지운다. 부분적으로 밖에 걸치는 경우 보드 안의 Cell을 red로 표시한다.
+## 규칙
+유효 배치 점수 = Cell 수×10 + 완성 Line 수×100 + (Line Clear 발생 시 max(0,Combo−1)×50).
+Combo는 연속 Line Clear 유효 배치 횟수. Line Clear 없는 유효 배치에서 0. 실패/취소는 변경 없음.
+Score가 Best를 초과하면 PlayerPrefs의 CosmicBlock.BestScore에 즉시 저장. Retry에서 Best 유지.
+세 슬롯 모두 소비했을 때만 재공급. 제거/재공급 후 남은 Shape 중 하나라도 보드 어디든 들어가면 Playing.
+Score는 int 범위를 넘기지 않도록 상한 처리한다.
 
-## Unity 자동화
-- COSMIC BLOCK → Sprint 1 → Upgrade Game Scene: 기존 Scene 확장. 반복 실행해도 슬롯/Cell을 중복 생성하지 않는다.
-- COSMIC BLOCK → Sprint 1 → Validate Placement Logic: Single/H3/L/Reverse L/범위/점유/모든 Shape 가장자리/seed 테스트.
-- Sprint 0 메뉴/검증 코드도 보존한다.
-- PlayProbe는 -executeMethod Sprint1PlayProbe.Run으로 배치 실행하며 완료 후 Editor를 종료한다. 대화형 Editor에서는 실행하지 않는다.
+## 좌표/Drag
+좌상단 (0,0), X 오른쪽/Y 아래쪽. Shape offset은 bounding-box 좌상단 기준.
+Canvas local pointer + 위쪽 offset → Piece 원점 중심 → Board local → 실제 Cell 중심/Grid pitch로 nearest anchor.
+Visual snap/preview/drop은 같은 anchor. GameSession Inspector Drag Finger Offset=110 Canvas 단위.
+Preview Gold=valid, Red=invalid. 원점이 보드 밖이면 preview 없음.
+New Input System의 uGUI 이벤트로 Mouse/Touch를 처리하고 동시 drag를 하나로 제한한다.
 
 ## 직접 QA
-1. Game Scene → Play → 하단 3개 블록, 8×8 보드를 확인.
-2. 마우스 왼쪽 버튼으로 블록을 드래그. 블록이 커지고 포인터 위로 이동한다.
-3. 빈 곳의 gold preview를 확인하고 release → 보라색 점유 Cell, 사용한 슬롯만 비워짐.
-4. 다른 블록을 이미 점유한 Cell 위로 이동 → red preview → release → 원래 슬롯 복귀, 보드 변화 없음.
-5. 폭/높이 2 이상 블록을 오른쪽/아래 경계에 걸치게 놓기 → 실패/복귀.
-6. Shape 전체가 들어가는 가장자리로 이동 → 성공.
-7. 보드 밖에서 release, 드래그 중 Escape 또는 다른 창으로 포커스 이동 → 복귀.
-8. 세 블록을 모두 사용 → 3개 슬롯 비어 있음, 자동 공급/Line Clear 없음.
-9. Game View 해상도 드롭다운 → + → Fixed Resolution으로 1080×1920, 1080×2400, 1080×1440 추가 → 각각 Play하여 정사각형/슬롯/미리보기 확인.
-10. Console에 게임 코드 오류/예외가 없어야 한다. Android 실기기에서는 손가락 드래그/다중 터치/노치 SafeArea를 추가 QA한다.
+1. Game Scene → Play → Score 0, 저장 Best, 랜덤 블록 3개 확인.
+2. 마우스 왼쪽 드래그 → Gold 위치에 release → 점유 및 Cell당 +10. Red/보드 밖 release → 복귀/점수·Combo 변화 없음.
+3. 세 블록을 모두 배치 → 새 3개. 하나/두 개만 사용했을 때는 공급 없어야 한다.
+4. Hierarchy → GameSession 선택 → Inspector GameSession 컴포넌트의 ⋮ 또는 우클릭 → Debug → Prepare Row And Column Clear.
+   새 게임/Single 3개/4번째 Row·Column 빈 교차점을 준비한다. 그 교차점(좌표 3,3)에 Single을 drop.
+   두 Line/15 unique Cell 제거, Score 210, COMBO 1 확인.
+5. 같은 컴포넌트 메뉴 → Debug → Prepare Next Row Clear → 같은 빈 Cell(3,3)에 Single drop.
+   Score 370, COMBO 2. 반복하면 580/STAR COMBO 3, 840/COSMIC COMBO 4.
+   그 후 빈 곳에 Line Clear 없이 배치 → Combo text 사라짐.
+6. 같은 메뉴 → Debug → Force Game Over.
+   Game Over의 Current/Best 확인, 블록 입력 잠금, 광고 버튼 비활성 확인.
+7. RETRY 클릭 → 빈 보드/Score 0/Combo 없음/새 3개/Playing, Best 유지.
+8. Play 종료 후 다시 Play → 저장 Best가 다시 표시되어야 한다.
+9. Game View 해상도 + → Fixed Resolution: 1080×1920, 1080×2400, 1080×1440.
+   Board 정사각형, Score/Combo/Block Area 구분, Game Over Card/Retry가 SafeArea 안에 있는지 확인.
+10. Console 게임 코드 오류/예외가 없어야 한다. Android 실기기 Touch/다중 터치/실제 노치 및 빌드는 별도 QA한다.
 
-원하는 Shape가 없다면 Play를 종료하고 다시 시작한다. 재현용 seed는 Play 전에 Hierarchy GameSession → Inspector → Use Fixed Seed 체크 → Fixed Seed 값 지정.
-점유 데이터는 Play 중 BoardView.Model 또는 GameSession.Model에서 확인 가능하며 Editor domain tests가 정확한 Cell 집합을 검사한다.
-한국어/영어 UI 및 폰트는 후속 UI Sprint에서 구현한다. 현재 영문 placeholder/LegacyRuntime 폰트는 최종 UI가 아니다.
+Debug ContextMenu는 Editor/Development Build에만 포함된다. 출시 게임 화면에는 Debug Text/버튼을 추가하지 않는다.
+재현용 랜덤: Play 전에 GameSession → Use Fixed Seed 체크 → Fixed Seed 지정. Retry는 같은 seed의 새 게임을 시작한다.
+기존 플레이어 Best를 초기화하지 않는다. 테스트 Probe는 별도 키를 사용하고 테스트 키도 종료 시 이전 값으로 복구한다.
 
-## 검증 결과와 한계
-Test 1~8 PASS: domain 및 Play Mode synthetic uGUI 이벤트(-1 mouse / 42,43 touch-style pointer ids).
-초기 3개와 UI raycast, exact offset 점유, 미리보기 모델 불변, 실패 복귀, slot consumption, 취소/다중 포인터 보호, 추가 프레임 후 자동 공급 없음 PASS.
-RenderTexture 1080×1920 / 1080×2400(모사 inset) / 1080×1440에서 보드 비율/64 cell mapping/slot bounds PASS.
-실제 블록을 넣은 spacing 8/12 비교 렌더를 확인하여 12를 선택했다. 테스트 이미지/로그는 Validation 및 루트 .log에 생성되고 Git에서 제외된다.
-이 검증은 하드웨어 입력에서 InputSystem→EventSystem까지의 전체 경로나 Android APK/AAB/실기기 QA를 대체하지 않는다.
-출시 전 application identifier/서명/ARM64/IL2CPP/AAB 및 정책을 별도 확정한다.
+## 자동화/테스트
+COSMIC BLOCK → Sprint 2 → Upgrade Core Loop UI: 기존 Scene 확장. 반복 실행 시 중복 Panel/Slot/Cell 없음.
+COSMIC BLOCK → Sprint 2 → Validate Line And Score Rules: Row/Column/다중/교차 중복/점수/배치 가능 검색.
+배치 전용: -executeMethod Sprint2PlayProbe.Run. 성공 시 Validation/sprint2.txt에 SPRINT2_PLAY_PASS.
+Probe는 Editor를 종료하므로 대화형 Editor에서는 실행하지 않는다.
+이전 Sprint 1 domain 검증은 여전히 사용 가능하다. Sprint 1 PlayProbe는 당시 규칙(재공급 없음)의 역사적 테스트로 현재 Core Loop에는 사용하지 않는다.
+Validation 이미지/로그는 .gitignore로 제외된다. RenderTexture 렌더/SafeArea 모사/synthetic 이벤트는 하드웨어 입력·Android 빌드를 대체하지 않는다.
+
+## 후속 작업
+Visual/Audio Polish는 승인 후 별도 Sprint. Localization/최종 한글 폰트/Home/AdMob/실기기 Release 설정은 후속 계획.
+최종 Art를 임의 생성하지 않는다. 현재는 코드 색상과 영문 placeholder/LegacyRuntime 폰트다.
+시작 시 Git main/working tree clean, remote 없음. Remote repository를 임의 생성하거나 force push하지 않는다.
+
+최종 Test 1~13/Play Mode 검증 PASS. Local Commit과 Remote 상태는 DEVLOG 및 작업 완료 보고 참고.
