@@ -16,3 +16,13 @@ Login, Server, Backend, Online Ranking, Database, IAP, Shop, Stage/Level, Accoun
 ## Sprint 0
 빈 보드 표시와 bool Cell 상태 API만 구현. 블록 생성/랜덤/드래그/배치 검사/라인 제거/점수/Combo/Game Over는 구현하지 않는다.
 
+
+## Sprint 1 — Shape와 Placement Rule
+- Pool 8종: Single, Horizontal 2/3, Vertical 2/3, Square 2×2, L Small, Reverse L Small.
+- 불변 Cell Offset 좌표 집합. 좌상단 bounding origin; x 오른쪽/y 아래쪽. Reverse L은 (1,0),(0,1),(1,1).
+- Game Start에서 System.Random으로 pool에서 독립 균등 선택 3회. 중복 허용. seed 옵션으로 재현 가능.
+- anchor + 모든 offset이 범위 0..7에 있고 비점유일 때만 성공. 전체 검사 후 모델 상태 변경.
+- Preview는 모델을 변경하지 않는다. gold valid/red invalid; 보드 밖 원점이면 preview 없음.
+- 성공: 점유 갱신/해당 Piece 소비/슬롯 비움. 배치한 블록 재이동 불가.
+- 실패/취소: 보드 변경 없이 원래 슬롯으로 snap 복귀. 비활성화 취소는 Unity lifecycle 충돌을 피하여 다음 프레임 복귀.
+- 초기 3개 모두 소비 후 빈 슬롯 유지. Line Clear/Score/Combo/Game Over/새 Set 공급 없음.

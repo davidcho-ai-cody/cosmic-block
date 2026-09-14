@@ -9,6 +9,22 @@ namespace CosmicBlock.Board {
    Check(x,y); if(cells[x,y]==value)return;
    cells[x,y]=value; CellChanged?.Invoke(x,y,value);
   }
+
+  // Validate every offset before any board mutation. Failed placements are atomic.
+  public bool CanPlace(CosmicBlock.Blocks.BlockShape shape, int x, int y) {
+   if(shape == null) return false;
+   foreach(var offset in shape.Cells) {
+    long cx = (long)x + offset.x, cy = (long)y + offset.y;
+    if(cx < 0 || cy < 0 || cx >= Size || cy >= Size || cells[(int)cx,(int)cy]) return false;
+   }
+   return true;
+  }
+  public bool TryPlace(CosmicBlock.Blocks.BlockShape shape, int x, int y) {
+   if(!CanPlace(shape,x,y)) return false;
+   foreach(var offset in shape.Cells) cells[x+offset.x,y+offset.y] = true;
+   foreach(var offset in shape.Cells) CellChanged?.Invoke(x+offset.x,y+offset.y,true);
+   return true;
+  }
   public void Clear() { for(int y=0;y<8;y++)for(int x=0;x<8;x++)SetOccupied(x,y,false); }
   private static void Check(int x,int y) { if(x<0||y<0||x>=8||y>=8)throw new ArgumentOutOfRangeException(nameof(x)); }
  }
