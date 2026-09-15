@@ -69,3 +69,13 @@
 - Sprite/Texture/Bloom/Particle/Sound/Haptic/광고/Stage 기능 추가 없음.
 - Sprint3 domain/Play Mode Test 1~10/12 PASS. Sprint2 전체 Core regression 및 1080x1920/2400/1440 SafeArea/정사각형/64 mapping PASS.
 - 개발 빌드/Editor 전용 score presets 950/2950/5950/9950 제공.
+
+## 2026-09-16 — Visual Readability & Drag Preview Polish
+- Preserved final Cosmic Background, Aspect Fill, global Navy overlay, STAR JOURNEY and all game rules.
+- Added Board blue-black container and subtle border; 64 empty cells now use dark fill plus cyan outline.
+- Added low-cost uGUI highlight/shade to generated block cells.
+- Restored three clear independent slot panels without reducing touch areas. Dragging slot uses warm-gold outline.
+- Board preview reuses Shape offsets and BoardModel.CanPlace. Valid uses gold fill/outline; collision and boundary use one red state.
+- Drag visual scale 1.05; nearest edge-cell mapping absorbs that visual offset while retaining 0..7 bounds.
+- Automated visual tests 1-12, Sprint 2 Core and Sprint 3 Journey regression passed.
+- 1080x1920, 1080x2400 with simulated inset, 1080x1440 renders reviewed. CS warnings/errors: 0/0.

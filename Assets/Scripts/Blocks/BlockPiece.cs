@@ -39,6 +39,14 @@ namespace CosmicBlock.Blocks
                 visuals[i] = rect.gameObject.AddComponent<Image>();
                 visuals[i].color = Palette[paletteIndex % Palette.Length];
                 visuals[i].raycastTarget = false;
+                var highlight = rect.gameObject.AddComponent<Outline>();
+                highlight.effectColor = new Color(1, 1, 1, .20f);
+                highlight.effectDistance = new Vector2(-1.5f, 1.5f);
+                highlight.useGraphicAlpha = true;
+                var shade = rect.gameObject.AddComponent<Shadow>();
+                shade.effectColor = new Color(.02f, .03f, .10f, .28f);
+                shade.effectDistance = new Vector2(2, -2);
+                shade.useGraphicAlpha = true;
             }
             GetComponent<BlockDragHandler>().Configure(board, dragLayer, session);
             paletteIndex++;

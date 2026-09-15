@@ -28,9 +28,11 @@ namespace CosmicBlock.Blocks
             if (!session.TryBeginDrag(this)) return;
             IsDragging = true; pointerId = eventData.pointerId;
             slot = transform.parent; sibling = transform.GetSiblingIndex();
+            slot.GetComponent<CosmicBlock.UI.SlotVisual>()?.SetSelected(true);
             transform.SetParent(layer, false);
             piece.Rect.anchorMin = piece.Rect.anchorMax = new Vector2(.5f, .5f);
             transform.SetAsLastSibling();
+            piece.Rect.localScale = Vector3.one * 1.05f;
             GetComponent<CanvasGroup>().blocksRaycasts = false;
             EventSystem.current?.SetSelectedGameObject(gameObject);
             Move(eventData);
@@ -76,6 +78,8 @@ namespace CosmicBlock.Blocks
         {
             IsDragging = false; hasAnchor = false;
             GetComponent<CanvasGroup>().blocksRaycasts = true;
+            piece.Rect.localScale = Vector3.one;
+            if (slot != null) slot.GetComponent<CosmicBlock.UI.SlotVisual>()?.SetSelected(false);
             if (session != null) session.ReleaseDrag(this);
             if (deferReturn)
             {

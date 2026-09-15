@@ -48,3 +48,12 @@ v1.0 규모에서는 key 기반 작은 자체 한국어/영어 테이블을 우�
 - Visual hierarchy: Board/Blocks > Score > Journey > Title.
 - Slot backgrounds use very low alpha while their full touch areas remain.
 - No final texture, Bloom, particle, shake, haptic, sound, or final combo animation.
+
+## Visual Readability & Drag Preview Polish
+- Board container: blue-black fill alpha 0.46 with a subtle blue outline.
+- Empty cells: dark cosmic blue fill alpha 0.86 and soft cyan outline alpha 0.58.
+- Occupied blocks keep the Blue/Purple/Gold palette with low-cost top-left highlight and bottom-right shade.
+- Upcoming blocks use three independent dark navy slots with cyan outlines; selected drag slot changes to warm gold.
+- Valid preview: subtle gold fill plus opaque warm gold outline over every in-board Shape cell.
+- Invalid preview: subtle muted-red fill plus red outline with one state for the whole Shape.
+- Drag root scales to 1.05 and returns to 1.00 on drop/cancel. Touch area and finger offset remain unchanged.

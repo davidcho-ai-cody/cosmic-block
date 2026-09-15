@@ -286,7 +286,7 @@ public static class Sprint2PlayProbe
     {
         for (int y = 0; y < 8; y++) for (int x = 0; x < 8; x++)
         {
-            Color expected = session.Model.IsOccupied(x, y) ? new Color(.43f, .56f, .94f) : new Color(.08f, .13f, .29f, .78f);
+            Color expected = session.Model.IsOccupied(x, y) ? BoardView.OccupiedFill : BoardView.EmptyFill;
             Require(board.transform.GetChild(y * 8 + x).GetComponent<Image>().color == expected, "Board model/view match");
         }
     }
