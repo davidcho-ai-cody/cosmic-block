@@ -319,6 +319,9 @@ public static class Sprint2PlayProbe
             }
             foreach (var piece in pieces) AssertInside((RectTransform)piece.transform.parent, safe);
             if (Panel().activeSelf) AssertInside((RectTransform)Card(), safe);
+            var background = UnityEngine.Object.FindAnyObjectByType<AspectFillBackground>();
+            if (background != null) background.SendMessage("LateUpdate");
+            Canvas.ForceUpdateCanvases();
             camera.Render(); RenderTexture.active = rt;
             image = new Texture2D(width, height, TextureFormat.RGB24, false);
             image.ReadPixels(new Rect(0, 0, width, height), 0, 0); image.Apply();
