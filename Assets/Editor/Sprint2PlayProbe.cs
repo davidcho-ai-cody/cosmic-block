@@ -31,7 +31,7 @@ public static class Sprint2PlayProbe
     {
         Sprint2Builder.Validate();
         EditorSceneManager.OpenScene(Sprint2Builder.ScenePath);
-        var sceneSession = UnityEngine.Object.FindFirstObjectByType<GameSession>();
+        var sceneSession = UnityEngine.Object.FindAnyObjectByType<GameSession>();
         var serialized = new SerializedObject(sceneSession);
         serialized.FindProperty("bestScoreKey").stringValue = TestKey;
         serialized.ApplyModifiedPropertiesWithoutUndo();
@@ -54,8 +54,8 @@ public static class Sprint2PlayProbe
         {
             if (stage == 0)
             {
-                session = UnityEngine.Object.FindFirstObjectByType<GameSession>();
-                board = UnityEngine.Object.FindFirstObjectByType<BoardView>();
+                session = UnityEngine.Object.FindAnyObjectByType<GameSession>();
+                board = UnityEngine.Object.FindAnyObjectByType<BoardView>();
                 layer = GameObject.Find("GameCanvas").transform.Find("DragLayer") as RectTransform;
                 pieces = new BlockPiece[session.Slots.Count];
                 for (int i = 0; i < pieces.Length; i++) pieces[i] = session.Slots[i];

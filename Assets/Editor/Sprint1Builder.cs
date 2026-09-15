@@ -18,8 +18,8 @@ public static class Sprint1Builder
         var scene = EditorSceneManager.OpenScene(ScenePath);
         var canvas = GameObject.Find("GameCanvas");
         var safe = canvas.transform.Find("SafeArea");
-        var board = UnityEngine.Object.FindFirstObjectByType<BoardView>();
-        var session = UnityEngine.Object.FindFirstObjectByType<GameSession>();
+        var board = UnityEngine.Object.FindAnyObjectByType<BoardView>();
+        var session = UnityEngine.Object.FindAnyObjectByType<GameSession>();
         if (safe == null || board == null || session == null) throw new Exception("Sprint 0 foundation missing.");
         board.GetComponent<GridLayoutGroup>().spacing = new Vector2(12, 12);
         var placeholder = safe.Find("TrayPlaceholder");

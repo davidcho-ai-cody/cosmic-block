@@ -20,8 +20,8 @@ public static class Sprint2Builder
         var scene = EditorSceneManager.OpenScene(ScenePath);
         var canvas = GameObject.Find("GameCanvas");
         var safe = canvas.transform.Find("SafeArea");
-        var session = UnityEngine.Object.FindFirstObjectByType<GameSession>();
-        var board = UnityEngine.Object.FindFirstObjectByType<BoardView>();
+        var session = UnityEngine.Object.FindAnyObjectByType<GameSession>();
+        var board = UnityEngine.Object.FindAnyObjectByType<BoardView>();
         if (safe == null || session == null || board == null || board.transform.childCount != 64)
             throw new Exception("Sprint 1 foundation missing.");
         var score = safe.Find("ScorePlaceholder").GetComponent<Text>();

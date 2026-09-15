@@ -71,7 +71,7 @@ public static class Sprint0Builder {
  public static void Validate() {
   if(!Application.isBatchMode&&!EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo())return;
   EditorSceneManager.OpenScene(ScenePath);
-  var view=UnityEngine.Object.FindFirstObjectByType<BoardView>();
+  var view=UnityEngine.Object.FindAnyObjectByType<BoardView>();
   if(view==null||view.CellCount!=64||view.transform.childCount!=64)throw new Exception("Expected 64 cells.");
   var model=new BoardModel(); int changes=0; model.CellChanged+=(_,_,_)=>changes++;
   model.SetOccupied(7,7,true);
@@ -79,7 +79,7 @@ public static class Sprint0Builder {
   model.SetOccupied(7,7,true); model.Clear();
   if(model.IsOccupied(7,7)||changes!=2)throw new Exception("State events failed.");
   try {model.SetOccupied(8,0,true); throw new Exception("Bounds check missing.");} catch(ArgumentOutOfRangeException) {}
-  if(UnityEngine.Object.FindFirstObjectByType<SafeArea>()==null||UnityEngine.Object.FindFirstObjectByType<InputSystemUIInputModule>()==null)throw new Exception("UI foundation missing.");
+  if(UnityEngine.Object.FindAnyObjectByType<SafeArea>()==null||UnityEngine.Object.FindAnyObjectByType<InputSystemUIInputModule>()==null)throw new Exception("UI foundation missing.");
   Directory.CreateDirectory("Validation");
   File.WriteAllText("Validation/sprint0.txt","PASS: Scene load, 64 cells, model isolation/events/bounds, SafeArea and New Input UI module. Runtime visual/device checks are separate.");
   Debug.Log("SPRINT0_VALIDATION_PASS");

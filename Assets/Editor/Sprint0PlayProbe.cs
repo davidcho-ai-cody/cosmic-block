@@ -19,7 +19,7 @@ public static class Sprint0PlayProbe {
   if(!EditorApplication.isPlaying)return;
   if(++frames<30)return;
   try {
-   var view=UnityEngine.Object.FindFirstObjectByType<BoardView>();
+   var view=UnityEngine.Object.FindAnyObjectByType<BoardView>();
    if(view==null||view.Model==null||view.CellCount!=64)throw new Exception("Runtime binding failed.");
    Canvas.ForceUpdateCanvases();
    var rect=((RectTransform)view.transform).rect;

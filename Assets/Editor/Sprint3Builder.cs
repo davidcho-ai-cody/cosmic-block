@@ -12,7 +12,7 @@ public static class Sprint3Builder {
  public static void Build(){
   if(!Application.isBatchMode&&!EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo())return;
   var scene=EditorSceneManager.OpenScene(ScenePath);var canvas=GameObject.Find("GameCanvas");var safe=canvas.transform.Find("SafeArea");
-  var session=UnityEngine.Object.FindFirstObjectByType<GameSession>();var hud=canvas.GetComponent<GameHud>();if(safe==null||session==null||hud==null)throw new Exception("Sprint 2 foundation missing.");
+  var session=UnityEngine.Object.FindAnyObjectByType<GameSession>();var hud=canvas.GetComponent<GameHud>();if(safe==null||session==null||hud==null)throw new Exception("Sprint 2 foundation missing.");
   var bg=canvas.transform.Find("Background").GetComponent<Image>();bg.color=new Color(.025f,.025f,.10f);bg.sprite=null;
   var title=safe.Find("Title").GetComponent<Text>();title.text="COSMIC BLOCK";title.color=new Color(.93f,.78f,.43f);title.fontSize=44;Set((RectTransform)title.transform,new Vector2(.08f,.92f),new Vector2(.92f,.975f));
   var score=safe.Find("ScorePlaceholder").GetComponent<Text>();score.color=new Color(.91f,.93f,1);Set((RectTransform)score.transform,new Vector2(.08f,.835f),new Vector2(.92f,.875f));

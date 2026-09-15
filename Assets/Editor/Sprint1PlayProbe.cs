@@ -48,10 +48,10 @@ public static class Sprint1PlayProbe
         {
             if (stage == 0)
             {
-                board = UnityEngine.Object.FindFirstObjectByType<BoardView>();
-                session = UnityEngine.Object.FindFirstObjectByType<GameSession>();
+                board = UnityEngine.Object.FindAnyObjectByType<BoardView>();
+                session = UnityEngine.Object.FindAnyObjectByType<GameSession>();
                 layer = GameObject.Find("GameCanvas").transform.Find("DragLayer") as RectTransform;
-                initial = UnityEngine.Object.FindObjectsByType<BlockPiece>(FindObjectsSortMode.None);
+                initial = UnityEngine.Object.FindObjectsByType<BlockPiece>(FindObjectsInactive.Exclude);
                 Array.Sort(initial, (a, b) => string.CompareOrdinal(a.transform.parent.name, b.transform.parent.name));
                 Require(initial.Length == 3 && board.Model != null && layer != null, "Initial 3 pieces and binding");
                 foreach (var piece in initial) Require(piece.Shape != null && !piece.IsConsumed, "Generated shape");
