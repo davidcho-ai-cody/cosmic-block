@@ -84,3 +84,9 @@ Visual/Audio Polish는 승인 후 별도 Sprint. Localization/최종 한글 폰�
 시작 시 Git main/working tree clean, remote 없음. Remote repository를 임의 생성하거나 force push하지 않는다.
 
 최종 Test 1~13/Play Mode 검증 PASS. Local Commit과 Remote 상태는 DEVLOG 및 작업 완료 보고 참고.
+
+## Sprint 3 직접 확인
+1. Assets/Scenes/Game.unity를 열고 Play.
+2. Hierarchy에서 GameSession을 선택한 뒤 Component Context Menu의 Debug/Journey/Set Score 950, 2950, 5950, 9950을 사용한다.
+3. 다음 유효 배치로 milestone을 넘기거나 DebugSetScore를 호출해 도달 카드가 한 번만 표시되는지 확인한다.
+4. Retry 후 START와 유지된 Best Journey를 확인한다.

@@ -58,3 +58,14 @@
 - 현재 단계에서 수동 Unity 구성 작업 없음. 사용자 직접 QA 및 Debug 메뉴 재현 방법은 README.
 - Remote 없음: Local Commit만 수행하며 Remote Push는 미완료(대상 없음). 원격 저장소를 임의 생성하지 않는다.
 - 최종 Scene upgrade 반복 실행/전체 Play Mode 검증 PASS. 게임/문서를 gameplay: complete core game loop로 Local Commit.
+
+## 2026-09-15 — Sprint 3 / STAR JOURNEY + Cosmic Visual Foundation
+- 시작 main/origin/main clean, 기준 309868f.
+- JourneyProgress 단일 데이터 소스: START 0 / STAR FIELD 1,000 / MOON 3,000 / SATURN 6,000 / DEEP SPACE 10,000.
+- Score에서 current/next/segment progress 계산. 마지막 목적지 이후 full 상태로 게임 지속.
+- Run별 milestone HashSet과 uGUI coroutine fade/scale reached feedback. Retry reset, Best Score 기반 Best Journey.
+- Game Over에 current route/progress와 Best Journey 추가.
+- 최종 배경 asset 없이 replaceable Image 기반 Deep Navy foundation. Board/preview와 Piece Blue/Purple/Gold, 약한 Slot 배경 적용.
+- Sprite/Texture/Bloom/Particle/Sound/Haptic/광고/Stage 기능 추가 없음.
+- Sprint3 domain/Play Mode Test 1~10/12 PASS. Sprint2 전체 Core regression 및 1080x1920/2400/1440 SafeArea/정사각형/64 mapping PASS.
+- 개발 빌드/Editor 전용 score presets 950/2950/5950/9950 제공.

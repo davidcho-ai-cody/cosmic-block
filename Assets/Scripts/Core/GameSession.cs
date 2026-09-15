@@ -30,6 +30,8 @@ namespace CosmicBlock.Core
         public int Combo { get; private set; }
         public int BlockSetNumber { get; private set; }
         public LineClearResult LastClear { get; private set; } = LineClearResult.Empty;
+        public JourneyStatus Journey => JourneyProgress.At(Score);
+        public JourneyStatus BestJourney => JourneyProgress.At(BestScore);
         public IReadOnlyList<BlockPiece> Slots => slots;
 
         public void Configure(BoardView view) => board = view;
@@ -58,6 +60,7 @@ namespace CosmicBlock.Core
             if (!Model.TryPlace(piece.Shape, x, y)) { State = GameState.Playing; return false; }
             LastClear = Model.ClearCompletedLines();
             Combo = LastClear.LineCount > 0 ? (int)Math.Min(int.MaxValue, (long)Combo + 1) : 0;
+            int previousScore = Score;
             Score = ScoreRules.AddPlacement(Score, piece.Shape.Cells.Count, LastClear.LineCount, Combo);
             if (Score > BestScore)
             {
@@ -71,7 +74,7 @@ namespace CosmicBlock.Core
             if (allConsumed) GenerateBlockSet();
             // Only the final, cleared board and current (possibly refreshed) remaining set is searched.
             State = HasPlaceableRemainingBlock() ? GameState.Playing : GameState.GameOver;
-            if (hud != null) hud.Render(this);
+            if (hud != null) { hud.Render(this); hud.NotifyJourneyCrossings(previousScore, Score); }
             return true;
         }
         private void GenerateBlockSet()
@@ -107,12 +110,23 @@ namespace CosmicBlock.Core
             LastClear = LineClearResult.Empty;
             generator = new BlockGenerator(useFixedSeed ? (int?)fixedSeed : null);
             State = GameState.Playing;
+            if (hud != null) hud.ResetJourneyFeedback();
             GenerateBlockSet();
             if (slots != null && slots.Length > 0) EvaluateGameOver();
             else if (hud != null) hud.Render(this);
         }
 
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
+        public void DebugSetScore(int value)
+        {
+            if (!Application.isPlaying || State == GameState.Resolving) return;
+            int previous = Score; Score = Mathf.Max(0, value);
+            if (hud != null) { hud.Render(this); hud.NotifyJourneyCrossings(previous, Score); }
+        }
+        [ContextMenu("Debug/Journey/Set Score 950")] private void DebugScore950() => DebugSetScore(950);
+        [ContextMenu("Debug/Journey/Set Score 2950")] private void DebugScore2950() => DebugSetScore(2950);
+        [ContextMenu("Debug/Journey/Set Score 5950")] private void DebugScore5950() => DebugSetScore(5950);
+        [ContextMenu("Debug/Journey/Set Score 9950")] private void DebugScore9950() => DebugSetScore(9950);
         [ContextMenu("Debug/Prepare Row And Column Clear")]
         public void DebugPrepareCross()
         {

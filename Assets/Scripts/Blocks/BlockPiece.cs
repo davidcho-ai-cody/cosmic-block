@@ -9,6 +9,8 @@ namespace CosmicBlock.Blocks
     [RequireComponent(typeof(BlockDragHandler))]
     public sealed class BlockPiece : MonoBehaviour
     {
+        private static int paletteIndex;
+        private static readonly Color[] Palette = { new Color(.30f,.58f,.96f), new Color(.60f,.42f,.91f), new Color(.94f,.69f,.30f) };
         private Image[] visuals;
         private float cellSize;
         public BlockShape Shape { get; private set; }
@@ -35,10 +37,11 @@ namespace CosmicBlock.Blocks
                 rect.SetParent(transform, false);
                 rect.anchorMin = rect.anchorMax = new Vector2(0, 1);
                 visuals[i] = rect.gameObject.AddComponent<Image>();
-                visuals[i].color = new Color(.43f, .48f, .85f);
+                visuals[i].color = Palette[paletteIndex % Palette.Length];
                 visuals[i].raycastTarget = false;
             }
             GetComponent<BlockDragHandler>().Configure(board, dragLayer, session);
+            paletteIndex++;
             gameObject.SetActive(true);
             FitSlot();
         }

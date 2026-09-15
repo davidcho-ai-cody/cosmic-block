@@ -37,3 +37,14 @@ v1.0 규모에서는 key 기반 작은 자체 한국어/영어 테이블을 우�
 - Card: GAME OVER, Current Score/Best, RETRY, disabled WATCH AD TO CONTINUE/COMING LATER.
 - Retry는 실제 Session reset. 광고 버튼 이벤트/SDK 없음.
 - Board/Tray/SafeArea/spacing12/padding8 유지. Animation/Particle/Glow/Art/Sound 없음.
+
+## Sprint 3 — Cosmic Visual Foundation
+- Mood: Dreamy Cosmic / Cozy Space / Premium Casual.
+- Background foundation: replaceable sprite-less Image in Deep Navy (#060619), keeping the board region quiet.
+- Empty board: dark translucent navy. Occupied board: cool cosmic blue. Spacing remains 12.
+- Pieces rotate visual-only Blue / Purple / Warm Gold colors; color has no gameplay meaning.
+- Valid preview uses warm gold; invalid uses muted red.
+- Journey is smaller than Score and Board: title, compact route text, thin progress bar.
+- Visual hierarchy: Board/Blocks > Score > Journey > Title.
+- Slot backgrounds use very low alpha while their full touch areas remain.
+- No final texture, Bloom, particle, shake, haptic, sound, or final combo animation.

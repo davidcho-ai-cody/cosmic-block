@@ -40,3 +40,11 @@ Sprint 1의 '재공급/Score/Line Clear 없음'은 당시 제한이며, 현재 �
 - Resolving 중/게임 종료 후 배치 입력 차단. 동기 처리 후 Playing 또는 GameOver.
 - Retry는 현재 Session의 보드/Score/Combo/슬롯/State/UI reset, Scene reload 없음.
 - 광고 Continue는 비활성 Placeholder. 특수 블록/게임 규칙 추가 없음.
+
+## Sprint 3 — STAR JOURNEY
+- Milestones: 0 START, 1,000 STAR FIELD, 3,000 MOON, 6,000 SATURN, 10,000 DEEP SPACE.
+- Current/Next are selected from score. Segment progress = (score-current score)/(next score-current score).
+- Crossing a destination shows its reached feedback once per run. Retry resets this run state.
+- At DEEP SPACE progress remains full and play continues.
+- Best Journey is derived from saved Best Score; no duplicate persistence.
+- Journey is not Stage: no level, scene transition, reward, difficulty, restart, or map.

@@ -14,7 +14,7 @@ namespace CosmicBlock.Board {
    Model=model; Model.CellChanged+=Refresh;
    for(int y=0;y<8;y++)for(int x=0;x<8;x++)Refresh(x,y,Model.IsOccupied(x,y));
   }
-  private void Refresh(int x,int y,bool occupied) { cells[y*8+x].color=preview.Contains(y*8+x) ? (previewValid ? new Color(.82f,.7f,.4f,.9f) : new Color(.78f,.3f,.36f,.9f)) : occupied?new Color(.43f,.48f,.85f):new Color(.22f,.27f,.47f,.72f); }
+  private void Refresh(int x,int y,bool occupied) { cells[y*8+x].color=preview.Contains(y*8+x) ? (previewValid ? new Color(.96f,.73f,.3f,.92f) : new Color(.67f,.25f,.32f,.9f)) : occupied?new Color(.43f,.56f,.94f):new Color(.08f,.13f,.29f,.78f); }
 
   public float CellSize => GetComponent<GridLayoutGroup>().cellSize.x;
   public float CellSpacing => GetComponent<GridLayoutGroup>().spacing.x;
