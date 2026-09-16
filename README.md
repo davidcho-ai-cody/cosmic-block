@@ -90,3 +90,13 @@ Visual/Audio Polish는 승인 후 별도 Sprint. Localization/최종 한글 폰�
 2. Hierarchy에서 GameSession을 선택한 뒤 Component Context Menu의 Debug/Journey/Set Score 950, 2950, 5950, 9950을 사용한다.
 3. 다음 유효 배치로 milestone을 넘기거나 DebugSetScore를 호출해 도달 카드가 한 번만 표시되는지 확인한다.
 4. Retry 후 START와 유지된 Best Journey를 확인한다.
+
+## Sprint 4 Feedback 직접 확인
+1. Game Scene Play 후 GameSession의 Debug/Prepare Next Row Clear를 실행하고 (3,3)에 Single을 배치한다.
+2. Gold Flash, Cell Pop, 8개 Star, 실제 +Score, CLEAR!, 짧은 Clear SFX를 확인한다.
+3. 같은 준비/배치를 연속 실행해 STAR COMBO, COSMIC COMBO와 소폭 상승한 Pitch를 확인한다.
+4. Debug/Prepare Row And Column Clear 후 교차점에 배치해 15개 unique Cell과 한 번의 SFX/Haptic 요청을 확인한다.
+5. 연출 중 다음 Piece를 즉시 Drag하고, Retry 시 모든 임시 연출이 사라지는지 확인한다.
+6. Android 실기기에서는 Line Clear에만 짧은 진동이 발생하는지 확인한다. Editor에서는 Haptic이 no-op이다.
+
+Clear SFX 교체 경로는 Assets/Audio/SFX/clear.wav다. Feedback 객체는 Sprint4Builder가 중복 없이 구성하며 새 Tween/Audio/Haptic 플러그인은 없다.

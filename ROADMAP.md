@@ -8,3 +8,6 @@
 - 후속 Ads: Core 플레이 테스트 후 AdMob Rewarded/Interstitial.
 - Release: Android 실기기/화면비 QA, application identifier/서명/ARM64/IL2CPP/AAB/정책/스토어 출시.
 범위 확장은 BACKLOG에 기록하며 자동 구현하지 않는다.
+
+- Sprint 4 완료: Line Clear Gold Flash/Cell Pop/pooled Star Burst/Score Pop/Combo/SFX/Android Haptic 및 Drag Gold Polish.
+- 다음 후보: Sprint 5 — Home, Localization, 최종 폰트, Sound/Haptic 설정과 Android 실기기 UX QA. 사용자 승인 필요.

@@ -57,3 +57,10 @@ v1.0 규모에서는 key 기반 작은 자체 한국어/영어 테이블을 우�
 - Valid preview: subtle gold fill plus opaque warm gold outline over every in-board Shape cell.
 - Invalid preview: subtle muted-red fill plus red outline with one state for the whole Shape.
 - Drag root scales to 1.05 and returns to 1.00 on drop/cancel. Touch area and finger offset remain unchanged.
+
+## Sprint 4 — Feedback
+- Clear Cell: Warm Gold 0.10초 Flash 후 scale 1.0→1.16→0과 fade.
+- Star Burst: Warm Gold / Soft White / Cosmic Blue, 기본 8개, Multi-Line 12개부터 최대 24개.
+- Score Pop은 Board 근처에서 실제 점수 증가량을 표시하고 0.68초 내 상승/fade.
+- Combo 단계는 CLEAR! / STAR COMBO / COSMIC COMBO. Full-screen popup과 입력 차단을 사용하지 않는다.
+- Drag Piece는 기존 1.05 scale과 Fill을 유지하고 Gold Outline 두께만 3.25로 강화한다.

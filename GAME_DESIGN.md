@@ -48,3 +48,9 @@ Sprint 1의 '재공급/Score/Line Clear 없음'은 당시 제한이며, 현재 �
 - At DEEP SPACE progress remains full and play continues.
 - Best Journey is derived from saved Best Score; no duplicate persistence.
 - Journey is not Stage: no level, scene transition, reward, difficulty, restart, or map.
+
+## Sprint 4 — Juice & Feedback
+- Line Clear 판정, Score 공식, Combo 값은 Sprint 2 결과를 그대로 사용한다.
+- Clear가 있을 때만 Gold Flash → Cell Pop → Star Burst → Score Pop → SFX → Android Haptic을 재생한다.
+- Combo 1은 CLEAR!, Combo 2는 STAR COMBO, Combo 3 이상은 COSMIC COMBO로 표시한다.
+- 연출 중에도 Model은 이미 확정되어 다음 Block Drag가 가능하다. Retry는 진행 중 연출을 즉시 정리한다.

@@ -79,3 +79,12 @@
 - Drag visual scale 1.05; nearest edge-cell mapping absorbs that visual offset while retaining 0..7 bounds.
 - Automated visual tests 1-12, Sprint 2 Core and Sprint 3 Journey regression passed.
 - 1080x1920, 1080x2400 with simulated inset, 1080x1440 renders reviewed. CS warnings/errors: 0/0.
+
+## 2026-09-17 — Sprint 4 / Juice & Feedback
+- 기준 cd963d1, main/origin/main clean. 게임 규칙과 STAR JOURNEY 변경 없음.
+- GameFeedbackController가 확정된 LineClearResult/실제 점수 차이/Combo만 받아 0.68초 이내 비차단 연출.
+- 64 Clear Cell + 24 Star UI Pool 재사용. 교차 Clear는 UniqueClearedCells로 한 번만 표시.
+- Gold Flash 0.10초, 1.16 Pop/Fade, Gold/White/Blue Star Burst, Score 상승/Fade, CLEAR!/STAR COMBO/COSMIC COMBO.
+- 자체 생성 Assets/Audio/SFX/clear.wav, 단일 AudioSource 재시작과 pitch 1.00/1.05/1.10. Android에서만 짧은 Handheld.Vibrate 요청.
+- Drag Gold Outline 두께를 2.5에서 3.25로 소폭 강화.
+- 실제 Row/Column/Cross/연속 Combo/Rapid Drag/Retry/Game Over/Pool cleanup 및 1080×1920/2400/1440 렌더 PASS.

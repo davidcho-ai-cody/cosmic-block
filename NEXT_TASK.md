@@ -1,13 +1,11 @@
 # Next Task
 사용자 승인 전 다음 Sprint를 시작하지 않는다.
 
-후보: **Sprint 4 — Juice & Feedback**
-- Line Clear Burst
-- Star Particle
-- Haptic / Vibration
-- Sound
-- Combo Animation
-- Micro Tween
-- Feedback Tuning
+후보: **Sprint 5 — Home, Localization & Release UI**
+- Home/Game 전환과 최종 Game Over 흐름
+- 한국어/영어 문자열 테이블 및 저장
+- 라이선스 확인 한글 폰트와 fallback
+- Sound/Haptic 설정 토글
+- Android 실기기 Touch/SafeArea/Audio/Haptic QA
 
-최종 Background Sprite가 제공되면 Assets/Art/Backgrounds/CosmicBackground.png에 저장하고 Sprite (2D and UI), Single, sRGB, Alpha Is Transparency(해당 시), Max Size 2048, ASTC Android 압축 기준으로 교체한다.
+AdMob과 Store Release는 Core UX와 실기기 검증 후 별도 Sprint로 유지한다.

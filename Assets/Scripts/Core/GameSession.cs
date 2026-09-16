@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using CosmicBlock.Blocks;
 using CosmicBlock.Board;
 using CosmicBlock.UI;
+using CosmicBlock.Effects;
 using UnityEngine;
 
 namespace CosmicBlock.Core
@@ -18,6 +19,7 @@ namespace CosmicBlock.Core
         [SerializeField] private bool useFixedSeed;
         [SerializeField] private int fixedSeed = 1;
         [SerializeField] private GameHud hud;
+        [SerializeField] private GameFeedbackController feedback;
         [SerializeField, HideInInspector] private string bestScoreKey = DefaultBestScoreKey;
         private BlockDragHandler activeDrag;
         private BlockGenerator generator;
@@ -37,6 +39,8 @@ namespace CosmicBlock.Core
         public void Configure(BoardView view) => board = view;
         public void ConfigureBlocks(BlockPiece[] pieces, RectTransform layer) { slots = pieces; dragLayer = layer; }
         public void ConfigureHud(GameHud view) => hud = view;
+        public void ConfigureFeedback(GameFeedbackController controller) => feedback = controller;
+        public GameFeedbackController Feedback => feedback;
         private void Awake()
         {
             Model = new BoardModel(); board.Bind(Model);
@@ -75,6 +79,7 @@ namespace CosmicBlock.Core
             // Only the final, cleared board and current (possibly refreshed) remaining set is searched.
             State = HasPlaceableRemainingBlock() ? GameState.Playing : GameState.GameOver;
             if (hud != null) { hud.Render(this); hud.NotifyJourneyCrossings(previousScore, Score); }
+            if (feedback != null && LastClear.LineCount > 0) feedback.PlayClear(LastClear, Score - previousScore, Combo);
             return true;
         }
         private void GenerateBlockSet()
@@ -111,6 +116,7 @@ namespace CosmicBlock.Core
             generator = new BlockGenerator(useFixedSeed ? (int?)fixedSeed : null);
             State = GameState.Playing;
             if (hud != null) hud.ResetJourneyFeedback();
+            if (feedback != null) feedback.ResetFeedback();
             GenerateBlockSet();
             if (slots != null && slots.Length > 0) EvaluateGameOver();
             else if (hud != null) hud.Render(this);

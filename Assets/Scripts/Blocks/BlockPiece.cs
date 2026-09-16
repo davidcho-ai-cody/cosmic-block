@@ -65,7 +65,7 @@ namespace CosmicBlock.Blocks
             {
                 if (outline == null) continue;
                 outline.effectColor = dragging ? DragOutlineColor : RestOutlineColor;
-                outline.effectDistance = dragging ? new Vector2(2.5f, -2.5f) : new Vector2(-1.5f, 1.5f);
+                outline.effectDistance = dragging ? new Vector2(3.25f, -3.25f) : new Vector2(-1.5f, 1.5f);
                 outline.useGraphicAlpha = !dragging;
             }
         }
