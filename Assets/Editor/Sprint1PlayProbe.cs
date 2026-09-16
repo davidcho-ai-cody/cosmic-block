@@ -20,6 +20,7 @@ public static class Sprint1PlayProbe
     private static GameSession session;
     private static RectTransform layer;
     private static BlockPiece[] initial;
+    private static readonly List<BlockPiece> fixtures = new List<BlockPiece>();
     private static BlockPiece deferredPiece;
     private static Transform deferredSlot;
     private static readonly List<string> results = new List<string>();
@@ -182,9 +183,22 @@ public static class Sprint1PlayProbe
         rect.anchorMin = rect.anchorMax = new Vector2(.5f, .5f);
         var piece = obj.AddComponent<BlockPiece>();
         piece.Initialize(shape, board, layer, session);
+        fixtures.Add(piece);
+        RegisterFixtures();
         return piece;
     }
-    private static void Destroy(BlockPiece piece) => UnityEngine.Object.DestroyImmediate(piece.gameObject);
+    private static void Destroy(BlockPiece piece)
+    {
+        fixtures.Remove(piece);
+        UnityEngine.Object.DestroyImmediate(piece.gameObject);
+        RegisterFixtures();
+    }
+    private static void RegisterFixtures()
+    {
+        var registered = new List<BlockPiece>(initial);
+        registered.AddRange(fixtures);
+        session.ConfigureBlocks(registered.ToArray(), layer);
+    }
     private static Camera UICamera()
     {
         var canvas = layer.GetComponentInParent<Canvas>();

@@ -12,7 +12,10 @@ namespace CosmicBlock.Blocks
         private static int paletteIndex;
         private static readonly Color[] Palette = { new Color(.30f,.58f,.96f), new Color(.60f,.42f,.91f), new Color(.94f,.69f,.30f) };
         private Image[] visuals;
+        private Outline[] cellOutlines;
         private float cellSize;
+        public static readonly Color DragOutlineColor = new Color(1f, .76f, .28f, .98f);
+        private static readonly Color RestOutlineColor = new Color(1f, 1f, 1f, .20f);
         public BlockShape Shape { get; private set; }
         public bool IsConsumed { get; private set; }
         public RectTransform Rect => (RectTransform)transform;
@@ -31,6 +34,7 @@ namespace CosmicBlock.Blocks
             GetComponent<Image>().color = new Color(0, 0, 0, .001f);
             GetComponent<Image>().raycastTarget = true;
             visuals = new Image[shape.Cells.Count];
+            cellOutlines = new Outline[shape.Cells.Count];
             for (int i = 0; i < visuals.Length; i++)
             {
                 var rect = new GameObject("BlockCell_" + i, typeof(RectTransform)).GetComponent<RectTransform>();
@@ -40,18 +44,40 @@ namespace CosmicBlock.Blocks
                 visuals[i].color = Palette[paletteIndex % Palette.Length];
                 visuals[i].raycastTarget = false;
                 var highlight = rect.gameObject.AddComponent<Outline>();
-                highlight.effectColor = new Color(1, 1, 1, .20f);
+                highlight.effectColor = RestOutlineColor;
                 highlight.effectDistance = new Vector2(-1.5f, 1.5f);
                 highlight.useGraphicAlpha = true;
                 var shade = rect.gameObject.AddComponent<Shadow>();
                 shade.effectColor = new Color(.02f, .03f, .10f, .28f);
                 shade.effectDistance = new Vector2(2, -2);
                 shade.useGraphicAlpha = true;
+                cellOutlines[i] = highlight;
             }
             GetComponent<BlockDragHandler>().Configure(board, dragLayer, session);
             paletteIndex++;
             gameObject.SetActive(true);
             FitSlot();
+        }
+        public void SetDraggingVisual(bool dragging)
+        {
+            if (cellOutlines == null) return;
+            foreach (var outline in cellOutlines)
+            {
+                if (outline == null) continue;
+                outline.effectColor = dragging ? DragOutlineColor : RestOutlineColor;
+                outline.effectDistance = dragging ? new Vector2(2.5f, -2.5f) : new Vector2(-1.5f, 1.5f);
+                outline.useGraphicAlpha = !dragging;
+            }
+        }
+        public bool DragHighlightActive
+        {
+            get
+            {
+                if (cellOutlines == null || cellOutlines.Length == 0) return false;
+                foreach (var outline in cellOutlines)
+                    if (outline == null || outline.effectColor != DragOutlineColor) return false;
+                return true;
+            }
         }
         public void SetGeometry(float size, float spacing)
         {
@@ -78,6 +104,7 @@ namespace CosmicBlock.Blocks
         }
         public void Consume()
         {
+            SetDraggingVisual(false);
             IsConsumed = true;
             gameObject.SetActive(false);
         }

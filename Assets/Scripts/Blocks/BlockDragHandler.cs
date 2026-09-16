@@ -29,6 +29,7 @@ namespace CosmicBlock.Blocks
             IsDragging = true; pointerId = eventData.pointerId;
             slot = transform.parent; sibling = transform.GetSiblingIndex();
             slot.GetComponent<CosmicBlock.UI.SlotVisual>()?.SetSelected(true);
+            piece.SetDraggingVisual(true);
             transform.SetParent(layer, false);
             piece.Rect.anchorMin = piece.Rect.anchorMax = new Vector2(.5f, .5f);
             transform.SetAsLastSibling();
@@ -79,6 +80,7 @@ namespace CosmicBlock.Blocks
             IsDragging = false; hasAnchor = false;
             GetComponent<CanvasGroup>().blocksRaycasts = true;
             piece.Rect.localScale = Vector3.one;
+            piece.SetDraggingVisual(false);
             if (slot != null) slot.GetComponent<CosmicBlock.UI.SlotVisual>()?.SetSelected(false);
             if (session != null) session.ReleaseDrag(this);
             if (deferReturn)

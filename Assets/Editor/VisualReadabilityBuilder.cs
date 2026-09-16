@@ -11,7 +11,7 @@ public static class VisualReadabilityBuilder {
  [MenuItem("COSMIC BLOCK/Visual/Build Readability And Preview")]
  public static void Build(){
   if(!Application.isBatchMode&&!EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo())return;
-  var scene=EditorSceneManager.OpenScene(ScenePath);var board=UnityEngine.Object.FindAnyObjectByType<BoardView>();var area=GameObject.Find("GameCanvas").transform.Find("SafeArea/BlockArea");
+  var scene=EditorSceneManager.OpenScene(ScenePath);MissingScriptDiagnostics.RemoveMissingScriptsInOpenScene();var board=UnityEngine.Object.FindAnyObjectByType<BoardView>();var area=GameObject.Find("GameCanvas").transform.Find("SafeArea/BlockArea");
   if(board==null||board.transform.childCount!=64||area==null||area.childCount!=3)throw new Exception("Sprint 3 scene foundation missing.");
   var panel=board.GetComponent<Image>();if(panel==null)panel=board.gameObject.AddComponent<Image>();panel.color=new Color(.018f,.035f,.10f,.46f);panel.raycastTarget=false;
   var boardBorder=board.GetComponent<Outline>();if(boardBorder==null)boardBorder=board.gameObject.AddComponent<Outline>();boardBorder.effectColor=new Color(.24f,.58f,.78f,.30f);boardBorder.effectDistance=new Vector2(2,-2);boardBorder.useGraphicAlpha=false;
