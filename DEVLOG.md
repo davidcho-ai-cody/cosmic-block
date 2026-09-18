@@ -88,3 +88,14 @@
 - 자체 생성 Assets/Audio/SFX/clear.wav, 단일 AudioSource 재시작과 pitch 1.00/1.05/1.10. Android에서만 짧은 Handheld.Vibrate 요청.
 - Drag Gold Outline 두께를 2.5에서 3.25로 소폭 강화.
 - 실제 Row/Column/Cross/연속 Combo/Rapid Drag/Retry/Game Over/Pool cleanup 및 1080×1920/2400/1440 렌더 PASS.
+
+## 2026-09-18 — Sprint 4.5 / Android Device QA
+- Unity 6000.5.8f1 Android Build Support, SDK/NDK/OpenJDK와 ADB 실행 경로 확인.
+- 현재 Android 설정 확인: Portrait, minSdk 26, targetSdk 36, IL2CPP, ARM64, Vulkan/OpenGLES3, New Input System, version 1.0/code 1.
+- 현재 패키지명은 `com.DefaultCompany.CosmicBlock`. 이번 QA에서는 변경하지 않았으며 출시 전 `com.playyournextworld.cosmicblock` 같은 최종 식별자로 교체 권장.
+- Development/Release APK 메뉴와 배치 빌드용 `AndroidBuildAutomation` 추가. Development는 Unity 6.5 `DebugSymbolLevel.SymbolTable`을 사용.
+- 불필요한 Unity Engine Diagnostics를 비활성화해 Cloud symbol upload 경고를 제거. 게임 동작과 Android 런타임 설정은 변경하지 않음.
+- Development APK 생성 성공: `Builds/Android/Development/CosmicBlock-dev.apk`, 89,878,495 bytes. BuildReport Warning 0/Error 0.
+- Sprint 0/1/2/3/4 PlayProbe와 Visual Readability PASS. Missing Script 0. 컴파일 CS Warning/Error 0.
+- ADB daemon은 정상 시작했지만 연결 기기 없음. 따라서 설치/실행/Logcat과 실제 Portrait/SafeArea/Touch/Audio/Haptic/성능 QA는 대기.
+- Game Feel 값 변경 없음: 0.68초 전체, 0.10초 Flash, 0.18초 Pop/최대 1.16배, SFX 0.58, pitch 1.00/1.05/1.10, Drag outline 3.25, Android line-clear vibration 요청 유지.

@@ -100,3 +100,22 @@ Visual/Audio Polish는 승인 후 별도 Sprint. Localization/최종 한글 폰�
 6. Android 실기기에서는 Line Clear에만 짧은 진동이 발생하는지 확인한다. Editor에서는 Haptic이 no-op이다.
 
 Clear SFX 교체 경로는 Assets/Audio/SFX/clear.wav다. Feedback 객체는 Sprint4Builder가 중복 없이 구성하며 새 Tween/Audio/Haptic 플러그인은 없다.
+
+## Android Development Build
+Unity 메뉴 `COSMIC BLOCK → Build → Android Development APK`로 `Builds/Android/Development/CosmicBlock-dev.apk`를 생성한다. 현재 검증 설정은 Portrait, minSdk 26, targetSdk 36, IL2CPP, ARM64, Vulkan/OpenGLES3, New Input System, version 1.0/code 1이다.
+
+현재 패키지명은 `com.DefaultCompany.CosmicBlock`이다. QA 동안 유지하며 출시 서명/AAB 전에 `com.playyournextworld.cosmicblock` 같은 최종 식별자로 확정한다. APK와 symbol zip은 Git에 포함하지 않는다.
+
+## Android 실기기 QA 체크리스트
+1. 개발자 옵션과 USB 디버깅을 켜고 USB 연결 후 기기의 RSA 허용 창을 승인한다.
+2. Unity 포함 ADB의 `adb devices -l`에서 기기 상태가 `device`인지 확인한다.
+3. Development APK를 `adb install -r`로 설치하고 Portrait로 실행한다.
+4. 상단 행성/하단 지형, 중앙 Board, STAR JOURNEY, 세 Block Slot이 실제 SafeArea 안에서 선명한지 확인한다.
+5. 손가락 Drag가 자연스럽고 Gold/Red preview와 drop 위치가 일치하는지 확인한다. 빠른 반복과 멀티터치에서도 입력이 잠기지 않아야 한다.
+6. Row/Column/Cross Clear에서 Gold Flash, Cell Pop, Star Burst, Score/Combo가 0.68초 안에 표시되고 플레이 입력을 막지 않는지 확인한다.
+7. Clear SFX의 음량과 combo pitch, Line Clear에만 발생하는 짧은 진동의 강도/지속이 적절한지 확인한다.
+8. 앱 일시정지/복귀, 화면 껐다 켜기, Game Over/Retry 후 입력·Audio·임시 연출이 정상인지 확인한다.
+9. 장시간 반복 플레이 중 프레임 저하, 발열, 비정상 종료가 없는지 확인한다.
+10. 실행 직전 Logcat을 비우고 앱 PID 중심으로 Fatal/Exception/Unity 오류를 확인한다. 시스템 전체 로그는 보관하지 않는다.
+
+2026-09-18 자동 검증 결과는 APK build Warning 0/Error 0, Sprint 0~4/Visual Readability PASS, Missing Script 0이다. 당시 ADB 연결 기기가 없어 위 실기기 항목은 아직 수동 확인 전이다.

@@ -11,3 +11,5 @@
 
 - Sprint 4 완료: Line Clear Gold Flash/Cell Pop/pooled Star Burst/Score Pop/Combo/SFX/Android Haptic 및 Drag Gold Polish.
 - 다음 후보: Sprint 5 — Home, Localization, 최종 폰트, Sound/Haptic 설정과 Android 실기기 UX QA. 사용자 승인 필요.
+- Sprint 4.5 자동 준비 완료: ARM64/IL2CPP Development APK, 빌드 메뉴, Sprint 0~4/Visual 회귀, Missing Script 0. 연결 기기가 없어 설치/실행/Logcat 및 실제 Touch/SafeArea/Audio/Haptic QA는 대기.
+- 실기기 QA 다음: 결과에 따른 최소 Game Feel 조정 후 Sprint 5 — Home, Localization & Release UI. 출시 전 최종 application identifier/서명/AAB 확정.
