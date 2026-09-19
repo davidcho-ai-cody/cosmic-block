@@ -56,6 +56,7 @@ namespace CosmicBlock.Blocks
             GetComponent<BlockDragHandler>().Configure(board, dragLayer, session);
             paletteIndex++;
             gameObject.SetActive(true);
+            transform.parent.GetComponent<CosmicBlock.UI.SlotDragHandler>()?.Configure(this);
             FitSlot();
         }
         public void SetDraggingVisual(bool dragging)
@@ -106,6 +107,7 @@ namespace CosmicBlock.Blocks
         {
             SetDraggingVisual(false);
             IsConsumed = true;
+            transform.parent.GetComponent<CosmicBlock.UI.SlotDragHandler>()?.SetInteractable(false);
             gameObject.SetActive(false);
         }
     }

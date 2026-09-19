@@ -99,3 +99,14 @@
 - Sprint 0/1/2/3/4 PlayProbe와 Visual Readability PASS. Missing Script 0. 컴파일 CS Warning/Error 0.
 - ADB daemon은 정상 시작했지만 연결 기기 없음. 따라서 설치/실행/Logcat과 실제 Portrait/SafeArea/Touch/Audio/Haptic/성능 QA는 대기.
 - Game Feel 값 변경 없음: 0.68초 전체, 0.10초 Flash, 0.18초 Pop/최대 1.16배, SFX 0.58, pitch 1.00/1.05/1.10, Drag outline 3.25, Android line-clear vibration 요청 유지.
+
+## 2026-09-19 — Sprint 4.5 / Device UX Touch Target + HUD Readability
+- Android 실기기 피드백에 따라 Piece 시각 크기 변경 없이 기존 Bottom Slot RectTransform 전체를 drag hit area로 사용.
+- SlotDragHandler가 기존 BlockDragHandler로 begin/drag/end/cancel을 전달. Piece 재공급 시 활성화, consumed slot은 Image raycastTarget 비활성화.
+- 기존 drag visual, scale 1.05, Gold highlight, Board preview, placement validation, Mouse/Touch 경로 유지.
+- 실제 기기에서 Piece가 손가락에 가려지지 않았던 Drag Finger Offset 110은 유지.
+- HUD 전→후: COSMIC BLOCK 44→56, BEST/SCORE 36→44 Bold, Journey 25→30. Progress Bar 크기/두께 유지.
+- Title→BEST/SCORE→Journey Destination→Progress Value 계층으로 anchor 재정렬. Board 및 Bottom Slot anchor/게임 규칙/Game Feel/Haptic/SFX/0.68초 timing 변경 없음.
+- 전용 Probe: Single/H2/V2/2x2/L/Reverse L을 Slot 가장자리에서 drag 시작 PASS, consumed slot raycast off PASS, 1/3/4/5자리 Score fit PASS.
+- 자동 렌더 PASS: 1080×1920 board 1032.0, 1080×2400 inset board 879.3, 1080×1440 board 964.4. SafeArea/Text/Board/Slot bounds와 정사각 Board 확인.
+- Sprint 0~4 및 Visual Readability PASS. C# Warning 0/Error 0, Missing Script 0.

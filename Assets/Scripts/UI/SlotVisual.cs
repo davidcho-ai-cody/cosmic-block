@@ -8,7 +8,7 @@ namespace CosmicBlock.UI {
   public static readonly Color SelectedBorder=new Color(1,.76f,.28f,.96f);
   Image image;Outline outline;
   void Awake(){image=GetComponent<Image>();outline=GetComponent<Outline>();SetSelected(false);}
-  public void SetSelected(bool selected){if(image==null)image=GetComponent<Image>();if(outline==null)outline=GetComponent<Outline>();image.color=NormalFill;image.raycastTarget=false;outline.effectColor=selected?SelectedBorder:NormalBorder;outline.effectDistance=selected?new Vector2(3,-3):new Vector2(2,-2);outline.useGraphicAlpha=false;}
+  public void SetSelected(bool selected){if(image==null)image=GetComponent<Image>();if(outline==null)outline=GetComponent<Outline>();image.color=NormalFill;outline.effectColor=selected?SelectedBorder:NormalBorder;outline.effectDistance=selected?new Vector2(3,-3):new Vector2(2,-2);outline.useGraphicAlpha=false;}
   public bool IsSelected=>outline!=null&&outline.effectColor==SelectedBorder;
  }
 }

@@ -119,3 +119,9 @@ Unity 메뉴 `COSMIC BLOCK → Build → Android Development APK`로 `Builds/And
 10. 실행 직전 Logcat을 비우고 앱 PID 중심으로 Fatal/Exception/Unity 오류를 확인한다. 시스템 전체 로그는 보관하지 않는다.
 
 2026-09-18 자동 검증 결과는 APK build Warning 0/Error 0, Sprint 0~4/Visual Readability PASS, Missing Script 0이다. 당시 ADB 연결 기기가 없어 위 실기기 항목은 아직 수동 확인 전이다.
+
+## Sprint 4.5 Device UX 개선
+- Bottom Slot 전체가 해당 Piece의 Touch/Drag 영역이다. 소비된 Slot은 raycast가 비활성화된다.
+- Piece 시각 크기와 Drag Offset 110, drag scale 1.05, Gold/Red preview는 유지된다.
+- HUD Font Size: COSMIC BLOCK 56, BEST/SCORE 44 Bold, Journey 30.
+- 자동 검증은 Single/H2/V2/2x2/L/Reverse L, consumed slot, 1~5자리 점수와 1080×1920/2400/1440을 포함한다.

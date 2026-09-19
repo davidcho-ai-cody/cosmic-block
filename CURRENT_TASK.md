@@ -1,8 +1,8 @@
 # Current Task
-Sprint 4.5 — Android Device QA 준비 및 자동 검증 완료.
+Sprint 4.5 Android 실기기 UX 개선 완료.
 
-Unity 6000.5.8f1 Android Development APK를 ARM64/IL2CPP, Portrait, minSdk 26/targetSdk 36으로 생성했다. 산출물은 `Builds/Android/Development/CosmicBlock-dev.apk`이며 89,878,495 bytes다. BuildReport는 Succeeded, Warning 0, Error 0이다.
+작은 Piece의 시각 크기는 유지하면서 각 Bottom Slot 전체를 Drag hit area로 사용한다. SlotDragHandler가 기존 BlockDragHandler로 이벤트를 전달하며, consumed slot은 raycast를 즉시 비활성화한다. Drag visual, 1.05 scale, Gold highlight, Board preview, placement validation과 Drag Offset 110은 유지했다.
 
-ADB 실행 환경은 확인했으나 연결된 기기가 없어 설치, 실행, Logcat, 실제 Touch/SafeArea/Audio/Haptic/Game Feel 검증은 대기 상태다. Sprint 0~4, Visual Readability 회귀는 모두 PASS했고 Missing Script는 0이다.
+HUD 가독성은 COSMIC BLOCK 44→56, BEST/SCORE 36→44 Bold, Journey 25→30으로 개선했다. Progress Bar, Board, Bottom Slot의 크기와 게임 규칙은 변경하지 않았다.
 
-이번 단계에서는 Game Feel 값을 변경하지 않았다. 현재 기준은 전체 연출 0.68초, Gold Flash 0.10초, Cell Pop 0.18초/최대 1.16배, SFX volume 0.58, combo pitch 1.00/1.05/1.10, Drag Gold Outline 3.25, Android line-clear vibration 요청이다.
+Single/H2/V2/2x2/L/Reverse L slot-edge drag, consumed slot, 1·3·4·5자리 Score, 1080×1920/2400/1440 렌더, Sprint 0~4/Visual 회귀와 Missing Script 검증을 완료했다.
