@@ -4106,7 +4106,6 @@ GameObject:
   - component: {fileID: 564461211}
   - component: {fileID: 564461213}
   - component: {fileID: 564461212}
-  - component: {fileID: 564461214}
   m_Layer: 0
   m_Name: GameOverPanel
   m_TagString: Untagged
@@ -4172,18 +4171,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 564461210}
   m_CullTransparentMesh: 1
---- !u!225 &564461214
-CanvasGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 564461210}
-  m_Enabled: 1
-  m_Alpha: 0
-  m_Interactable: 0
-  m_BlocksRaycasts: 0
-  m_IgnoreParentGroups: 0
 --- !u!1 &570410539
 GameObject:
   m_ObjectHideFlags: 0
@@ -9815,7 +9802,6 @@ MonoBehaviour:
   - {fileID: 1074100502}
   - {fileID: 1049207780}
   - {fileID: 1844748365}
-  - {fileID: 564461210}
   - {fileID: 769173516}
   session: {fileID: 2048069185}
   homeBest: {fileID: 782443118}

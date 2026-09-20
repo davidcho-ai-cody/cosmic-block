@@ -18,11 +18,13 @@ public static class Sprint5Builder
         var scene=EditorSceneManager.OpenScene(ScenePath);var canvas=GameObject.Find("GameCanvas");var safe=canvas.transform.Find("SafeArea") as RectTransform;var session=UnityEngine.Object.FindAnyObjectByType<GameSession>();GameHud hud=null;foreach(var candidate in UnityEngine.Object.FindObjectsByType<GameHud>(FindObjectsInactive.Include,FindObjectsSortMode.None))if(candidate.JourneyFeedbackRoot!=null){hud=candidate;break;}
         if(canvas==null||safe==null||session==null)throw new Exception("Game scene foundation missing.");
         var homeRoot=safe.Find("HomeRoot") as RectTransform;if(homeRoot==null)homeRoot=UI("HomeRoot",safe);Stretch(homeRoot);homeRoot.SetAsLastSibling();
-        var reached=new List<Transform>();foreach(Transform child in safe)if(child.name=="ReachedFeedback")reached.Add(child);
-        if(hud==null)throw new Exception("Connected Journey feedback missing.");
-        Transform journeyFeedback=hud.JourneyFeedbackRoot.transform;
+        var reached=new List<Transform>();var gameOvers=new List<Transform>();foreach(Transform child in safe){if(child.name=="ReachedFeedback")reached.Add(child);if(child.name=="GameOverPanel")gameOvers.Add(child);}
+        if(hud==null||hud.GameOverRoot==null)throw new Exception("Connected transient UI missing.");
+        Transform journeyFeedback=hud.JourneyFeedbackRoot.transform,gameOverPanel=hud.GameOverRoot.transform;
+        var staleFlowGroup=gameOverPanel.GetComponent<CanvasGroup>();if(staleFlowGroup!=null)UnityEngine.Object.DestroyImmediate(staleFlowGroup);
         foreach(var duplicate in reached)if(duplicate!=journeyFeedback)UnityEngine.Object.DestroyImmediate(duplicate.gameObject);
-        var gameRoots=new List<GameObject>();foreach(Transform child in safe)if(child!=homeRoot&&child!=journeyFeedback)gameRoots.Add(child.gameObject);
+        foreach(var duplicate in gameOvers)if(duplicate!=gameOverPanel)UnityEngine.Object.DestroyImmediate(duplicate.gameObject);
+        var gameRoots=new List<GameObject>();foreach(Transform child in safe)if(child!=homeRoot&&child!=journeyFeedback&&child!=gameOverPanel)gameRoots.Add(child.gameObject);
         var homeImage=Ensure<Image>(homeRoot.gameObject);homeImage.color=new Color(.01f,.018f,.07f,.18f);homeImage.raycastTarget=true;
         var title=Text("Title",homeRoot,"COSMIC BLOCK",72,Gold,FontStyle.Bold);Set(title.rectTransform,new Vector2(.05f,.72f),new Vector2(.95f,.84f));title.resizeTextForBestFit=true;title.resizeTextMinSize=48;title.resizeTextMaxSize=72;
         var subtitle=Text("Subtitle",homeRoot,"PLAY YOUR NEXT WORLD",26,Blue,FontStyle.Normal);Set(subtitle.rectTransform,new Vector2(.10f,.65f),new Vector2(.90f,.71f));
@@ -42,6 +44,7 @@ public static class Sprint5Builder
         var canvas=GameObject.Find("GameCanvas");var safe=canvas.transform.Find("SafeArea");var home=safe.Find("HomeRoot");var flow=canvas.GetComponent<GameFlowController>();
         Require(home!=null&&flow!=null&&flow.GameRoots!=null&&flow.GameRoots.Length>0,"Home/game visibility controller");
         Require(home.Find("Title")!=null&&home.Find("Subtitle")!=null&&home.Find("PlayButton")!=null,"Home primary UI");Require(home.Find("BestScore")!=null&&home.Find("BestJourney")!=null,"Home best UI");
+        int gameOverCount=0;foreach(Transform child in safe)if(child.name=="GameOverPanel")gameOverCount++;Require(gameOverCount==1&&flow.GameRoots!=null&&Array.IndexOf(flow.GameRoots,safe.Find("GameOverPanel").gameObject)<0,"One independently managed Game Over panel");
         Require(safe.Find("GameOverPanel/Card/HomeButton")!=null,"Game Over HOME");var ad=safe.Find("GameOverPanel/Card/AdPlaceholderButton");Require(ad==null||!ad.gameObject.activeSelf,"No ad placeholder UI");
     }
     static RectTransform UI(string name,Transform parent){var r=new GameObject(name,typeof(RectTransform)).GetComponent<RectTransform>();r.SetParent(parent,false);return r;}

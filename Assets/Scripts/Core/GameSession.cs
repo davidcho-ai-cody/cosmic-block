@@ -111,12 +111,13 @@ namespace CosmicBlock.Core
             ResetTransientFeedback();
             if (State == GameState.Resolving) return;
             if (activeDrag != null) activeDrag.CancelDrag();
+            State = GameState.Resolving;
             board.ClearPreview(); Model.Clear();
             Score = Combo = BlockSetNumber = 0;
             LastClear = LineClearResult.Empty;
             generator = new BlockGenerator(useFixedSeed ? (int?)fixedSeed : null);
-            State = GameState.Playing;
             GenerateBlockSet();
+            State = GameState.Playing;
             if (slots != null && slots.Length > 0) EvaluateGameOver();
             else if (hud != null) hud.Render(this);
         }

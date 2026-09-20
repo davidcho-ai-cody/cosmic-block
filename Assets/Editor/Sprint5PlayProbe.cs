@@ -41,7 +41,7 @@ public static class Sprint5PlayProbe
             Require(errors.Length==0,"Runtime errors: "+errors);Finish(true,"");
         }catch(Exception ex){Finish(false,ex.ToString());}
     }
-    static void AssertFreshGame(string label){Require(flow.Screen==FlowScreen.Game&&!flow.HomeRoot.activeSelf&&session.State==GameState.Playing&&session.Score==0&&session.Combo==0&&CountBoard()==0&&session.Slots.Count==3,label);foreach(var p in session.Slots)Require(!p.IsConsumed,label+" pieces");}
+    static void AssertFreshGame(string label){Require(flow.Screen==FlowScreen.Game&&!flow.HomeRoot.activeSelf&&session.State==GameState.Playing&&session.Score==0&&session.Combo==0&&CountBoard()==0&&session.Slots.Count==3&&!UnityEngine.Object.FindAnyObjectByType<GameHud>().GameOverRoot.activeSelf,label);foreach(var p in session.Slots)Require(!p.IsConsumed,label+" pieces");}
     static void AssertHome(string label){Require(flow.Screen==FlowScreen.Home&&flow.HomeRoot.activeSelf&&session.Score==0&&session.Combo==0&&CountBoard()==0,label);foreach(var root in flow.GameRoots){var g=root.GetComponent<CanvasGroup>();Require(g!=null&&g.alpha==0&&!g.blocksRaycasts&&!g.interactable,label+" hidden "+root.name);}}
     static int CountBoard(){int count=0;for(int y=0;y<8;y++)for(int x=0;x<8;x++)if(session.Model.IsOccupied(x,y))count++;return count;}
     static Text TextAt(string path)=>safe.Find(path).GetComponent<Text>();

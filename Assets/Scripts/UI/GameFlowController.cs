@@ -38,8 +38,8 @@ namespace CosmicBlock.UI
         public void Play()
         {
             if (session == null) return;
-            session.ResetTransientFeedback(); session.Retry();
-            homeRoot.SetActive(false); SetGameVisible(true); Screen=FlowScreen.Game; QuitRequested=false;
+            session.ResetTransientFeedback();
+            homeRoot.SetActive(false); SetGameVisible(true); session.Retry(); Screen=FlowScreen.Game; QuitRequested=false;
         }
 
         public void ShowHome()
