@@ -64,3 +64,11 @@ v1.0 규모에서는 key 기반 작은 자체 한국어/영어 테이블을 우�
 - Score Pop은 Board 근처에서 실제 점수 증가량을 표시하고 0.68초 내 상승/fade.
 - Combo 단계는 CLEAR! / STAR COMBO / COSMIC COMBO. Full-screen popup과 입력 차단을 사용하지 않는다.
 - Drag Piece는 기존 1.05 scale과 Fill을 유지하고 Gold Outline 두께만 3.25로 강화한다.
+
+## Sprint 5 Home Visual
+- 기존 CosmicBackground와 Deep Navy overlay를 Home과 Game에서 공유한다.
+- Home hierarchy: COSMIC BLOCK 72 Bold Warm Gold → subtitle 26 Soft Blue → PLAY 42 Warm Gold → BEST 40 → BEST JOURNEY 32.
+- PLAY는 화면 폭의 64%, 높이 약 11% 범위로 모바일 touch target을 확보하고 Navy fill + Gold border를 사용한다.
+- Press feedback은 1.0→0.96→1.0이며 popup이나 장식용 비활성 버튼은 없다.
+- Game Over는 SCORE/BEST 정보와 RETRY/HOME 두 행동만 제공한다.
+- Home과 Game 모두 기존 SafeArea와 Aspect Fill을 사용한다.

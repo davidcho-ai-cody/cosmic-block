@@ -1,8 +1,10 @@
 # Current Task
-Sprint 4.5 Android 실기기 UX 개선 완료.
+Sprint 5 — Home Screen & Game Flow 완료.
 
-작은 Piece의 시각 크기는 유지하면서 각 Bottom Slot 전체를 Drag hit area로 사용한다. SlotDragHandler가 기존 BlockDragHandler로 이벤트를 전달하며, consumed slot은 raycast를 즉시 비활성화한다. Drag visual, 1.05 scale, Gold highlight, Board preview, placement validation과 Drag Offset 110은 유지했다.
+앱은 Game.unity 단일 Scene에서 HOME으로 시작한다. 기존 SafeArea 게임 오브젝트는 계층과 참조를 유지하고 CanvasGroup으로 표시/입력만 전환한다. PLAY는 새 Run을 시작하며 Game Over에서 RETRY 또는 HOME으로 이동한다.
 
-HUD 가독성은 COSMIC BLOCK 44→56, BEST/SCORE 36→44 Bold, Journey 25→30으로 개선했다. Progress Bar, Board, Bottom Slot의 크기와 게임 규칙은 변경하지 않았다.
+Home은 기존 CosmicBackground를 공유하고 COSMIC BLOCK, PLAY YOUR NEXT WORLD, PLAY, Best Score, Best Journey만 표시한다. Best Journey는 저장하지 않고 기존 Best Score와 JourneyProgress에서 파생한다.
 
-Single/H2/V2/2x2/L/Reverse L slot-edge drag, consumed slot, 1·3·4·5자리 Score, 1080×1920/2400/1440 렌더, Sprint 0~4/Visual 회귀와 Missing Script 검증을 완료했다.
+Android Back은 Game 중 무동작, Game Over에서 HOME, Home에서 종료 요청이다. Home 이동은 Retry cleanup을 재사용해 Board/Score/Combo/Drag/Preview/Feedback/Audio 상태를 초기화한다.
+
+Sprint 5 Flow/20회 stress/1080×1920·2400·1440 렌더와 Sprint 0~4/Visual/Missing Script 회귀를 완료했다.

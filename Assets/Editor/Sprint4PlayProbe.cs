@@ -25,6 +25,7 @@ public static class Sprint4PlayProbe
 
     public static void Run()
     {
+  CosmicBlock.UI.GameFlowController.StartInGameForAutomation=true;
         EditorSceneManager.OpenScene(Sprint4Builder.ScenePath);
         started = EditorApplication.timeSinceStartup;
         Application.logMessageReceived += Log;
@@ -141,5 +142,3 @@ public static class Sprint4PlayProbe
         if(pass)Debug.Log("SPRINT4_PLAY_PASS");else Debug.LogError(failure);EditorApplication.Exit(pass?0:1);
     }
 }
-
-

@@ -28,6 +28,7 @@ public static class Sprint1PlayProbe
     // Batch-only: exits the Editor when finished, never changes the saved scene.
     public static void Run()
     {
+  CosmicBlock.UI.GameFlowController.StartInGameForAutomation=true;
         Sprint1Builder.Validate();
         EditorSceneManager.OpenScene(Sprint1Builder.ScenePath);
         started = EditorApplication.timeSinceStartup;

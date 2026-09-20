@@ -9,6 +9,7 @@ public static class Sprint0PlayProbe {
  static double started;
  static int frames;
  public static void Run() {
+  CosmicBlock.UI.GameFlowController.StartInGameForAutomation=true;
   EditorSceneManager.OpenScene("Assets/Scenes/Game.unity");
   started=EditorApplication.timeSinceStartup;
   EditorApplication.update+=Check;
@@ -40,4 +41,3 @@ public static class Sprint0PlayProbe {
  }
  static void Fail(string message) {Debug.LogError(message);EditorApplication.update-=Check;EditorApplication.Exit(1);}
 }
-

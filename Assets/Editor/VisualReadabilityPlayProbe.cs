@@ -12,7 +12,8 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 public static class VisualReadabilityPlayProbe {
  static double started;static int frames,stage;static string errors="";static GameSession session;static BoardView board;static RectTransform layer;static BlockPiece[] pieces;static readonly List<string> results=new List<string>();
- public static void Run(){EditorSceneManager.OpenScene(VisualReadabilityBuilder.ScenePath);started=EditorApplication.timeSinceStartup;Application.logMessageReceived+=Log;EditorApplication.update+=Check;EditorApplication.EnterPlaymode();}
+ public static void Run(){
+  CosmicBlock.UI.GameFlowController.StartInGameForAutomation=true;EditorSceneManager.OpenScene(VisualReadabilityBuilder.ScenePath);started=EditorApplication.timeSinceStartup;Application.logMessageReceived+=Log;EditorApplication.update+=Check;EditorApplication.EnterPlaymode();}
  static void Log(string m,string st,LogType t){if(t==LogType.Error||t==LogType.Exception||t==LogType.Assert)errors+=m+"\n";}
  static void Check(){if(EditorApplication.timeSinceStartup-started>150){Finish(false,"timeout");return;}if(!EditorApplication.isPlaying||++frames<30)return;try{if(stage==0){session=UnityEngine.Object.FindAnyObjectByType<GameSession>();board=UnityEngine.Object.FindAnyObjectByType<BoardView>();layer=GameObject.Find("GameCanvas").transform.Find("DragLayer") as RectTransform;pieces=new BlockPiece[session.Slots.Count];for(int i=0;i<pieces.Length;i++)pieces[i]=session.Slots[i];
   Require(board.GetComponent<Image>()!=null&&board.GetComponent<Outline>()!=null,"Test 1 board container");for(int i=0;i<64;i++){var image=board.transform.GetChild(i).GetComponent<Image>();Require(image.color==BoardView.EmptyFill&&image.GetComponent<Outline>().effectColor==BoardView.EmptyBorder,"Test 1 empty cell "+i);}results.Add("PASS Test 1: Board container and 64 dark-fill/cyan-outline cells.");

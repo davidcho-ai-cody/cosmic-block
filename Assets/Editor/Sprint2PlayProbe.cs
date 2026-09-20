@@ -29,6 +29,7 @@ public static class Sprint2PlayProbe
     // Batch-only. Saved scenes and the player's production Best Score are untouched.
     public static void Run()
     {
+  CosmicBlock.UI.GameFlowController.StartInGameForAutomation=true;
         Sprint2Builder.Validate();
         EditorSceneManager.OpenScene(Sprint2Builder.ScenePath);
         var sceneSession = UnityEngine.Object.FindAnyObjectByType<GameSession>();

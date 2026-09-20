@@ -110,3 +110,17 @@
 - 전용 Probe: Single/H2/V2/2x2/L/Reverse L을 Slot 가장자리에서 drag 시작 PASS, consumed slot raycast off PASS, 1/3/4/5자리 Score fit PASS.
 - 자동 렌더 PASS: 1080×1920 board 1032.0, 1080×2400 inset board 879.3, 1080×1440 board 964.4. SafeArea/Text/Board/Slot bounds와 정사각 Board 확인.
 - Sprint 0~4 및 Visual Readability PASS. C# Warning 0/Error 0, Missing Script 0.
+
+## 2026-09-20 — Sprint 5 / Home Screen & Game Flow
+- 단일 Game.unity 구조 선택. 기존 Scene 참조와 Core UI 계층을 유지하고 HomeRoot + 기존 SafeArea root별 CanvasGroup으로 화면 전환.
+- APP LAUNCH→HOME→PLAY→GAME→GAME OVER→RETRY/HOME 흐름 구현.
+- Home은 기존 CosmicBackground/Aspect Fill을 공유하고 Title, subtitle, PLAY, Best, Best Journey만 표시.
+- Best는 CosmicBlock.BestScore 재사용. Best Journey는 JourneyProgress.At(BestScore)로 파생하며 추가 저장 없음.
+- PLAY는 기존 GameSession.Retry를 재사용해 Score/Combo 0, 빈 Board, 3 Pieces, START, Best 유지.
+- Game Over 광고 Placeholder 숨김. 기존 RETRY 유지, HOME 버튼 추가.
+- Android Back: Playing 무동작, Game Over→Home, Home→Application.Quit 요청. New Input System Keyboard Escape 사용.
+- Home 이동 시 active drag/preview/Board/Score/Combo/Journey feedback/Clear feedback/Audio를 기존 cleanup 경로로 초기화.
+- PLAY/RETRY/HOME에 0.96 press scale feedback. 게임 Game Feel/Haptic/SFX/0.68초 timing/Board 규칙 변경 없음.
+- Sprint5PlayProbe PASS: Home 시작, Best/Journey, PLAY, RETRY, HOME, Home loop x10, Retry loop x10, cleanup, Back.
+- Home 자동 렌더 1080×1920/2400 inset/1440: SafeArea, hierarchy, bounds, no overlap/clipping PASS.
+- Sprint 0~4와 Visual Readability PASS. C# Warning 0/Error 0, Missing Script 0.

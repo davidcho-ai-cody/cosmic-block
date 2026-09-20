@@ -125,3 +125,14 @@ Unity 메뉴 `COSMIC BLOCK → Build → Android Development APK`로 `Builds/And
 - Piece 시각 크기와 Drag Offset 110, drag scale 1.05, Gold/Red preview는 유지된다.
 - HUD Font Size: COSMIC BLOCK 56, BEST/SCORE 44 Bold, Journey 30.
 - 자동 검증은 Single/H2/V2/2x2/L/Reverse L, consumed slot, 1~5자리 점수와 1080×1920/2400/1440을 포함한다.
+
+## Sprint 5 Home Flow
+앱은 Home에서 시작한다. PLAY는 popup 없이 즉시 새 게임을 시작한다. Game Over에서는 RETRY와 HOME을 사용할 수 있다.
+
+Home 표시 정보:
+- COSMIC BLOCK / PLAY YOUR NEXT WORLD
+- PLAY
+- 저장된 BEST
+- Best Score에서 파생한 BEST JOURNEY
+
+Android Back은 게임 중 무동작, Game Over에서 Home, Home에서 종료 요청이다. `COSMIC BLOCK → Sprint 5 → Build Home And Game Flow`로 UI와 wiring을 반복 구성할 수 있고 `-executeMethod Sprint5PlayProbe.Run`으로 flow/stress/반응형 검증을 실행한다.

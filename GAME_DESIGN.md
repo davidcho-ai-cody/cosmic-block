@@ -54,3 +54,11 @@ Sprint 1의 '재공급/Score/Line Clear 없음'은 당시 제한이며, 현재 �
 - Clear가 있을 때만 Gold Flash → Cell Pop → Star Burst → Score Pop → SFX → Android Haptic을 재생한다.
 - Combo 1은 CLEAR!, Combo 2는 STAR COMBO, Combo 3 이상은 COSMIC COMBO로 표시한다.
 - 연출 중에도 Model은 이미 확정되어 다음 Block Drag가 가능하다. Retry는 진행 중 연출을 즉시 정리한다.
+
+## Home / Game / Game Over Flow
+- 앱 시작 화면은 Home이다.
+- Home의 PLAY는 새 Run을 시작한다: Score 0, Combo 0, 빈 8×8 Board, Piece 3개, Journey START, 저장 Best 유지.
+- Game Over의 RETRY는 같은 화면에서 새 Run을 시작하고 HOME은 최신 Best/Best Journey를 표시하는 Home으로 돌아간다.
+- Best Journey는 Best Score에서 START/STAR FIELD/MOON/SATURN/DEEP SPACE를 계산하며 별도로 저장하지 않는다.
+- Android Back은 Playing 중 무동작, Game Over에서 Home, Home에서 앱 종료 요청이다.
+- Home 이동은 임시 clear/particle/score/combo/audio/drag/preview 상태를 정리한다.

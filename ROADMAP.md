@@ -14,3 +14,10 @@
 - Sprint 4.5 자동 준비 완료: ARM64/IL2CPP Development APK, 빌드 메뉴, Sprint 0~4/Visual 회귀, Missing Script 0. 연결 기기가 없어 설치/실행/Logcat 및 실제 Touch/SafeArea/Audio/Haptic QA는 대기.
 - 실기기 QA 다음: 결과에 따른 최소 Game Feel 조정 후 Sprint 5 — Home, Localization & Release UI. 출시 전 최종 application identifier/서명/AAB 확정.
 - Sprint 4.5 Device UX 개선 완료: Bottom Slot 전체 touch target, consumed slot 비활성화, HUD Title/Score/Journey 스마트폰 가독성 강화. 실기기에서 최종 Touch/HUD 체감 재확인 후 다음 Sprint 진행.
+
+## Sprint 5 Home & Game Flow
+1. App launch는 Home에서 시작한다.
+2. PLAY로 기존 Core Game의 새 Run을 시작한다.
+3. Game Over에서 RETRY 또는 HOME으로 이동한다.
+4. Android Back은 Playing 보호, Game Over→Home, Home→종료 요청으로 처리한다.
+5. 다음 단계는 실기기 Home UX 확인 후 Localization & Release UI다.
