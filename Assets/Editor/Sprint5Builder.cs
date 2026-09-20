@@ -15,10 +15,14 @@ public static class Sprint5Builder
     public static void Build()
     {
         if(!Application.isBatchMode&&!EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo())return;
-        var scene=EditorSceneManager.OpenScene(ScenePath);var canvas=GameObject.Find("GameCanvas");var safe=canvas.transform.Find("SafeArea") as RectTransform;var session=UnityEngine.Object.FindAnyObjectByType<GameSession>();
+        var scene=EditorSceneManager.OpenScene(ScenePath);var canvas=GameObject.Find("GameCanvas");var safe=canvas.transform.Find("SafeArea") as RectTransform;var session=UnityEngine.Object.FindAnyObjectByType<GameSession>();GameHud hud=null;foreach(var candidate in UnityEngine.Object.FindObjectsByType<GameHud>(FindObjectsInactive.Include,FindObjectsSortMode.None))if(candidate.JourneyFeedbackRoot!=null){hud=candidate;break;}
         if(canvas==null||safe==null||session==null)throw new Exception("Game scene foundation missing.");
         var homeRoot=safe.Find("HomeRoot") as RectTransform;if(homeRoot==null)homeRoot=UI("HomeRoot",safe);Stretch(homeRoot);homeRoot.SetAsLastSibling();
-        var gameRoots=new List<GameObject>();foreach(Transform child in safe)if(child!=homeRoot)gameRoots.Add(child.gameObject);
+        var reached=new List<Transform>();foreach(Transform child in safe)if(child.name=="ReachedFeedback")reached.Add(child);
+        if(hud==null)throw new Exception("Connected Journey feedback missing.");
+        Transform journeyFeedback=hud.JourneyFeedbackRoot.transform;
+        foreach(var duplicate in reached)if(duplicate!=journeyFeedback)UnityEngine.Object.DestroyImmediate(duplicate.gameObject);
+        var gameRoots=new List<GameObject>();foreach(Transform child in safe)if(child!=homeRoot&&child!=journeyFeedback)gameRoots.Add(child.gameObject);
         var homeImage=Ensure<Image>(homeRoot.gameObject);homeImage.color=new Color(.01f,.018f,.07f,.18f);homeImage.raycastTarget=true;
         var title=Text("Title",homeRoot,"COSMIC BLOCK",72,Gold,FontStyle.Bold);Set(title.rectTransform,new Vector2(.05f,.72f),new Vector2(.95f,.84f));title.resizeTextForBestFit=true;title.resizeTextMinSize=48;title.resizeTextMaxSize=72;
         var subtitle=Text("Subtitle",homeRoot,"PLAY YOUR NEXT WORLD",26,Blue,FontStyle.Normal);Set(subtitle.rectTransform,new Vector2(.10f,.65f),new Vector2(.90f,.71f));

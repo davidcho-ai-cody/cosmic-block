@@ -10,9 +10,8 @@ namespace CosmicBlock.UI
 
     public sealed class GameFlowController : MonoBehaviour
     {
-#if UNITY_EDITOR
         public static bool StartInGameForAutomation;
-#endif
+
         [SerializeField] GameObject homeRoot;
         [SerializeField] GameObject[] gameRoots;
         [SerializeField] GameSession session;
@@ -39,12 +38,13 @@ namespace CosmicBlock.UI
         public void Play()
         {
             if (session == null) return;
-            homeRoot.SetActive(false); SetGameVisible(true); session.Retry(); Screen=FlowScreen.Game; QuitRequested=false;
+            session.ResetTransientFeedback(); session.Retry();
+            homeRoot.SetActive(false); SetGameVisible(true); Screen=FlowScreen.Game; QuitRequested=false;
         }
 
         public void ShowHome()
         {
-            if (session != null) session.Retry();
+            if (session != null) { session.ResetTransientFeedback(); session.Retry(); }
             SetGameVisible(false); RefreshHome(); homeRoot.SetActive(true); Screen=FlowScreen.Home;
         }
 

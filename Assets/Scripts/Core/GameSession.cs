@@ -108,6 +108,7 @@ namespace CosmicBlock.Core
         }
         public void Retry()
         {
+            ResetTransientFeedback();
             if (State == GameState.Resolving) return;
             if (activeDrag != null) activeDrag.CancelDrag();
             board.ClearPreview(); Model.Clear();
@@ -115,11 +116,15 @@ namespace CosmicBlock.Core
             LastClear = LineClearResult.Empty;
             generator = new BlockGenerator(useFixedSeed ? (int?)fixedSeed : null);
             State = GameState.Playing;
-            if (hud != null) hud.ResetJourneyFeedback();
-            if (feedback != null) feedback.ResetFeedback();
             GenerateBlockSet();
             if (slots != null && slots.Length > 0) EvaluateGameOver();
             else if (hud != null) hud.Render(this);
+        }
+
+        public void ResetTransientFeedback()
+        {
+            if (hud != null) hud.ResetJourneyFeedback();
+            if (feedback != null) feedback.ResetFeedback();
         }
 
 #if UNITY_EDITOR || DEVELOPMENT_BUILD

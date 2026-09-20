@@ -11,7 +11,11 @@ namespace CosmicBlock.UI {
   [SerializeField] Button retryButton,adPlaceholderButton;
   [SerializeField] Image journeyFill;
   [SerializeField] CanvasGroup reachedFeedback;
-  public int ReachedCount=>reachedThisRun.Count; GameSession session; readonly HashSet<int> reachedThisRun=new HashSet<int>(); Coroutine feedbackRoutine;
+  public int ReachedCount=>reachedThisRun.Count;
+  public bool IsJourneyFeedbackVisible=>reachedFeedback!=null&&reachedFeedback.gameObject.activeSelf&&reachedFeedback.alpha>0;
+  public string JourneyFeedbackText=>reachedText==null?string.Empty:reachedText.text;
+  public GameObject JourneyFeedbackRoot=>reachedFeedback==null?null:reachedFeedback.gameObject;
+  GameSession session; readonly HashSet<int> reachedThisRun=new HashSet<int>(); Coroutine feedbackRoutine;
   public void Configure(Text score,Text combo,GameObject panel,Text finalScore,Button retry,Button ad){scoreText=score;comboText=combo;gameOverPanel=panel;finalScoreText=finalScore;retryButton=retry;adPlaceholderButton=ad;}
   public void ConfigureJourney(Text journey,Image fill,CanvasGroup feedback,Text feedbackText){journeyText=journey;journeyFill=fill;reachedFeedback=feedback;reachedText=feedbackText;}
   public void Connect(GameSession owner){if(session!=null)retryButton.onClick.RemoveListener(session.Retry);session=owner;retryButton.onClick.AddListener(session.Retry);adPlaceholderButton.interactable=false;reachedThisRun.Clear();}
@@ -29,7 +33,11 @@ namespace CosmicBlock.UI {
   public void NotifyJourneyCrossings(int before,int after){if(after<=before)return;foreach(var m in JourneyProgress.Milestones)if(m.Score>0&&before<m.Score&&after>=m.Score&&reachedThisRun.Add(m.Score))ShowReached(m.Name);}
   void ShowReached(string destination){if(reachedFeedback==null)return;if(feedbackRoutine!=null)StopCoroutine(feedbackRoutine);feedbackRoutine=StartCoroutine(AnimateReached(destination));}
   IEnumerator AnimateReached(string destination){reachedText.text="DESTINATION REACHED\n"+destination;reachedFeedback.gameObject.SetActive(true);var rect=(RectTransform)reachedFeedback.transform;for(float t=0;t<.22f;t+=Time.unscaledDeltaTime){float p=t/.22f;reachedFeedback.alpha=p;rect.localScale=Vector3.one*Mathf.Lerp(.92f,1.04f,p);yield return null;}reachedFeedback.alpha=1;rect.localScale=Vector3.one;yield return new WaitForSecondsRealtime(1.15f);for(float t=0;t<.35f;t+=Time.unscaledDeltaTime){reachedFeedback.alpha=1-t/.35f;yield return null;}reachedFeedback.alpha=0;reachedFeedback.gameObject.SetActive(false);feedbackRoutine=null;}
-  public void ResetJourneyFeedback(){reachedThisRun.Clear();if(feedbackRoutine!=null)StopCoroutine(feedbackRoutine);feedbackRoutine=null;if(reachedFeedback!=null){reachedFeedback.alpha=0;reachedFeedback.gameObject.SetActive(false);}}
+  public void ResetJourneyFeedback(){
+   reachedThisRun.Clear();if(feedbackRoutine!=null)StopCoroutine(feedbackRoutine);feedbackRoutine=null;
+   if(reachedText!=null)reachedText.text=string.Empty;
+   if(reachedFeedback!=null){reachedFeedback.alpha=0;reachedFeedback.transform.localScale=Vector3.one;reachedFeedback.gameObject.SetActive(false);}
+  }
   void OnDestroy(){if(session!=null&&retryButton!=null)retryButton.onClick.RemoveListener(session.Retry);}
  }
 }
