@@ -1,0 +1,429 @@
+fileFormatVersion: 2
+guid: f9921b7cbcf35474b9ae12c7394e6124
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -3543047481843058845
+    second: Planet01_Stage01_Desolate_0
+  - first:
+      213: -137084256322481638
+    second: Planet01_Stage01_Desolate_1
+  - first:
+      213: -2299940933022609289
+    second: Planet01_Stage01_Desolate_2
+  - first:
+      213: -899229259201467381
+    second: Planet01_Stage01_Desolate_3
+  - first:
+      213: -6898076232923738115
+    second: Planet01_Stage01_Desolate_4
+  - first:
+      213: 5394743148276568710
+    second: Planet01_Stage01_Desolate_5
+  - first:
+      213: 1115978632686091841
+    second: Planet01_Stage01_Desolate_6
+  - first:
+      213: -9046804218826772895
+    second: Planet01_Stage01_Desolate_7
+  - first:
+      213: 5202966700166955384
+    second: Planet01_Stage01_Desolate_8
+  - first:
+      213: -6048072222876318377
+    second: Planet01_Stage01_Desolate_9
+  - first:
+      213: -9150669139107729649
+    second: Planet01_Stage01_Desolate_10
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 1
+  spriteExtrude: 1
+  spriteMeshType: 0
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 2
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Planet01_Stage01_Desolate_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 1211
+        height: 1236
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 367f66e461194dec0800000000000000
+      internalID: -3543047481843058845
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Planet01_Stage01_Desolate_1
+      rect:
+        serializedVersion: 2
+        x: 1049
+        y: 1165
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a12999d589af81ef0800000000000000
+      internalID: -137084256322481638
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Planet01_Stage01_Desolate_2
+      rect:
+        serializedVersion: 2
+        x: 305
+        y: 1148
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7709ec238e7f410e0800000000000000
+      internalID: -2299940933022609289
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Planet01_Stage01_Desolate_3
+      rect:
+        serializedVersion: 2
+        x: 307
+        y: 1142
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b0ca8a9c0cb4583f0800000000000000
+      internalID: -899229259201467381
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Planet01_Stage01_Desolate_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1002
+        width: 29
+        height: 75
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dff0407b63c1540a0800000000000000
+      internalID: -6898076232923738115
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Planet01_Stage01_Desolate_5
+      rect:
+        serializedVersion: 2
+        x: 1162
+        y: 1002
+        width: 25
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6825f7f8f4afdda40800000000000000
+      internalID: 5394743148276568710
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Planet01_Stage01_Desolate_6
+      rect:
+        serializedVersion: 2
+        x: 1170
+        y: 980
+        width: 31
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 14e3e2a57a0cc7f00800000000000000
+      internalID: 1115978632686091841
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Planet01_Stage01_Desolate_7
+      rect:
+        serializedVersion: 2
+        x: 1180
+        y: 883
+        width: 19
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 16e2358be7b437280800000000000000
+      internalID: -9046804218826772895
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Planet01_Stage01_Desolate_8
+      rect:
+        serializedVersion: 2
+        x: 1188
+        y: 256
+        width: 13
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 87143a5b5a6a43840800000000000000
+      internalID: 5202966700166955384
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Planet01_Stage01_Desolate_9
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 55
+        width: 30
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 755cc8b7b5ee01ca0800000000000000
+      internalID: -6048072222876318377
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Planet01_Stage01_Desolate_10
+      rect:
+        serializedVersion: 2
+        x: 217
+        y: 39
+        width: 11
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f0faa5a76ea420180800000000000000
+      internalID: -9150669139107729649
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    outline: []
+    customData:
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices:
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Planet01_Stage01_Desolate_0: -3543047481843058845
+      Planet01_Stage01_Desolate_1: -137084256322481638
+      Planet01_Stage01_Desolate_10: -9150669139107729649
+      Planet01_Stage01_Desolate_2: -2299940933022609289
+      Planet01_Stage01_Desolate_3: -899229259201467381
+      Planet01_Stage01_Desolate_4: -6898076232923738115
+      Planet01_Stage01_Desolate_5: 5394743148276568710
+      Planet01_Stage01_Desolate_6: 1115978632686091841
+      Planet01_Stage01_Desolate_7: -9046804218826772895
+      Planet01_Stage01_Desolate_8: 5202966700166955384
+      Planet01_Stage01_Desolate_9: -6048072222876318377
+  mipmapLimitGroupName:
+  pSDRemoveMatte: 0
+  userData:
+  assetBundleName:
+  assetBundleVariant:

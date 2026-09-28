@@ -21,3 +21,8 @@
 3. Game Over에서 RETRY 또는 HOME으로 이동한다.
 4. Android Back은 Playing 보호, Game Over→Home, Home→종료 요청으로 처리한다.
 5. 다음 단계는 실기기 Home UX 확인 후 Localization & Release UI다.
+
+
+## Sprint 6 — Complete
+
+Planet 01 restoration progression replaces STAR JOURNEY in the player-facing experience. Planet 02 remains out of scope.

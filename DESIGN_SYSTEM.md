@@ -72,3 +72,8 @@ v1.0 규모에서는 key 기반 작은 자체 한국어/영어 테이블을 우�
 - Press feedback은 1.0→0.96→1.0이며 popup이나 장식용 비활성 버튼은 없다.
 - Game Over는 SCORE/BEST 정보와 RETRY/HOME 두 행동만 제공한다.
 - Home과 Game 모두 기존 SafeArea와 Aspect Fill을 사용한다.
+
+
+## Planet Restoration UI
+
+The compact Planet HUD uses Warm Gold progress, white energy text, preserved-aspect planet sprites, a 0.65 second cross-fade, pooled Gold/Blue travel sparks, and a 1.06 pulse. It occupies the former Journey region and preserves Board and slot layout.

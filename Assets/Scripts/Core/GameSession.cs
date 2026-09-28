@@ -23,6 +23,7 @@ namespace CosmicBlock.Core
         [SerializeField, HideInInspector] private string bestScoreKey = DefaultBestScoreKey;
         private BlockDragHandler activeDrag;
         private BlockGenerator generator;
+        private PlanetRestoration restoration;
 
         public float DragFingerOffset => dragFingerOffset;
         public GameState State { get; private set; } = GameState.Playing;
@@ -35,6 +36,7 @@ namespace CosmicBlock.Core
         public JourneyStatus Journey => JourneyProgress.At(Score);
         public JourneyStatus BestJourney => JourneyProgress.At(BestScore);
         public IReadOnlyList<BlockPiece> Slots => slots;
+        public PlanetRestoration Restoration => restoration;
 
         public void Configure(BoardView view) => board = view;
         public void ConfigureBlocks(BlockPiece[] pieces, RectTransform layer) { slots = pieces; dragLayer = layer; }
@@ -45,6 +47,7 @@ namespace CosmicBlock.Core
         {
             Model = new BoardModel(); board.Bind(Model);
             BestScore = Mathf.Max(0, PlayerPrefs.GetInt(bestScoreKey, 0));
+            restoration = new PlanetRestoration();
         }
         private void Start() { if (hud != null) hud.Connect(this); Retry(); }
         public bool TryBeginDrag(BlockDragHandler handler)
@@ -66,6 +69,8 @@ namespace CosmicBlock.Core
             Combo = LastClear.LineCount > 0 ? (int)Math.Min(int.MaxValue, (long)Combo + 1) : 0;
             int previousScore = Score;
             Score = ScoreRules.AddPlacement(Score, piece.Shape.Cells.Count, LastClear.LineCount, Combo);
+            int previousPlanetEnergy = restoration.CurrentEnergy;
+            int energyAward = restoration.AddEnergy(PlanetRestoration.AwardForLines(LastClear.LineCount));
             if (Score > BestScore)
             {
                 BestScore = Score;
@@ -78,7 +83,7 @@ namespace CosmicBlock.Core
             if (allConsumed) GenerateBlockSet();
             // Only the final, cleared board and current (possibly refreshed) remaining set is searched.
             State = HasPlaceableRemainingBlock() ? GameState.Playing : GameState.GameOver;
-            if (hud != null) { hud.Render(this); hud.NotifyJourneyCrossings(previousScore, Score); }
+            if (hud != null) { hud.Render(this); hud.NotifyJourneyCrossings(previousScore, Score); hud.NotifyPlanetEnergy(energyAward, previousPlanetEnergy < PlanetRestoration.RequiredEnergy && restoration.IsRestored); }
             if (feedback != null && LastClear.LineCount > 0) feedback.PlayClear(LastClear, Score - previousScore, Combo);
             return true;
         }
@@ -126,6 +131,7 @@ namespace CosmicBlock.Core
         {
             if (hud != null) hud.ResetJourneyFeedback();
             if (feedback != null) feedback.ResetFeedback();
+            if (hud != null) hud.ResetPlanetFeedback();
         }
 
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
@@ -135,6 +141,18 @@ namespace CosmicBlock.Core
             int previous = Score; Score = Mathf.Max(0, value);
             if (hud != null) { hud.Render(this); hud.NotifyJourneyCrossings(previous, Score); }
         }
+        public void DebugSetPlanetEnergy(int value){if(!Application.isPlaying)return;restoration.SetEnergy(value);if(hud!=null)hud.Render(this);}
+        [ContextMenu("Debug/Planet/Set 0%")] private void DebugPlanet0()=>DebugSetPlanetEnergy(0);
+        [ContextMenu("Debug/Planet/Set 24%")] private void DebugPlanet24()=>DebugSetPlanetEnergy(120);
+        [ContextMenu("Debug/Planet/Set 25%")] private void DebugPlanet25()=>DebugSetPlanetEnergy(125);
+        [ContextMenu("Debug/Planet/Set 49%")] private void DebugPlanet49()=>DebugSetPlanetEnergy(245);
+        [ContextMenu("Debug/Planet/Set 50%")] private void DebugPlanet50()=>DebugSetPlanetEnergy(250);
+        [ContextMenu("Debug/Planet/Set 74%")] private void DebugPlanet74()=>DebugSetPlanetEnergy(370);
+        [ContextMenu("Debug/Planet/Set 75%")] private void DebugPlanet75()=>DebugSetPlanetEnergy(375);
+        [ContextMenu("Debug/Planet/Set 99%")] private void DebugPlanet99()=>DebugSetPlanetEnergy(495);
+        [ContextMenu("Debug/Planet/Set 100%")] private void DebugPlanet100()=>DebugSetPlanetEnergy(500);
+        [ContextMenu("Debug/Planet/Add 10 Energy")] private void DebugPlanetAdd10(){restoration.AddEnergy(10);if(hud!=null)hud.Render(this);}
+        [ContextMenu("Debug/Planet/Reset Planet 01")] private void DebugPlanetReset()=>DebugSetPlanetEnergy(0);
         [ContextMenu("Debug/Journey/Set Score 950")] private void DebugScore950() => DebugSetScore(950);
         [ContextMenu("Debug/Journey/Set Score 2950")] private void DebugScore2950() => DebugSetScore(2950);
         [ContextMenu("Debug/Journey/Set Score 5950")] private void DebugScore5950() => DebugSetScore(5950);

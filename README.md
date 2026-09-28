@@ -136,3 +136,8 @@ Home 표시 정보:
 - Best Score에서 파생한 BEST JOURNEY
 
 Android Back은 게임 중 무동작, Game Over에서 Home, Home에서 종료 요청이다. `COSMIC BLOCK → Sprint 5 → Build Home And Game Flow`로 UI와 wiring을 반복 구성할 수 있고 `-executeMethod Sprint5PlayProbe.Run`으로 flow/stress/반응형 검증을 실행한다.
+
+
+## Planet Restoration
+
+Line clears now restore Planet 01 through five persistent visual stages. Progress is saved independently from runs and Best Score.

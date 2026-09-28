@@ -46,7 +46,7 @@ public static class Sprint5JourneyFeedbackPlayProbe
             if(stage==1)
             {
                 if(EditorApplication.timeSinceStartup-waitStarted<.12)return;
-                Require(hud.IsJourneyFeedbackVisible&&hud.JourneyFeedbackText.Contains("MOON"),"A setup milestone visible");
+                AssertHidden("A retired milestone");
                 flow.ShowHome();AssertHidden("A Home");flow.Play();AssertFreshHidden("A PLAY");
                 session.DebugSetScore(1000);session.DebugForceGameOver();flow.ShowHome();flow.Play();AssertFreshHidden("B GameOver HOME PLAY");
                 session.DebugSetScore(1000);session.DebugForceGameOver();safe.Find("GameOverPanel/Card/RetryButton").GetComponent<Button>().onClick.Invoke();AssertFreshHidden("C GameOver RETRY");
@@ -65,16 +65,16 @@ public static class Sprint5JourneyFeedbackPlayProbe
             if(stage==2)
             {
                 if(EditorApplication.timeSinceStartup-waitStarted<.12)return;
-                Require(hud.IsJourneyFeedbackVisible&&hud.JourneyFeedbackText.Contains("STAR FIELD"),"D feedback shown");
-                Require(hud.ReachedCount==1,"D feedback exactly once");
-                results.Add("PASS D: real placement crossing shows STAR FIELD feedback once.");
+                Require(!hud.IsJourneyFeedbackVisible,"D retired feedback remains hidden");
+                Require(hud.ReachedCount==0,"D retired milestone flags remain empty");
+                results.Add("PASS D: real milestone crossing does not revive retired Journey feedback.");
                 waitStarted=EditorApplication.timeSinceStartup;stage=3;return;
             }
             if(stage==3)
             {
                 if(EditorApplication.timeSinceStartup-waitStarted<2.0)return;
                 Require(!hud.IsJourneyFeedbackVisible,"D feedback faded and hidden");
-                results.Add("PASS D: feedback fades and hides on schedule.");
+                results.Add("PASS D: retired feedback remains hidden after its former animation window.");
                 Require(errors.Length==0,"Runtime errors: "+errors);Finish(true,"");
             }
         }

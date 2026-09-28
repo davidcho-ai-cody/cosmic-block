@@ -62,3 +62,8 @@ Sprint 1의 '재공급/Score/Line Clear 없음'은 당시 제한이며, 현재 �
 - Best Journey는 Best Score에서 START/STAR FIELD/MOON/SATURN/DEEP SPACE를 계산하며 별도로 저장하지 않는다.
 - Android Back은 Playing 중 무동작, Game Over에서 Home, Home에서 앱 종료 요청이다.
 - Home 이동은 임시 clear/particle/score/combo/audio/drag/preview 상태를 정리한다.
+
+
+## Sprint 6 — Planet Restoration
+
+Planet 01 requires 500 Energy. Piece placement gives no Energy; 1/2/3/4+ cleared lines give 10/25/45/70. Progress persists across runs and app restarts. Stage thresholds are 0/25/50/75/100 percent.

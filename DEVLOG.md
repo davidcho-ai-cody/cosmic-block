@@ -124,3 +124,8 @@
 - Sprint5PlayProbe PASS: Home 시작, Best/Journey, PLAY, RETRY, HOME, Home loop x10, Retry loop x10, cleanup, Back.
 - Home 자동 렌더 1080×1920/2400 inset/1440: SafeArea, hierarchy, bounds, no overlap/clipping PASS.
 - Sprint 0~4와 Visual Readability PASS. C# Warning 0/Error 0, Missing Script 0.
+
+
+## Sprint 6 — Planet Restoration
+
+STAR JOURNEY user-facing progression was replaced by persistent Planet 01 restoration. Only line clears award Cosmic Energy: 10/25/45/70 for 1/2/3/4+ lines. Five supplied transparent sprites represent Desolate, Awakening, Recovering, Thriving, and Restored stages. Stage changes cross-fade and line clears send pooled sparks toward the planet with an energy label and pulse. Completion celebrates once without ending the run.
