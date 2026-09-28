@@ -81,10 +81,22 @@ namespace CosmicBlock.Core
             bool allConsumed = true;
             foreach (var slot in slots) if (!slot.IsConsumed) { allConsumed = false; break; }
             if (allConsumed) GenerateBlockSet();
-            // Only the final, cleared board and current (possibly refreshed) remaining set is searched.
-            State = HasPlaceableRemainingBlock() ? GameState.Playing : GameState.GameOver;
-            if (hud != null) { hud.Render(this); hud.NotifyJourneyCrossings(previousScore, Score); hud.NotifyPlanetEnergy(energyAward, previousPlanetEnergy < PlanetRestoration.RequiredEnergy && restoration.IsRestored); }
+            // Keep Resolving until the clear-to-planet presentation finishes.
+            bool gameOverAfterResolution = !HasPlaceableRemainingBlock();
+            bool lockForPlanetTransition = energyAward > 0 && PlanetRestoration.StageForEnergy(previousPlanetEnergy) != restoration.Stage;
             if (feedback != null && LastClear.LineCount > 0) feedback.PlayClear(LastClear, Score - previousScore, Combo);
+            Action finishResolution = () =>
+            {
+                State = gameOverAfterResolution ? GameState.GameOver : GameState.Playing;
+                if (hud != null) hud.Render(this);
+            };
+            if (!lockForPlanetTransition && !gameOverAfterResolution) State = GameState.Playing;
+            if (hud != null)
+            {
+                hud.Render(this); hud.NotifyJourneyCrossings(previousScore, Score);
+                if (energyAward > 0 && hud.PresentPlanetEnergy(LastClear, board, previousPlanetEnergy, restoration.CurrentEnergy, finishResolution)) return true;
+            }
+            finishResolution();
             return true;
         }
         private void GenerateBlockSet()
@@ -141,16 +153,16 @@ namespace CosmicBlock.Core
             int previous = Score; Score = Mathf.Max(0, value);
             if (hud != null) { hud.Render(this); hud.NotifyJourneyCrossings(previous, Score); }
         }
-        public void DebugSetPlanetEnergy(int value){if(!Application.isPlaying)return;restoration.SetEnergy(value);if(hud!=null)hud.Render(this);}
+        public void DebugSetPlanetEnergy(int value){if(!Application.isPlaying)return;ResetTransientFeedback();restoration.SetEnergy(value);if(hud!=null)hud.Render(this);}
         [ContextMenu("Debug/Planet/Set 0%")] private void DebugPlanet0()=>DebugSetPlanetEnergy(0);
-        [ContextMenu("Debug/Planet/Set 24%")] private void DebugPlanet24()=>DebugSetPlanetEnergy(120);
-        [ContextMenu("Debug/Planet/Set 25%")] private void DebugPlanet25()=>DebugSetPlanetEnergy(125);
-        [ContextMenu("Debug/Planet/Set 49%")] private void DebugPlanet49()=>DebugSetPlanetEnergy(245);
-        [ContextMenu("Debug/Planet/Set 50%")] private void DebugPlanet50()=>DebugSetPlanetEnergy(250);
-        [ContextMenu("Debug/Planet/Set 74%")] private void DebugPlanet74()=>DebugSetPlanetEnergy(370);
-        [ContextMenu("Debug/Planet/Set 75%")] private void DebugPlanet75()=>DebugSetPlanetEnergy(375);
-        [ContextMenu("Debug/Planet/Set 99%")] private void DebugPlanet99()=>DebugSetPlanetEnergy(495);
-        [ContextMenu("Debug/Planet/Set 100%")] private void DebugPlanet100()=>DebugSetPlanetEnergy(500);
+        [ContextMenu("Debug/Planet/Set 24%")] private void DebugPlanet24()=>DebugSetPlanetEnergy(99);
+        [ContextMenu("Debug/Planet/Set 25%")] private void DebugPlanet25()=>DebugSetPlanetEnergy(100);
+        [ContextMenu("Debug/Planet/Set 49%")] private void DebugPlanet49()=>DebugSetPlanetEnergy(199);
+        [ContextMenu("Debug/Planet/Set 50%")] private void DebugPlanet50()=>DebugSetPlanetEnergy(200);
+        [ContextMenu("Debug/Planet/Set 74%")] private void DebugPlanet74()=>DebugSetPlanetEnergy(299);
+        [ContextMenu("Debug/Planet/Set 75%")] private void DebugPlanet75()=>DebugSetPlanetEnergy(300);
+        [ContextMenu("Debug/Planet/Set 99%")] private void DebugPlanet99()=>DebugSetPlanetEnergy(399);
+        [ContextMenu("Debug/Planet/Set 100%")] private void DebugPlanet100()=>DebugSetPlanetEnergy(400);
         [ContextMenu("Debug/Planet/Add 10 Energy")] private void DebugPlanetAdd10(){restoration.AddEnergy(10);if(hud!=null)hud.Render(this);}
         [ContextMenu("Debug/Planet/Reset Planet 01")] private void DebugPlanetReset()=>DebugSetPlanetEnergy(0);
         [ContextMenu("Debug/Journey/Set Score 950")] private void DebugScore950() => DebugSetScore(950);

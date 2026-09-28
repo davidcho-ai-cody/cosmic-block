@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using CosmicBlock.Core;
+using CosmicBlock.Board;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 namespace CosmicBlock.UI {
@@ -31,7 +33,7 @@ namespace CosmicBlock.UI {
    journeyText.text=j.Next.HasValue?j.Current.Name+"  >  "+j.Next.Value.Name+"\n"+score+" / "+j.Next.Value.Score.ToString("N0",CultureInfo.InvariantCulture):j.Current.Name+"  -  JOURNEY COMPLETE\n"+score;
    journeyFill.fillAmount=j.Progress;
    string route=j.Next.HasValue?j.Current.Name+"  >  "+j.Next.Value.Name:j.Current.Name;
-   finalScoreText.text="SCORE  "+score+"\n\nPLANET 01  ·  "+owner.Restoration.Percent+"% RESTORED\n\nBEST  "+best;
+   finalScoreText.text="SCORE  "+score+"\n\n"+(owner.Restoration.IsRestored?"PLANET 01 · RESTORED ✓":"PLANET 01 · STAGE "+owner.Restoration.Stage+" · "+owner.Restoration.Percent+"% RESTORED")+"\n\nBEST  "+best;
    gameOverPanel.SetActive(owner.State==GameState.GameOver);
    if(planetView!=null)planetView.Render(owner.Restoration,true);
   }
@@ -43,7 +45,7 @@ namespace CosmicBlock.UI {
    if(reachedText!=null)reachedText.text=string.Empty;
    if(reachedFeedback!=null){reachedFeedback.alpha=0;reachedFeedback.transform.localScale=Vector3.one;reachedFeedback.gameObject.SetActive(false);}
   }
-  public void NotifyPlanetEnergy(int amount,bool completed){if(planetView!=null)planetView.PlayAward(amount,completed);}
+  public bool PresentPlanetEnergy(LineClearResult clear,BoardView board,int before,int after,Action complete){if(planetView==null){complete?.Invoke();return false;}planetView.RenderEnergy(before,false);return planetView.PresentClear(clear,board,before,after,complete);}
   public void ResetPlanetFeedback(){if(planetView!=null)planetView.ResetTransient();}
   void OnDestroy(){if(session!=null&&retryButton!=null)retryButton.onClick.RemoveListener(session.Retry);}
  }

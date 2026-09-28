@@ -77,3 +77,6 @@ v1.0 규모에서는 key 기반 작은 자체 한국어/영어 테이블을 우�
 ## Planet Restoration UI
 
 The compact Planet HUD uses Warm Gold progress, white energy text, preserved-aspect planet sprites, a 0.65 second cross-fade, pooled Gold/Blue travel sparks, and a 1.06 pulse. It occupies the former Journey region and preserves Board and slot layout.
+
+## Planet healing feedback
+Energy fragments originate at cleared cells and arc toward the Planet HUD. The Stage bar represents only the current 0–100 stage. At 100, a dimmed central Planet crossfade communicates the next healed state while gameplay input is locked.

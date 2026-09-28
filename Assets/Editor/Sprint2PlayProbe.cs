@@ -16,7 +16,8 @@ public static class Sprint2PlayProbe
 {
     private const string TestKey = "CosmicBlock.Tests.Sprint2.BestScore";
     private static bool hadTestKey;
-    private static int previousTestBest;
+    private static int previousTestBest, previousPlanetEnergy, previousPlanetVersion;
+    private static bool hadPlanetEnergy, hadPlanetVersion;
     private static double started;
     private static int frames, stage;
     private static string runtimeErrors;
@@ -38,7 +39,7 @@ public static class Sprint2PlayProbe
         serialized.ApplyModifiedPropertiesWithoutUndo();
         hadTestKey = PlayerPrefs.HasKey(TestKey);
         previousTestBest = PlayerPrefs.GetInt(TestKey, 0);
-        PlayerPrefs.SetInt(TestKey, 123); PlayerPrefs.Save();
+        hadPlanetEnergy=PlayerPrefs.HasKey(PlanetRestoration.DefaultKey);hadPlanetVersion=PlayerPrefs.HasKey(PlanetRestoration.VersionKey);previousPlanetEnergy=PlayerPrefs.GetInt(PlanetRestoration.DefaultKey,0);previousPlanetVersion=PlayerPrefs.GetInt(PlanetRestoration.VersionKey,0);PlayerPrefs.SetInt(PlanetRestoration.DefaultKey,400);PlayerPrefs.SetInt(PlanetRestoration.VersionKey,PlanetRestoration.CurrentVersion);PlayerPrefs.SetInt(TestKey, 123); PlayerPrefs.Save();
         started = EditorApplication.timeSinceStartup;
         frames = stage = 0; runtimeErrors = ""; results.Clear();
         Application.logMessageReceived += Log;
@@ -356,7 +357,7 @@ public static class Sprint2PlayProbe
     private static void Finish(bool passed, string failure)
     {
         EditorApplication.update -= Check; Application.logMessageReceived -= Log;
-        if (hadTestKey) PlayerPrefs.SetInt(TestKey, previousTestBest); else PlayerPrefs.DeleteKey(TestKey);
+        if (hadTestKey) PlayerPrefs.SetInt(TestKey, previousTestBest); else PlayerPrefs.DeleteKey(TestKey); if(hadPlanetEnergy)PlayerPrefs.SetInt(PlanetRestoration.DefaultKey,previousPlanetEnergy);else PlayerPrefs.DeleteKey(PlanetRestoration.DefaultKey);if(hadPlanetVersion)PlayerPrefs.SetInt(PlanetRestoration.VersionKey,previousPlanetVersion);else PlayerPrefs.DeleteKey(PlanetRestoration.VersionKey);
         PlayerPrefs.Save();
         File.AppendAllText("Validation/sprint2.txt", string.Join("\n", results) + "\n" + (passed ? "SPRINT2_PLAY_PASS" : failure));
         if (passed) Debug.Log("SPRINT2_PLAY_PASS"); else Debug.LogError(failure);

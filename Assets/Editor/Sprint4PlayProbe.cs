@@ -15,7 +15,7 @@ using UnityEngine.UI;
 public static class Sprint4PlayProbe
 {
     static double started, stageStarted;
-    static int frames, stage;
+    static int frames, stage,oldEnergy,oldVersion; static bool hadEnergy,hadVersion;
     static string errors = "";
     static GameSession session;
     static BoardView board;
@@ -26,6 +26,7 @@ public static class Sprint4PlayProbe
     public static void Run()
     {
   CosmicBlock.UI.GameFlowController.StartInGameForAutomation=true;
+        hadEnergy=PlayerPrefs.HasKey(PlanetRestoration.DefaultKey);hadVersion=PlayerPrefs.HasKey(PlanetRestoration.VersionKey);oldEnergy=PlayerPrefs.GetInt(PlanetRestoration.DefaultKey,0);oldVersion=PlayerPrefs.GetInt(PlanetRestoration.VersionKey,0);PlayerPrefs.SetInt(PlanetRestoration.DefaultKey,0);PlayerPrefs.SetInt(PlanetRestoration.VersionKey,2);PlayerPrefs.Save();
         EditorSceneManager.OpenScene(Sprint4Builder.ScenePath);
         started = EditorApplication.timeSinceStartup;
         Application.logMessageReceived += Log;
@@ -137,7 +138,7 @@ public static class Sprint4PlayProbe
     static void Require(bool condition,string message){if(!condition)throw new Exception("Sprint 4 test failed: "+message);}
     static void Finish(bool pass,string failure)
     {
-        EditorApplication.update-=Check;Application.logMessageReceived-=Log;Directory.CreateDirectory("Validation");
+        EditorApplication.update-=Check;Application.logMessageReceived-=Log;if(hadEnergy)PlayerPrefs.SetInt(PlanetRestoration.DefaultKey,oldEnergy);else PlayerPrefs.DeleteKey(PlanetRestoration.DefaultKey);if(hadVersion)PlayerPrefs.SetInt(PlanetRestoration.VersionKey,oldVersion);else PlayerPrefs.DeleteKey(PlanetRestoration.VersionKey);PlayerPrefs.Save();Directory.CreateDirectory("Validation");
         File.AppendAllText("Validation/sprint4.txt",string.Join("\n",results)+"\n"+(pass?"SPRINT4_PLAY_PASS":failure)+"\n");
         if(pass)Debug.Log("SPRINT4_PLAY_PASS");else Debug.LogError(failure);EditorApplication.Exit(pass?0:1);
     }

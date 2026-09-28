@@ -67,3 +67,6 @@ Sprint 1의 '재공급/Score/Line Clear 없음'은 당시 제한이며, 현재 �
 ## Sprint 6 — Planet Restoration
 
 Planet 01 requires 500 Energy. Piece placement gives no Energy; 1/2/3/4+ cleared lines give 10/25/45/70. Progress persists across runs and app restarts. Stage thresholds are 0/25/50/75/100 percent.
+
+## Planet Restoration 6.5
+Planet 01 has DESOLATE, AWAKENING, RECOVERING, THRIVING, and RESTORED states. Four transitions each require 100 Energy. Energy comes only from confirmed line clears: 10/25/45/70 for 1/2/3/4+ lines. Overflow carries across stage boundaries and total Energy clamps at 400.

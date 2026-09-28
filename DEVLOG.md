@@ -129,3 +129,6 @@
 ## Sprint 6 — Planet Restoration
 
 STAR JOURNEY user-facing progression was replaced by persistent Planet 01 restoration. Only line clears award Cosmic Energy: 10/25/45/70 for 1/2/3/4+ lines. Five supplied transparent sprites represent Desolate, Awakening, Recovering, Thriving, and Restored stages. Stage changes cross-fade and line clears send pooled sparks toward the planet with an energy label and pulse. Completion celebrates once without ending the run.
+
+## Sprint 6.5 Planet Restoration Game Feel
+Implemented stage-local 0–100 Energy, 0–400 persistence migration, cleared-cell Energy Fragment pooling, arrival-synchronized HUD growth, central healing cinematics, Stage 5 one-shot completion, and transition cleanup across Home/Retry/Game Over.

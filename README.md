@@ -141,3 +141,6 @@ Android Back은 게임 중 무동작, Game Over에서 Home, Home에서 종료 �
 ## Planet Restoration
 
 Line clears now restore Planet 01 through five persistent visual stages. Progress is saved independently from runs and Best Score.
+
+### Sprint 6.5 Planet Restoration
+Planet progress is now 0–400 total with four 100-Energy transitions. Confirmed cleared cells emit pooled Energy fragments toward the Planet; arrival advances the Stage bar and a central cinematic handles Stage changes.

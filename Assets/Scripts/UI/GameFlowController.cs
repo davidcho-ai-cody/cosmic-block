@@ -64,7 +64,7 @@ namespace CosmicBlock.UI
         {
             if(session==null)return; int best=session.BestScore;
             homeBest.text="BEST  "+best.ToString("N0",CultureInfo.InvariantCulture);
-            homeJourney.text="PLANET 01  ·  "+session.Restoration.Percent+"% RESTORED";
+            homeJourney.text=session.Restoration.IsRestored?"PLANET 01 · RESTORED ✓":"PLANET 01 · STAGE "+session.Restoration.Stage+" / "+session.Restoration.Percent+"% RESTORED";
         }
 
         void SetGameVisible(bool value)

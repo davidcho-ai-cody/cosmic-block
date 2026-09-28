@@ -26,3 +26,5 @@
 ## Sprint 6 — Complete
 
 Planet 01 restoration progression replaces STAR JOURNEY in the player-facing experience. Planet 02 remains out of scope.
+
+- Sprint 6.5: Planet Restoration Game Feel, stage-local Energy, migration, pooled cell-to-planet flight, healing cinematic, and Android verification.
