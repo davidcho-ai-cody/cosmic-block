@@ -132,3 +132,6 @@ STAR JOURNEY user-facing progression was replaced by persistent Planet 01 restor
 
 ## Sprint 6.5 Planet Restoration Game Feel
 Implemented stage-local 0–100 Energy, 0–400 persistence migration, cleared-cell Energy Fragment pooling, arrival-synchronized HUD growth, central healing cinematics, Stage 5 one-shot completion, and transition cleanup across Home/Retry/Game Over.
+
+## Sprint 6.5 QA Hotfix — Planet Progress Reset
+Development builds expose a subtle Home `DEV` launcher with Planet presets 0/90/190/290/390. Presets update only `CosmicBlock.Planet01Energy`, preserve migration version and Best Score, cancel transient Planet presentation, and refresh Home/Game HUD immediately. Release builds hide the launcher and panel through `Debug.isDebugBuild`. Stage 5 now shows one `100% RESTORED` line.

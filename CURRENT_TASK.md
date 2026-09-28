@@ -14,3 +14,5 @@ Sprint 6 Planet Restoration is implemented and under final validation.
 - Pooled fragments fly from cleared Board cells to the Planet before the visible bar advances.
 - Stage boundaries use a central 1.5–2.0 second healing transition with Resolving input lock.
 - Legacy 0–500 saves migrate once using `round(old / 500 * 400)` and a version key.
+
+- Sprint 6.5 QA Hotfix: development-only Planet reset/presets and Stage 5 HUD duplicate removal.

@@ -144,3 +144,6 @@ Line clears now restore Planet 01 through five persistent visual stages. Progres
 
 ### Sprint 6.5 Planet Restoration
 Planet progress is now 0–400 total with four 100-Energy transitions. Confirmed cleared cells emit pooled Energy fragments toward the Planet; arrival advances the Stage bar and a central cinematic handles Stage changes.
+
+### Development Planet QA controls
+Development builds include a Home DEV panel for RESET PLANET and 90/190/290/390 transition presets. The panel is unavailable in release builds and never deletes unrelated PlayerPrefs.
