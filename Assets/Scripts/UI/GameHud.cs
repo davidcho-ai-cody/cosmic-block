@@ -28,7 +28,7 @@ namespace CosmicBlock.UI {
   public void Render(GameSession owner){
    string score=owner.Score.ToString("N0",CultureInfo.InvariantCulture),best=owner.BestScore.ToString("N0",CultureInfo.InvariantCulture);
    scoreText.text="BEST  "+best+"     SCORE  "+score;
-   comboText.text=owner.Combo==0?"":owner.Combo<3?"COMBO "+owner.Combo:owner.Combo==3?"STAR COMBO 3":"COSMIC COMBO "+owner.Combo;
+   if(comboText!=null){comboText.text=string.Empty;comboText.gameObject.SetActive(false);}
    var j=owner.Journey;
    journeyText.text=j.Next.HasValue?j.Current.Name+"  >  "+j.Next.Value.Name+"\n"+score+" / "+j.Next.Value.Score.ToString("N0",CultureInfo.InvariantCulture):j.Current.Name+"  -  JOURNEY COMPLETE\n"+score;
    journeyFill.fillAmount=j.Progress;

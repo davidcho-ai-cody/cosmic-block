@@ -19,16 +19,28 @@ namespace CosmicBlock.UI
         [SerializeField] Text homeJourney;
         [SerializeField] Button playButton;
         [SerializeField] Button gameOverHomeButton;
+        [SerializeField] Button playingHomeButton;
+        [SerializeField] Button homeExitButton;
+        [SerializeField] GameObject homeConfirmPanel;
+        [SerializeField] Button continueButton;
+        [SerializeField] Button confirmHomeButton;
 
         public FlowScreen Screen { get; private set; }
         public bool QuitRequested { get; private set; }
         public GameObject HomeRoot => homeRoot;
         public GameObject[] GameRoots => gameRoots;
+        public bool HomeConfirmVisible => homeConfirmPanel != null && homeConfirmPanel.activeSelf;
 
         public void Configure(GameObject home, GameObject[] game, GameSession owner, Text best, Text journey, Button play, Button gameOverHome)
         {
             RemoveListeners(); homeRoot=home; gameRoots=game; session=owner; homeBest=best; homeJourney=journey;
             playButton=play; gameOverHomeButton=gameOverHome; AddListeners();
+        }
+
+        public void ConfigureNavigation(Button playingHome, Button exit, GameObject confirmPanel, Button keepPlaying, Button goHome)
+        {
+            RemoveListeners(); playingHomeButton=playingHome; homeExitButton=exit; homeConfirmPanel=confirmPanel;
+            continueButton=keepPlaying; confirmHomeButton=goHome; AddListeners(); HideHomeConfirmation();
         }
 
         void Awake() => AddListeners();
@@ -38,24 +50,46 @@ namespace CosmicBlock.UI
         public void Play()
         {
             if (session == null) return;
+            HideHomeConfirmation();
             session.ResetTransientFeedback();
             homeRoot.SetActive(false); SetGameVisible(true); session.Retry(); Screen=FlowScreen.Game; QuitRequested=false;
         }
 
         public void ShowHome()
         {
+            HideHomeConfirmation();
             if (session != null) { session.ResetTransientFeedback(); session.Retry(); }
             SetGameVisible(false); RefreshHome(); homeRoot.SetActive(true); Screen=FlowScreen.Home;
+        }
+
+        public void RequestHome()
+        {
+            if (Screen != FlowScreen.Game || homeConfirmPanel == null) return;
+            homeConfirmPanel.SetActive(true);
+        }
+
+        public void CancelHome() => HideHomeConfirmation();
+
+        public void ConfirmHome()
+        {
+            if (!HomeConfirmVisible) return;
+            HideHomeConfirmation(); ShowHome();
+        }
+
+        public void RequestQuit()
+        {
+            if (Screen != FlowScreen.Home) return;
+            QuitRequested=true;
+#if !UNITY_EDITOR
+            Application.Quit();
+#endif
         }
 
         public void HandleBack()
         {
             if (Screen == FlowScreen.Home)
             {
-                QuitRequested=true;
-#if !UNITY_EDITOR
-                Application.Quit();
-#endif
+                RequestQuit();
             }
             else if (session != null && session.State == GameState.GameOver) ShowHome();
         }
@@ -84,12 +118,21 @@ namespace CosmicBlock.UI
         {
             if(playButton!=null){playButton.onClick.RemoveListener(Play);playButton.onClick.AddListener(Play);}
             if(gameOverHomeButton!=null){gameOverHomeButton.onClick.RemoveListener(ShowHome);gameOverHomeButton.onClick.AddListener(ShowHome);}
+            if(playingHomeButton!=null){playingHomeButton.onClick.RemoveListener(RequestHome);playingHomeButton.onClick.AddListener(RequestHome);}
+            if(homeExitButton!=null){homeExitButton.onClick.RemoveListener(RequestQuit);homeExitButton.onClick.AddListener(RequestQuit);}
+            if(continueButton!=null){continueButton.onClick.RemoveListener(CancelHome);continueButton.onClick.AddListener(CancelHome);}
+            if(confirmHomeButton!=null){confirmHomeButton.onClick.RemoveListener(ConfirmHome);confirmHomeButton.onClick.AddListener(ConfirmHome);}
         }
         void RemoveListeners()
         {
             if(playButton!=null)playButton.onClick.RemoveListener(Play);
             if(gameOverHomeButton!=null)gameOverHomeButton.onClick.RemoveListener(ShowHome);
+            if(playingHomeButton!=null)playingHomeButton.onClick.RemoveListener(RequestHome);
+            if(homeExitButton!=null)homeExitButton.onClick.RemoveListener(RequestQuit);
+            if(continueButton!=null)continueButton.onClick.RemoveListener(CancelHome);
+            if(confirmHomeButton!=null)confirmHomeButton.onClick.RemoveListener(ConfirmHome);
         }
+        void HideHomeConfirmation(){if(homeConfirmPanel!=null)homeConfirmPanel.SetActive(false);}
         void OnDestroy()=>RemoveListeners();
     }
 }

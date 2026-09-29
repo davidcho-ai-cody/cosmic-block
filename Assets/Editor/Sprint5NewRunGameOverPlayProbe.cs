@@ -24,7 +24,7 @@ public static class Sprint5NewRunGameOverPlayProbe
         try
         {
             session=UnityEngine.Object.FindAnyObjectByType<GameSession>();flow=UnityEngine.Object.FindAnyObjectByType<GameFlowController>();hud=UnityEngine.Object.FindAnyObjectByType<GameHud>();safe=GameObject.Find("GameCanvas").transform.Find("SafeArea");
-            int panels=0,huds=UnityEngine.Object.FindObjectsByType<GameHud>(FindObjectsInactive.Include,FindObjectsSortMode.None).Length,sessions=UnityEngine.Object.FindObjectsByType<GameSession>(FindObjectsInactive.Include,FindObjectsSortMode.None).Length;
+            int panels=0,huds=UnityEngine.Object.FindObjectsByType<GameHud>(FindObjectsInactive.Include).Length,sessions=UnityEngine.Object.FindObjectsByType<GameSession>(FindObjectsInactive.Include).Length;
             foreach(Transform child in safe)if(child.name=="GameOverPanel")panels++;
             Require(panels==1&&huds==1&&sessions==1,"G duplicate Game Over/session/controller objects");
             Require(Array.IndexOf(flow.GameRoots,hud.GameOverRoot)<0,"G GameOverPanel excluded from game roots");

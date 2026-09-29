@@ -139,7 +139,7 @@ public static class Sprint2PlayProbe
 
         session.DebugPrepareCross(); Drop(0, new Vector2Int(3, 3), -1);
         session.DebugPrepareNextRow(); Drop(0, new Vector2Int(3, 3), -1);
-        Require(session.Combo == 2 && session.Score == 370 && ComboLabel().text == "COMBO 2", "Test 7 Combo 2");
+        Require(session.Combo == 2 && session.Score == 370 && session.Feedback.LastComboLabel == "COMBO 2!" && session.Feedback.ComboPopupVisible, "Test 7 Combo 2");
         results.Add("PASS test 7: consecutive clear Combo 2, +50 bonus, cumulative 370.");
 
         // Temporary board state for placeholder UI review, removed by the next preparation.
@@ -154,12 +154,12 @@ public static class Sprint2PlayProbe
         board.ClearPreview();
 
         session.DebugPrepareNextRow(); Drop(0, new Vector2Int(3, 3), -1);
-        Require(session.Combo == 3 && session.Score == 580 && ComboLabel().text == "STAR COMBO 3", "Combo 3");
+        Require(session.Combo == 3 && session.Score == 580 && session.Feedback.LastComboLabel == "COMBO 3!" && session.Feedback.ComboPopupVisible, "Combo 3");
         session.DebugPrepareNextRow(); Drop(0, new Vector2Int(3, 3), 42);
-        Require(session.Combo == 4 && session.Score == 840 && ComboLabel().text == "COSMIC COMBO 4", "Combo 4");
+        Require(session.Combo == 4 && session.Score == 840 && session.Feedback.LastComboLabel == "COMBO 4!" && session.Feedback.ComboPopupVisible, "Combo 4");
         Drop(1, new Vector2Int(0, 0), -1);
-        Require(session.Combo == 0 && session.Score == 850 && ComboLabel().text == "", "Test 8 reset");
-        results.Add("PASS test 8: Combo 3/4 text and bonus; valid non-clear resets to 0; cumulative score 850.");
+        Require(session.Combo == 0 && session.Score == 850, "Test 8 reset");
+        results.Add("PASS test 8: Combo 3/4 popup and bonus; valid non-clear resets to 0; cumulative score 850.");
 
         Prepare(true, 0, 2, 5);
         Drop(0, new Vector2Int(0, 0), -1);
@@ -250,7 +250,6 @@ public static class Sprint2PlayProbe
     private static Transform Safe() => GameObject.Find("GameCanvas").transform.Find("SafeArea");
     private static GameObject Panel() => Safe().Find("GameOverPanel").gameObject;
     private static Transform Card() => Panel().transform.Find("Card");
-    private static Text ComboLabel() => Safe().Find("ComboText").GetComponent<Text>();
     private static Camera UICamera()
     {
         var canvas = layer.GetComponentInParent<Canvas>();

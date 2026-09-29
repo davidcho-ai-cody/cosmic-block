@@ -56,9 +56,9 @@ public static class Sprint4PlayProbe
                 int before=session.Score;
                 Require(session.TryPlacePiece(session.Slots[0],3,3),"row placement");
                 int expected=ScoreRules.AddPlacement(before,1,1,1)-before;
-                Require(session.LastClear.LineCount==1&&feedback.LastCellCount==8&&feedback.LastScoreDelta==expected&&feedback.LastComboLabel=="CLEAR!"&&feedback.LastParticleCount==8,"single row feedback/score");
+                Require(session.LastClear.LineCount==1&&feedback.LastCellCount==8&&feedback.LastScoreDelta==expected&&feedback.LastComboLabel==string.Empty&&!feedback.ComboPopupVisible&&feedback.LastParticleCount==8,"single row feedback/score");
                 Require(feedback.HapticRequestCount==hapticBefore+1&&Mathf.Approximately(feedback.LastPitch,1f),"single haptic/audio");
-                results.Add("PASS 1-3/6/9/15: row clear uses 8 unique cells, actual score delta, CLEAR!, one SFX and one safe haptic request.");
+                results.Add("PASS 1-3/6/9/15: row clear uses 8 unique cells, actual score delta, no combo popup, one SFX and one safe haptic request.");
 
                 RapidDrag();
                 Require(feedback.IsPlaying,"rapid input stopped feedback");
@@ -66,11 +66,11 @@ public static class Sprint4PlayProbe
 
                 session.DebugPrepareNextRow();before=session.Score;
                 Require(session.TryPlacePiece(session.Slots[0],3,3)&&session.Combo==2,"combo 2 placement");
-                Require(feedback.LastComboLabel=="STAR COMBO"&&feedback.LastScoreDelta==ScoreRules.AddPlacement(before,1,1,2)-before&&Mathf.Approximately(feedback.LastPitch,1.05f),"combo2");
+                Require(feedback.LastComboLabel=="COMBO 2!"&&feedback.ComboPopupVisible&&feedback.LastScoreDelta==ScoreRules.AddPlacement(before,1,1,2)-before&&Mathf.Approximately(feedback.LastPitch,1.05f),"combo2");
                 session.DebugPrepareNextRow();before=session.Score;
                 Require(session.TryPlacePiece(session.Slots[0],3,3)&&session.Combo==3,"combo 3 placement");
-                Require(feedback.LastComboLabel.StartsWith("COSMIC COMBO")&&feedback.LastScoreDelta==ScoreRules.AddPlacement(before,1,1,3)-before&&Mathf.Approximately(feedback.LastPitch,1.1f),"combo3");
-                results.Add("PASS 6-9/14: CLEAR -> STAR COMBO -> COSMIC COMBO; existing score formula and capped pitch progression.");
+                Require(feedback.LastComboLabel=="COMBO 3!"&&feedback.ComboPopupVisible&&feedback.LastScoreDelta==ScoreRules.AddPlacement(before,1,1,3)-before&&Mathf.Approximately(feedback.LastPitch,1.1f),"combo3");
+                results.Add("PASS 6-9/14: Combo 1 hidden -> COMBO 2! -> COMBO 3!; existing score formula and capped pitch progression.");
 
                 PrepareColumn();before=session.Score;
                 Require(session.TryPlacePiece(session.Slots[0],3,3)&&session.LastClear.ClearedColumns.Count==1,"column clear");

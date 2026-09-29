@@ -35,6 +35,8 @@ namespace CosmicBlock.Effects
         public int CellPoolCapacity => clearCells == null ? 0 : clearCells.Length;
         public int StarPoolCapacity => stars == null ? 0 : stars.Length;
         public bool HasAudioClip => clearClip != null;
+        public bool ComboPopupVisible => comboPop != null && comboPop.gameObject.activeSelf;
+        public string ComboPopupText => comboPop == null ? string.Empty : comboPop.text;
         public void Configure(BoardView boardView, RectTransform root, Image[] cells, Text[] starPool, Text scoreText, Text comboText, AudioSource source, AudioClip clip)
         {
             board=boardView;effectRoot=root;clearCells=cells;stars=starPool;scorePop=scoreText;comboPop=comboText;audioSource=source;clearClip=clip;ResetFeedback();
@@ -42,14 +44,14 @@ namespace CosmicBlock.Effects
         public void PlayClear(LineClearResult result,int scoreDelta,int combo)
         {
             if(result==null||result.LineCount==0||result.UniqueClearedCells.Count==0)return;
-            ResetVisuals();PlayCount++;LastCellCount=Mathf.Min(result.UniqueClearedCells.Count,clearCells.Length);
+            if(routine!=null){StopCoroutine(routine);routine=null;}ResetVisuals();PlayCount++;LastCellCount=Mathf.Min(result.UniqueClearedCells.Count,clearCells.Length);
             LastParticleCount=Mathf.Min(stars.Length,Mathf.Clamp(8+(result.LineCount-1)*4,8,24));
-            LastScoreDelta=scoreDelta;LastCombo=combo;LastComboLabel=combo<=1?"CLEAR!":combo==2?"STAR COMBO":"COSMIC COMBO x"+combo;
+            LastScoreDelta=scoreDelta;LastCombo=combo;LastComboLabel=combo>=2?"COMBO "+combo+"!":string.Empty;
             LastPitch=combo<=1?1f:combo==2?1.05f:1.1f;Vector2 center=Vector2.zero;
             for(int i=0;i<LastCellCount;i++){var cell=clearCells[i];var rect=(RectTransform)cell.transform;rect.anchoredPosition=effectRoot.InverseTransformPoint(board.GetCellWorld(result.UniqueClearedCells[i]));rect.sizeDelta=Vector2.one*board.CellSize;rect.localScale=Vector3.one;cell.color=Gold;cell.gameObject.SetActive(true);center+=rect.anchoredPosition;}
             center/=LastCellCount;
             for(int i=0;i<LastParticleCount;i++){float angle=i*2.39996323f;float radius=8f+(i%4)*9f;starOrigins[i]=center+new Vector2(Mathf.Cos(angle),Mathf.Sin(angle))*radius;starDirections[i]=new Vector2(Mathf.Cos(angle),Mathf.Sin(angle))*(55f+(i%5)*13f);var star=stars[i];star.rectTransform.anchoredPosition=starOrigins[i];star.rectTransform.localScale=Vector3.one*(result.LineCount>1?1.12f:1f);star.color=i%3==0?CosmicBlue:i%3==1?SoftWhite:Gold;star.gameObject.SetActive(true);}
-            scorePop.text="+"+scoreDelta;comboPop.text=LastComboLabel;scorePop.rectTransform.anchoredPosition=center+new Vector2(0,65);comboPop.rectTransform.anchoredPosition=center+new Vector2(0,115);scorePop.gameObject.SetActive(true);comboPop.gameObject.SetActive(true);
+            scorePop.text="+"+scoreDelta;comboPop.text=LastComboLabel;scorePop.rectTransform.anchoredPosition=center+new Vector2(0,65);comboPop.rectTransform.anchoredPosition=BoardCenter()+new Vector2(0,105);scorePop.gameObject.SetActive(true);comboPop.gameObject.SetActive(combo>=2);
             if(audioSource!=null&&clearClip!=null){audioSource.Stop();audioSource.clip=clearClip;audioSource.pitch=LastPitch;audioSource.volume=.58f;audioSource.Play();}
             RequestHaptic();routine=StartCoroutine(Animate(result.LineCount));
         }
@@ -58,11 +60,12 @@ namespace CosmicBlock.Effects
             const float flash=.10f,pop=.18f,total=.68f;float elapsed=0f;
             while(elapsed<total){elapsed+=Time.unscaledDeltaTime;if(elapsed<=flash){float pulse=1f+Mathf.Sin(elapsed/flash*Mathf.PI)*.12f;SetCellScale(pulse);}else if(elapsed<=flash+pop){float p=(elapsed-flash)/pop;float scale=p<.35f?Mathf.Lerp(1f,1.16f,p/.35f):Mathf.Lerp(1.16f,0f,(p-.35f)/.65f);SetCellScale(scale);SetCellAlpha(1f-Mathf.Clamp01((p-.3f)/.7f));}else DeactivateCells();
                 float starP=Mathf.Clamp01(elapsed/.42f);for(int i=0;i<LastParticleCount;i++){stars[i].rectTransform.anchoredPosition=starOrigins[i]+starDirections[i]*starP;SetAlpha(stars[i],1f-starP);}
-                float textP=Mathf.Clamp01(elapsed/total);scorePop.rectTransform.anchoredPosition+=Vector2.up*Time.unscaledDeltaTime*38f;comboPop.rectTransform.localScale=Vector3.one*Mathf.Lerp(lineCount>1?1.18f:1.06f,1f,textP);SetAlpha(scorePop,textP<.18f?textP/.18f:1f-Mathf.Clamp01((textP-.56f)/.44f));SetAlpha(comboPop,textP<.12f?textP/.12f:1f-Mathf.Clamp01((textP-.62f)/.38f));yield return null;}
+                float textP=Mathf.Clamp01(elapsed/total);scorePop.rectTransform.anchoredPosition+=Vector2.up*Time.unscaledDeltaTime*38f;float comboScale=textP<.24f?Mathf.Lerp(.7f,1.15f,textP/.24f):textP<.42f?Mathf.Lerp(1.15f,1f,(textP-.24f)/.18f):1f;comboPop.rectTransform.localScale=Vector3.one*comboScale;SetAlpha(scorePop,textP<.18f?textP/.18f:1f-Mathf.Clamp01((textP-.56f)/.44f));if(comboPop.gameObject.activeSelf)SetAlpha(comboPop,textP<.12f?textP/.12f:1f-Mathf.Clamp01((textP-.62f)/.38f));yield return null;}
             ResetVisuals();routine=null;
         }
         public void ResetFeedback(){if(routine!=null)StopCoroutine(routine);routine=null;ResetVisuals();if(audioSource!=null)audioSource.Stop();}
-        void ResetVisuals(){DeactivateCells();if(stars!=null)foreach(var star in stars)if(star!=null)star.gameObject.SetActive(false);if(scorePop!=null)scorePop.gameObject.SetActive(false);if(comboPop!=null)comboPop.gameObject.SetActive(false);}
+        void ResetVisuals(){DeactivateCells();if(stars!=null)foreach(var star in stars)if(star!=null)star.gameObject.SetActive(false);if(scorePop!=null)scorePop.gameObject.SetActive(false);if(comboPop!=null){comboPop.text=string.Empty;comboPop.rectTransform.localScale=Vector3.one;comboPop.gameObject.SetActive(false);}}
+        Vector2 BoardCenter(){var rect=board.transform as RectTransform;return rect==null?Vector2.zero:effectRoot.InverseTransformPoint(rect.TransformPoint(rect.rect.center));}
         void SetCellScale(float value){for(int i=0;i<LastCellCount;i++)clearCells[i].rectTransform.localScale=Vector3.one*value;}
         void SetCellAlpha(float alpha){for(int i=0;i<LastCellCount;i++)SetAlpha(clearCells[i],alpha);}
         void DeactivateCells(){if(clearCells==null)return;foreach(var cell in clearCells)if(cell!=null)cell.gameObject.SetActive(false);}

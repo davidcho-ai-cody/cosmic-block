@@ -15,7 +15,7 @@ public static class Sprint5Builder
     public static void Build()
     {
         if(!Application.isBatchMode&&!EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo())return;
-        var scene=EditorSceneManager.OpenScene(ScenePath);var canvas=GameObject.Find("GameCanvas");var safe=canvas.transform.Find("SafeArea") as RectTransform;var session=UnityEngine.Object.FindAnyObjectByType<GameSession>();GameHud hud=null;foreach(var candidate in UnityEngine.Object.FindObjectsByType<GameHud>(FindObjectsInactive.Include,FindObjectsSortMode.None))if(candidate.JourneyFeedbackRoot!=null){hud=candidate;break;}
+        var scene=EditorSceneManager.OpenScene(ScenePath);var canvas=GameObject.Find("GameCanvas");var safe=canvas.transform.Find("SafeArea") as RectTransform;var session=UnityEngine.Object.FindAnyObjectByType<GameSession>();GameHud hud=null;foreach(var candidate in UnityEngine.Object.FindObjectsByType<GameHud>(FindObjectsInactive.Include))if(candidate.JourneyFeedbackRoot!=null){hud=candidate;break;}
         if(canvas==null||safe==null||session==null)throw new Exception("Game scene foundation missing.");
         var homeRoot=safe.Find("HomeRoot") as RectTransform;if(homeRoot==null)homeRoot=UI("HomeRoot",safe);Stretch(homeRoot);homeRoot.SetAsLastSibling();
         var reached=new List<Transform>();var gameOvers=new List<Transform>();foreach(Transform child in safe){if(child.name=="ReachedFeedback")reached.Add(child);if(child.name=="GameOverPanel")gameOvers.Add(child);}
