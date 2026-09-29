@@ -24,12 +24,14 @@ namespace CosmicBlock.UI
         [SerializeField] GameObject homeConfirmPanel;
         [SerializeField] Button continueButton;
         [SerializeField] Button confirmHomeButton;
+        [SerializeField] HomeViewController homeView;
 
         public FlowScreen Screen { get; private set; }
         public bool QuitRequested { get; private set; }
         public GameObject HomeRoot => homeRoot;
         public GameObject[] GameRoots => gameRoots;
         public bool HomeConfirmVisible => homeConfirmPanel != null && homeConfirmPanel.activeSelf;
+        public HomeViewController HomeView => homeView;
 
         public void Configure(GameObject home, GameObject[] game, GameSession owner, Text best, Text journey, Button play, Button gameOverHome)
         {
@@ -42,6 +44,8 @@ namespace CosmicBlock.UI
             RemoveListeners(); playingHomeButton=playingHome; homeExitButton=exit; homeConfirmPanel=confirmPanel;
             continueButton=keepPlaying; confirmHomeButton=goHome; AddListeners(); HideHomeConfirmation();
         }
+
+        public void ConfigureHomeView(HomeViewController view){homeView=view;}
 
         void Awake() => AddListeners();
         void Start() { if (StartInGameForAutomation) { StartInGameForAutomation=false; Play(); } else ShowHome(); }
@@ -57,7 +61,7 @@ namespace CosmicBlock.UI
 
         public void ShowHome()
         {
-            HideHomeConfirmation();
+            HideHomeConfirmation(); homeView?.HideTransient();
             if (session != null) { session.ResetTransientFeedback(); session.Retry(); }
             SetGameVisible(false); RefreshHome(); homeRoot.SetActive(true); Screen=FlowScreen.Home;
         }
@@ -97,8 +101,9 @@ namespace CosmicBlock.UI
         public void RefreshHome()
         {
             if(session==null)return; int best=session.BestScore;
-            homeBest.text="BEST  "+best.ToString("N0",CultureInfo.InvariantCulture);
-            homeJourney.text=session.Restoration.IsRestored?"PLANET 01 · RESTORED ✓":"PLANET 01 · STAGE "+session.Restoration.Stage+" / "+session.Restoration.Percent+"% RESTORED";
+            if(homeView!=null){homeView.Refresh(session);return;}
+            if(homeBest!=null)homeBest.text="최고 점수  "+best.ToString("N0",CultureInfo.InvariantCulture);
+            if(homeJourney!=null)homeJourney.text=session.Restoration.IsRestored?"푸른 별 · 복원 완료 ✓":"푸른 별 · 복원 단계 "+session.Restoration.Stage+" / 5";
         }
 
         void SetGameVisible(bool value)
