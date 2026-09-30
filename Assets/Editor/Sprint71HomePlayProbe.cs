@@ -37,15 +37,15 @@ public static class Sprint71HomePlayProbe
         {
             session=UnityEngine.Object.FindAnyObjectByType<GameSession>();flow=UnityEngine.Object.FindAnyObjectByType<GameFlowController>();homeView=UnityEngine.Object.FindAnyObjectByType<HomeViewController>(FindObjectsInactive.Include);home=flow.HomeRoot.transform;
             Req(session!=null&&flow!=null&&homeView!=null&&flow.Screen==FlowScreen.Home&&home.gameObject.activeSelf,"cold HOME visible");
-            Req(home.Find("TitleArea/Title").GetComponent<Text>().text=="별빛 블록"&&home.Find("TitleArea/Subtitle").GetComponent<Text>().text=="상상을 플레이하다","Korean title");
+            Req(home.Find("TitleArea/Title").GetComponent<Image>().sprite.name=="home_title_starlight_block","image title");
             Req(home.Find("MainActions/GameStartButton").gameObject.activeInHierarchy&&home.Find("MainActions/PlanetCollectionButton").gameObject.activeInHierarchy&&home.Find("QuitConfirmPanel")!=null,"HOME actions");
             Req(!UnityEngine.Object.FindAnyObjectByType<GameHud>().GameOverRoot.activeSelf,"GameOver hidden");
             foreach(var root in flow.GameRoots){var group=root.GetComponent<CanvasGroup>();Req(group!=null&&group.alpha==0&&!group.interactable&&!group.blocksRaycasts,"game root hidden "+root.name);Req(root.name!="PlanetCompletion"&&root.name!="GameOverPanel"&&root.name!="ReachedFeedback","transient excluded "+root.name);}
-            Req(home.Find("TitleArea/Title").GetComponent<Text>().cachedTextGenerator.characterCountVisible>=4,"Korean title generated");
+            Req(home.Find("TitleArea/Title").GetComponent<Text>()==null,"legacy text title removed");
             results.Add("PASS A: Cold launch HOME, Korean title/actions, game/transient UI hidden.");
 
-            int savedBest=session.BestScore;int[] values={0,90,190,290,390,400};int[] stages={1,1,2,3,4,5};float[] fills={0,.225f,.475f,.725f,.975f,1};
-            for(int i=0;i<values.Length;i++){session.DebugSetPlanetEnergy(values[i]);flow.RefreshHome();Req(homeView.PlanetSprite!=null&&homeView.PlanetSprite.name.Contains("Stage0"+stages[i]),"sprite "+values[i]);Req(Mathf.Abs(homeView.ProgressFill-fills[i])<.011f,"fill "+values[i]);Req(values[i]==400?homeView.StageText=="복원 완료 ✓":homeView.StageText=="복원 단계 "+stages[i]+" / 5","stage "+values[i]);Req(homeView.BestText=="최고 점수  "+savedBest.ToString("N0",System.Globalization.CultureInfo.InvariantCulture),"best preserved");}
+            int savedBest=session.BestScore;int[] values={0,90,190,290,390,400};int[] stages={1,1,2,3,4,5};float[] fills={0,.9f,.9f,.9f,.9f,1};
+            for(int i=0;i<values.Length;i++){session.DebugSetPlanetEnergy(values[i]);flow.RefreshHome();Req(homeView.PlanetSprite!=null&&homeView.PlanetSprite.name.Contains("Stage0"+stages[i]),"sprite "+values[i]);Req(Mathf.Abs(homeView.ProgressFill-fills[i])<.011f,"fill "+values[i]);Req(homeView.StageText.StartsWith(stages[i]+"단계"),"stage "+values[i]);Req(homeView.BestText==savedBest.ToString("N0",System.Globalization.CultureInfo.InvariantCulture),"best preserved");}
             results.Add("PASS D: HOME Planet sprite/stage/progress sync at 0/90/190/290/390/400.");
 
             int energy=session.Restoration.CurrentEnergy,score=session.Score;
@@ -98,7 +98,7 @@ public static class Sprint71HomePlayProbe
 
     static void CheckLayout(string name)
     {
-        string[] paths={"TitleArea","MainActions","BestScore","CurrentPlanetArea","BottomActions"};
+        string[] paths={"TitleArea","CurrentPlanetArea","EnergyArea","MainActions","BestScoreArea","BottomActions"};
         Rect previous=new Rect();bool first=true;foreach(string path in paths){var r=WorldRect(home.Find(path) as RectTransform);Req(r.width>0&&r.height>0,"visible rect "+path+" "+name);if(!first)Req(r.yMax<=previous.yMin+2,"no vertical overlap "+path+" "+name);previous=r;first=false;}
         Req(!WorldRect(home.Find("BottomActions/SettingsButton") as RectTransform).Overlaps(WorldRect(home.Find("BottomActions/QuitButton") as RectTransform)),"bottom no overlap "+name);
     }
@@ -110,3 +110,4 @@ public static class Sprint71HomePlayProbe
         EditorApplication.update-=Check;Application.logMessageReceived-=Log;if(hadEnergy)PlayerPrefs.SetInt(PlanetRestoration.DefaultKey,oldEnergy);else PlayerPrefs.DeleteKey(PlanetRestoration.DefaultKey);if(hadVersion)PlayerPrefs.SetInt(PlanetRestoration.VersionKey,oldVersion);else PlayerPrefs.DeleteKey(PlanetRestoration.VersionKey);PlayerPrefs.Save();Directory.CreateDirectory("Validation");File.WriteAllText("Validation/sprint71.txt",string.Join("\n",results)+"\n"+(pass?"SPRINT71_HOME_PASS":failure)+"\n");if(pass)Debug.Log("SPRINT71_HOME_PASS");else Debug.LogError(failure);EditorApplication.Exit(pass?0:1);
     }
 }
+

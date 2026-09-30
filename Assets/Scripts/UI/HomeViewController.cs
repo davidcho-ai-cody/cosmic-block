@@ -14,6 +14,7 @@ namespace CosmicBlock.UI
         [SerializeField] Text planetNameText;
         [SerializeField] Text stageText;
         [SerializeField] Text energyText;
+        [SerializeField] Text energyPercentText;
         [SerializeField] Image progressFill;
         [SerializeField] Sprite[] planetStages;
         [SerializeField] Button collectionButton;
@@ -34,6 +35,8 @@ namespace CosmicBlock.UI
         public Sprite PlanetSprite => planetImage == null ? null : planetImage.sprite;
         public string BestText => bestScoreText == null ? string.Empty : bestScoreText.text;
         public string StageText => stageText == null ? string.Empty : stageText.text;
+        public string EnergyText => energyText == null ? string.Empty : energyText.text;
+        public string EnergyPercentText => energyPercentText == null ? string.Empty : energyPercentText.text;
 
         public void Configure(GameFlowController controller, Text best, Image planet, Text planetName, Text stage, Text energy, Image fill, Sprite[] sprites,
             Button collection, Button settings, Button settingsClose, Button quit, Button quitCancel, Button quitConfirm,
@@ -46,18 +49,33 @@ namespace CosmicBlock.UI
             AddListeners();HideTransient();
         }
 
+        public void Configure(GameFlowController controller, Text best, Image planet, Text planetName, Text stage, Text energy, Text percent, Image fill, Sprite[] sprites,
+            Button collection, Button settings, Button settingsClose, Button quit, Button quitCancel, Button quitConfirm,
+            GameObject toast, GameObject settingsRoot, GameObject quitRoot)
+        {
+            Configure(controller,best,planet,planetName,stage,energy,fill,sprites,collection,settings,settingsClose,quit,quitCancel,quitConfirm,toast,settingsRoot,quitRoot);
+            energyPercentText=percent;
+        }
+
         void Awake(){AddListeners();}
 
         public void Refresh(GameSession session)
         {
             if(session==null)return;
             int stage=Mathf.Clamp(session.Restoration.Stage,1,5);
-            bestScoreText.text="최고 점수  "+session.BestScore.ToString("N0",CultureInfo.InvariantCulture);
-            planetNameText.text=PlanetRestoration.Planet01DisplayName;
-            stageText.text=session.Restoration.IsRestored?"복원 완료 ✓":"복원 단계 "+stage+" / 5";
-            energyText.text=session.Restoration.Percent+"%";
+            int stageEnergy=session.Restoration.StageEnergy;
+            bestScoreText.text=session.BestScore.ToString("N0",CultureInfo.InvariantCulture);
+            planetNameText.text="행성 01";
+            stageText.text=stage+"단계 · "+KoreanStageName(stage);
+            energyText.text="별빛 에너지     "+stageEnergy+" / "+PlanetRestoration.StageEnergyRequired;
+            if(energyPercentText!=null)energyPercentText.text=stageEnergy+"%";
             if(planetStages!=null&&planetStages.Length>=stage)planetImage.sprite=planetStages[stage-1];
-            SetProgress(session.Restoration.Percent/100f);
+            SetProgress(stageEnergy/(float)PlanetRestoration.StageEnergyRequired);
+        }
+
+        static string KoreanStageName(int stage)
+        {
+            switch(Mathf.Clamp(stage,1,5)){case 1:return "황폐함";case 2:return "깨어남";case 3:return "회복 중";case 4:return "번성";default:return "복원 완료";}
         }
 
         public void ShowCollectionNotice()
@@ -104,3 +122,4 @@ namespace CosmicBlock.UI
         void OnDestroy()=>RemoveListeners();
     }
 }
+

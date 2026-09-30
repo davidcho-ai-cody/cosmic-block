@@ -28,11 +28,11 @@ public static class Sprint5PlayProbe
         try
         {
             session=UnityEngine.Object.FindAnyObjectByType<GameSession>();flow=UnityEngine.Object.FindAnyObjectByType<GameFlowController>();board=UnityEngine.Object.FindAnyObjectByType<BoardView>();safe=GameObject.Find("GameCanvas").transform.Find("SafeArea");
-            Require(flow.Screen==FlowScreen.Home&&flow.HomeRoot.activeSelf,"Test 1 app starts Home");Require(TextAt("HomeRoot/BestScore").text=="최고 점수  6,250","Test 4 best score");Require(TextAt("HomeRoot/CurrentPlanetArea/Stage").text.Contains("복원 단계"),"Test 5 best journey");results.Add("PASS 1/4/5: app starts Home; Best 6,250; Planet restoration progress derived.");
+            Require(flow.Screen==FlowScreen.Home&&flow.HomeRoot.activeSelf,"Test 1 app starts Home");Require(TextAt("HomeRoot/BestScore").text=="6,250","Test 4 best score");Require(TextAt("HomeRoot/CurrentPlanetArea/PlanetInfo/Stage").text.Contains("단계"),"Test 5 best journey");results.Add("PASS 1/4/5: app starts Home; Best 6,250; Planet restoration progress derived.");
             flow.Play();AssertFreshGame("Test 2/3 PLAY");results.Add("PASS 2/3: PLAY opens fresh Game with Score/Combo 0, empty board, three pieces.");
             session.DebugForceGameOver();Require(session.State==GameState.GameOver&&safe.Find("GameOverPanel").gameObject.activeSelf,"Test 6 game over");
             safe.Find("GameOverPanel/Card/RetryButton").GetComponent<Button>().onClick.Invoke();AssertFreshGame("Test 7 retry");results.Add("PASS 6/7: Game Over and existing RETRY flow.");
-            session.DebugForceGameOver();safe.Find("GameOverPanel/Card/HomeButton").GetComponent<Button>().onClick.Invoke();AssertHome("Test 8/9 home");Require(TextAt("HomeRoot/BestScore").text=="최고 점수  6,250"&&TextAt("HomeRoot/CurrentPlanetArea/Stage").text.Contains("복원 단계"),"Test 9 refreshed best");results.Add("PASS 8/9: Game Over HOME refreshes Best and Planet progress.");
+            session.DebugForceGameOver();safe.Find("GameOverPanel/Card/HomeButton").GetComponent<Button>().onClick.Invoke();AssertHome("Test 8/9 home");Require(TextAt("HomeRoot/BestScore").text=="6,250"&&TextAt("HomeRoot/CurrentPlanetArea/PlanetInfo/Stage").text.Contains("단계"),"Test 9 refreshed best");results.Add("PASS 8/9: Game Over HOME refreshes Best and Planet progress.");
             for(int i=0;i<10;i++){flow.Play();session.DebugForceGameOver();flow.ShowHome();AssertHome("Home loop "+i);}results.Add("PASS 10: Home-Play-GameOver-Home x10.");
             for(int i=0;i<10;i++){flow.Play();session.DebugForceGameOver();safe.Find("GameOverPanel/Card/RetryButton").GetComponent<Button>().onClick.Invoke();AssertFreshGame("Retry loop "+i);}results.Add("PASS 11: Home-Play-GameOver-Retry x10 without state leakage.");
             session.DebugPrepareNextRow();session.TryPlacePiece(session.Slots[0],3,3);flow.ShowHome();var feedback=session.Feedback;Require(!feedback.IsPlaying&&feedback.ActiveCellCount==0&&feedback.ActiveStarCount==0&&board.PreviewCount==0&&session.Combo==0,"Test 12 cleanup");results.Add("PASS 12: Home clears drag/preview/feedback/audio presentation state.");
@@ -54,8 +54,8 @@ public static class Sprint5PlayProbe
         {
             safeArea.enabled=false;rt.Create();camera.targetTexture=rt;camera.orthographic=true;camera.orthographicSize=height/2f;canvas.renderMode=RenderMode.ScreenSpaceCamera;canvas.worldCamera=camera;canvas.planeDistance=10;
             safeRect.anchorMin=inset?new Vector2(.02f,.04f):Vector2.zero;safeRect.anchorMax=inset?new Vector2(.98f,.94f):Vector2.one;safeRect.offsetMin=safeRect.offsetMax=Vector2.zero;Canvas.ForceUpdateCanvases();var bg=UnityEngine.Object.FindAnyObjectByType<AspectFillBackground>();if(bg!=null)bg.SendMessage("LateUpdate");Canvas.ForceUpdateCanvases();
-            string[] paths={"HomeRoot/TitleArea","HomeRoot/MainActions","HomeRoot/BestScore","HomeRoot/CurrentPlanetArea","HomeRoot/BottomActions"};foreach(var path in paths)AssertInside(safe.Find(path) as RectTransform,safeRect,name);
-            Require(Above(safe.Find(paths[0]) as RectTransform,safe.Find(paths[1]) as RectTransform)&&Above(safe.Find(paths[1]) as RectTransform,safe.Find(paths[2]) as RectTransform)&&Above(safe.Find(paths[2]) as RectTransform,safe.Find(paths[3]) as RectTransform)&&Above(safe.Find(paths[3]) as RectTransform,safe.Find(paths[4]) as RectTransform),name+" hierarchy/no overlap");
+            string[] paths={"HomeRoot/TitleArea","HomeRoot/CurrentPlanetArea","HomeRoot/EnergyArea","HomeRoot/MainActions","HomeRoot/BestScoreArea","HomeRoot/BottomActions"};foreach(var path in paths)AssertInside(safe.Find(path) as RectTransform,safeRect,name);
+            for(int i=0;i<paths.Length-1;i++)Require(Above(safe.Find(paths[i]) as RectTransform,safe.Find(paths[i+1]) as RectTransform),name+" hierarchy/no overlap "+i);
             camera.Render();RenderTexture.active=rt;image=new Texture2D(width,height,TextureFormat.RGB24,false);image.ReadPixels(new Rect(0,0,width,height),0,0);image.Apply();File.WriteAllBytes("Validation/sprint5_home_"+name+".png",image.EncodeToPNG());results.Add("PASS Render "+name+": Home SafeArea, hierarchy, no overlap/clipping.");
         }finally{canvas.renderMode=mode;canvas.worldCamera=oldCamera;camera.targetTexture=target;camera.orthographic=ortho;camera.orthographicSize=size;RenderTexture.active=active;safeRect.anchorMin=oldMin;safeRect.anchorMax=oldMax;safeRect.offsetMin=oldOMin;safeRect.offsetMax=oldOMax;safeArea.enabled=safeEnabled;if(image!=null)UnityEngine.Object.DestroyImmediate(image);rt.Release();UnityEngine.Object.DestroyImmediate(rt);}
     }
@@ -64,3 +64,6 @@ public static class Sprint5PlayProbe
     static void Require(bool value,string message){if(!value)throw new Exception("Sprint 5 test failed: "+message);}
     static void Finish(bool pass,string failure){EditorApplication.update-=Check;Application.logMessageReceived-=Log;if(had)PlayerPrefs.SetInt(Key,old);else PlayerPrefs.DeleteKey(Key);PlayerPrefs.Save();Directory.CreateDirectory("Validation");File.WriteAllText("Validation/sprint5.txt",string.Join("\n",results)+"\n"+(pass?"SPRINT5_PLAY_PASS":failure));if(pass)Debug.Log("SPRINT5_PLAY_PASS");else Debug.LogError(failure);EditorApplication.Exit(pass?0:1);}
 }
+
+
+
