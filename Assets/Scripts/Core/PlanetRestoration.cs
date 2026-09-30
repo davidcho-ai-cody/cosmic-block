@@ -2,7 +2,7 @@ using UnityEngine;
 namespace CosmicBlock.Core {
  public sealed class PlanetRestoration {
   public const int StageEnergyRequired=100,RequiredEnergy=400,CurrentVersion=2;
-  public const string DefaultKey="CosmicBlock.Planet01Energy",VersionKey="CosmicBlock.PlanetRestorationVersion";
+  public const string DefaultKey="CosmicBlock.Planet01Energy",VersionKey="CosmicBlock.PlanetRestorationVersion",Planet01DisplayName="푸른 별";
   static readonly string[] Names={"DESOLATE","AWAKENING","RECOVERING","THRIVING","RESTORED"};
   readonly string key,versionKey; public int CurrentEnergy{get;private set;}
   public int Stage=>StageForEnergy(CurrentEnergy); public string StageName=>Names[Stage-1];

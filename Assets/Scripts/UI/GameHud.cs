@@ -27,13 +27,13 @@ namespace CosmicBlock.UI {
   public void Connect(GameSession owner){if(session!=null)retryButton.onClick.RemoveListener(session.Retry);session=owner;retryButton.onClick.AddListener(session.Retry);adPlaceholderButton.interactable=false;reachedThisRun.Clear();}
   public void Render(GameSession owner){
    string score=owner.Score.ToString("N0",CultureInfo.InvariantCulture),best=owner.BestScore.ToString("N0",CultureInfo.InvariantCulture);
-   scoreText.text="BEST  "+best+"     SCORE  "+score;
+   scoreText.text="최고  "+best+"     점수  "+score;
    if(comboText!=null){comboText.text=string.Empty;comboText.gameObject.SetActive(false);}
    var j=owner.Journey;
    journeyText.text=j.Next.HasValue?j.Current.Name+"  >  "+j.Next.Value.Name+"\n"+score+" / "+j.Next.Value.Score.ToString("N0",CultureInfo.InvariantCulture):j.Current.Name+"  -  JOURNEY COMPLETE\n"+score;
    journeyFill.fillAmount=j.Progress;
    string route=j.Next.HasValue?j.Current.Name+"  >  "+j.Next.Value.Name:j.Current.Name;
-   finalScoreText.text="SCORE  "+score+"\n\n"+(owner.Restoration.IsRestored?"PLANET 01 · RESTORED ✓":"PLANET 01 · STAGE "+owner.Restoration.Stage+" · "+owner.Restoration.Percent+"% RESTORED")+"\n\nBEST  "+best;
+   finalScoreText.text="점수  "+score+"\n\n"+(owner.Restoration.IsRestored?"행성 01 · "+PlanetRestoration.Planet01DisplayName+" · 복원 완료 ✓":"행성 01 · "+PlanetRestoration.Planet01DisplayName+"\n복원 단계 "+owner.Restoration.Stage+" / 5 · 전체 "+owner.Restoration.Percent+"%")+"\n\n최고  "+best;
    gameOverPanel.SetActive(owner.State==GameState.GameOver);
    if(planetView!=null)planetView.Render(owner.Restoration,true);
   }

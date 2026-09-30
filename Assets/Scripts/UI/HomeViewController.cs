@@ -53,11 +53,11 @@ namespace CosmicBlock.UI
             if(session==null)return;
             int stage=Mathf.Clamp(session.Restoration.Stage,1,5);
             bestScoreText.text="최고 점수  "+session.BestScore.ToString("N0",CultureInfo.InvariantCulture);
-            planetNameText.text="푸른 별";
+            planetNameText.text=PlanetRestoration.Planet01DisplayName;
             stageText.text=session.Restoration.IsRestored?"복원 완료 ✓":"복원 단계 "+stage+" / 5";
-            energyText.text=session.Restoration.IsRestored?"100%":session.Restoration.StageEnergy+"%";
+            energyText.text=session.Restoration.Percent+"%";
             if(planetStages!=null&&planetStages.Length>=stage)planetImage.sprite=planetStages[stage-1];
-            SetProgress(session.Restoration.IsRestored?1f:session.Restoration.StageEnergy/100f);
+            SetProgress(session.Restoration.Percent/100f);
         }
 
         public void ShowCollectionNotice()
@@ -104,4 +104,3 @@ namespace CosmicBlock.UI
         void OnDestroy()=>RemoveListeners();
     }
 }
-

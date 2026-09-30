@@ -44,7 +44,7 @@ public static class Sprint71HomePlayProbe
             Req(home.Find("TitleArea/Title").GetComponent<Text>().cachedTextGenerator.characterCountVisible>=4,"Korean title generated");
             results.Add("PASS A: Cold launch HOME, Korean title/actions, game/transient UI hidden.");
 
-            int savedBest=session.BestScore;int[] values={0,90,190,290,390,400};int[] stages={1,1,2,3,4,5};float[] fills={0,.9f,.9f,.9f,.9f,1};
+            int savedBest=session.BestScore;int[] values={0,90,190,290,390,400};int[] stages={1,1,2,3,4,5};float[] fills={0,.225f,.475f,.725f,.975f,1};
             for(int i=0;i<values.Length;i++){session.DebugSetPlanetEnergy(values[i]);flow.RefreshHome();Req(homeView.PlanetSprite!=null&&homeView.PlanetSprite.name.Contains("Stage0"+stages[i]),"sprite "+values[i]);Req(Mathf.Abs(homeView.ProgressFill-fills[i])<.011f,"fill "+values[i]);Req(values[i]==400?homeView.StageText=="복원 완료 ✓":homeView.StageText=="복원 단계 "+stages[i]+" / 5","stage "+values[i]);Req(homeView.BestText=="최고 점수  "+savedBest.ToString("N0",System.Globalization.CultureInfo.InvariantCulture),"best preserved");}
             results.Add("PASS D: HOME Planet sprite/stage/progress sync at 0/90/190/290/390/400.");
 
@@ -110,4 +110,3 @@ public static class Sprint71HomePlayProbe
         EditorApplication.update-=Check;Application.logMessageReceived-=Log;if(hadEnergy)PlayerPrefs.SetInt(PlanetRestoration.DefaultKey,oldEnergy);else PlayerPrefs.DeleteKey(PlanetRestoration.DefaultKey);if(hadVersion)PlayerPrefs.SetInt(PlanetRestoration.VersionKey,oldVersion);else PlayerPrefs.DeleteKey(PlanetRestoration.VersionKey);PlayerPrefs.Save();Directory.CreateDirectory("Validation");File.WriteAllText("Validation/sprint71.txt",string.Join("\n",results)+"\n"+(pass?"SPRINT71_HOME_PASS":failure)+"\n");if(pass)Debug.Log("SPRINT71_HOME_PASS");else Debug.LogError(failure);EditorApplication.Exit(pass?0:1);
     }
 }
-
