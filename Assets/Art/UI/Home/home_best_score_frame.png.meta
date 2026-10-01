@@ -1,13 +1,22 @@
 fileFormatVersion: 2
-guid: 64ac80b85ff6b5047b7c7de9d61035a6
+guid: 9c8731c71490f104e8fcdb2cbc921545
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -1959597238477160992
-    second: home_best_score_badge_0
+      213: -5758975490865386076
+    second: home_best_score_frame_0
   - first:
-      213: 7455855394094091012
-    second: home_best_score_badge_1
+      213: -1370934307895463471
+    second: home_best_score_frame_1
+  - first:
+      213: -2520000853289806172
+    second: home_best_score_frame_2
+  - first:
+      213: 6430267310754402453
+    second: home_best_score_frame_3
+  - first:
+      213: -6861166895077166256
+    second: home_best_score_frame_4
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -129,13 +138,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: home_best_score_badge_0
+      name: home_best_score_frame_0
       rect:
         serializedVersion: 2
-        x: 27
-        y: 0
-        width: 2116
-        height: 696
+        x: 0
+        y: 29
+        width: 2170
+        height: 688
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -144,20 +153,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 0ed7bb9a1bc1ec4e0800000000000000
-      internalID: -1959597238477160992
+      spriteID: 4ada9ccad420410b0800000000000000
+      internalID: -5758975490865386076
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: home_best_score_badge_1
+      name: home_best_score_frame_1
       rect:
         serializedVersion: 2
-        x: 1102
-        y: 19
-        width: 19
-        height: 24
+        x: 818
+        y: 692
+        width: 9
+        height: 13
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -166,8 +175,74 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 40b88a56af4887760800000000000000
-      internalID: 7455855394094091012
+      spriteID: 1d1be7fa28679fce0800000000000000
+      internalID: -1370934307895463471
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: home_best_score_frame_2
+      rect:
+        serializedVersion: 2
+        x: 868
+        y: 700
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4a6daf15398270dd0800000000000000
+      internalID: -2520000853289806172
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: home_best_score_frame_3
+      rect:
+        serializedVersion: 2
+        x: 1270
+        y: 697
+        width: 11
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5909254dc06ec3950800000000000000
+      internalID: 6430267310754402453
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: home_best_score_frame_4
+      rect:
+        serializedVersion: 2
+        x: 1051
+        y: 627
+        width: 13
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 053714a9f0d38c0a0800000000000000
+      internalID: -6861166895077166256
       vertices: []
       indices: 
       edges: []
@@ -186,8 +261,11 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      home_best_score_badge_0: -1959597238477160992
-      home_best_score_badge_1: 7455855394094091012
+      home_best_score_frame_0: -5758975490865386076
+      home_best_score_frame_1: -1370934307895463471
+      home_best_score_frame_2: -2520000853289806172
+      home_best_score_frame_3: 6430267310754402453
+      home_best_score_frame_4: -6861166895077166256
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

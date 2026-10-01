@@ -99,7 +99,7 @@ namespace CosmicBlock.UI
         }
 
         IEnumerator HideToast(){yield return new WaitForSecondsRealtime(1.2f);toastRoot.SetActive(false);toastRoutine=null;}
-        void SetProgress(float value){value=Mathf.Clamp01(value);progressFill.fillAmount=value;var rect=progressFill.rectTransform;rect.anchorMin=Vector2.zero;rect.anchorMax=new Vector2(value,1);rect.offsetMin=rect.offsetMax=Vector2.zero;}
+        void SetProgress(float value){if(progressFill==null)return;value=Mathf.Clamp01(value);progressFill.fillAmount=value;var rect=progressFill.rectTransform;rect.anchorMin=Vector2.zero;rect.anchorMax=new Vector2(value,1);rect.offsetMin=rect.offsetMax=Vector2.zero;}
         void AddListeners()
         {
             if(collectionButton!=null)collectionButton.onClick.AddListener(ShowCollectionNotice);
