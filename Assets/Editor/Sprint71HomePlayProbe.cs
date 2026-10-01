@@ -45,7 +45,7 @@ public static class Sprint71HomePlayProbe
             results.Add("PASS A: Cold launch HOME, Korean title/actions, game/transient UI hidden.");
 
             int savedBest=session.BestScore;int[] values={0,90,190,290,390,400};int[] stages={1,1,2,3,4,5};float[] fills={0,.9f,.9f,.9f,.9f,1};
-            for(int i=0;i<values.Length;i++){session.DebugSetPlanetEnergy(values[i]);flow.RefreshHome();Req(homeView.PlanetSprite!=null&&homeView.PlanetSprite.name.Contains("Stage0"+stages[i]),"sprite "+values[i]);Req(Mathf.Abs(homeView.ProgressFill-fills[i])<.011f,"fill "+values[i]);Req(homeView.StageText.StartsWith(stages[i]+"단계"),"stage "+values[i]);Req(homeView.BestText==savedBest.ToString("N0",System.Globalization.CultureInfo.InvariantCulture),"best preserved");}
+            for(int i=0;i<values.Length;i++){session.DebugSetPlanetEnergy(values[i]);flow.RefreshHome();Req(home.Find("HeroArea/HeroPlanet").GetComponent<Image>().sprite.name=="home_planet_hero","fixed hero "+values[i]);Req(Mathf.Abs(homeView.ProgressFill-fills[i])<.011f,"fill "+values[i]);Req(home.Find("CurrentPlanetArea")==null,"stage card removed "+values[i]);Req(homeView.BestText==savedBest.ToString("N0",System.Globalization.CultureInfo.InvariantCulture),"best preserved");}
             results.Add("PASS D: HOME Planet sprite/stage/progress sync at 0/90/190/290/390/400.");
 
             int energy=session.Restoration.CurrentEnergy,score=session.Score;
@@ -98,7 +98,7 @@ public static class Sprint71HomePlayProbe
 
     static void CheckLayout(string name)
     {
-        string[] paths={"TitleArea","CurrentPlanetArea","EnergyArea","MainActions","BestScoreArea","BottomActions"};
+        string[] paths={"TitleArea","HeroArea","EnergyArea","MainActions","BestScoreArea","BottomActions"};
         Rect previous=new Rect();bool first=true;foreach(string path in paths){var r=WorldRect(home.Find(path) as RectTransform);Req(r.width>0&&r.height>0,"visible rect "+path+" "+name);if(!first)Req(r.yMax<=previous.yMin+2,"no vertical overlap "+path+" "+name);previous=r;first=false;}
         Req(!WorldRect(home.Find("BottomActions/SettingsButton") as RectTransform).Overlaps(WorldRect(home.Find("BottomActions/QuitButton") as RectTransform)),"bottom no overlap "+name);
     }

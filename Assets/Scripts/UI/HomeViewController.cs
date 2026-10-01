@@ -64,12 +64,12 @@ namespace CosmicBlock.UI
             if(session==null)return;
             int stage=Mathf.Clamp(session.Restoration.Stage,1,5);
             int stageEnergy=session.Restoration.StageEnergy;
-            bestScoreText.text=session.BestScore.ToString("N0",CultureInfo.InvariantCulture);
-            planetNameText.text="행성 01";
-            stageText.text=stage+"단계 · "+KoreanStageName(stage);
-            energyText.text="별빛 에너지     "+stageEnergy+" / "+PlanetRestoration.StageEnergyRequired;
+            if(bestScoreText!=null)bestScoreText.text=session.BestScore.ToString("N0",CultureInfo.InvariantCulture);
+            if(planetNameText!=null)planetNameText.text="행성 01";
+            if(stageText!=null)stageText.text=stage+"단계 · "+KoreanStageName(stage);
+            if(energyText!=null)energyText.text="별빛 에너지     "+stageEnergy+" / "+PlanetRestoration.StageEnergyRequired;
             if(energyPercentText!=null)energyPercentText.text=stageEnergy+"%";
-            if(planetStages!=null&&planetStages.Length>=stage)planetImage.sprite=planetStages[stage-1];
+            if(planetImage!=null&&planetStages!=null&&planetStages.Length>=stage)planetImage.sprite=planetStages[stage-1];
             SetProgress(stageEnergy/(float)PlanetRestoration.StageEnergyRequired);
         }
 
