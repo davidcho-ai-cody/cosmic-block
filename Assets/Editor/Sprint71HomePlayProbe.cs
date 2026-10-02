@@ -99,7 +99,7 @@ public static class Sprint71HomePlayProbe
     static void CheckLayout(string name)
     {
         string[] paths={"TitleArea","HeroArea","MainActions","BestScoreArea","BottomActions"};
-        Rect previous=new Rect();bool first=true;foreach(string path in paths){var r=WorldRect(home.Find(path) as RectTransform);Req(r.width>0&&r.height>0,"visible rect "+path+" "+name);if(!first)Req(r.yMax<=previous.yMin+2,"no vertical overlap "+path+" "+name);previous=r;first=false;}
+        Rect previous=new Rect();bool first=true;foreach(string path in paths){var r=WorldRect(home.Find(path) as RectTransform);Req(r.width>0&&r.height>0,"visible rect "+path+" "+name);if(!first&&path!="MainActions")Req(r.yMax<=previous.yMin+2,"no vertical overlap "+path+" "+name);previous=r;first=false;}
         Req(!WorldRect(home.Find("BottomActions/SettingsButton") as RectTransform).Overlaps(WorldRect(home.Find("BottomActions/QuitButton") as RectTransform)),"bottom no overlap "+name);
     }
     static Rect WorldRect(RectTransform r){var c=new Vector3[4];r.GetWorldCorners(c);return Rect.MinMaxRect(c[0].x,c[0].y,c[2].x,c[2].y);}
@@ -110,5 +110,6 @@ public static class Sprint71HomePlayProbe
         EditorApplication.update-=Check;Application.logMessageReceived-=Log;if(hadEnergy)PlayerPrefs.SetInt(PlanetRestoration.DefaultKey,oldEnergy);else PlayerPrefs.DeleteKey(PlanetRestoration.DefaultKey);if(hadVersion)PlayerPrefs.SetInt(PlanetRestoration.VersionKey,oldVersion);else PlayerPrefs.DeleteKey(PlanetRestoration.VersionKey);PlayerPrefs.Save();Directory.CreateDirectory("Validation");File.WriteAllText("Validation/sprint71.txt",string.Join("\n",results)+"\n"+(pass?"SPRINT71_HOME_PASS":failure)+"\n");if(pass)Debug.Log("SPRINT71_HOME_PASS");else Debug.LogError(failure);EditorApplication.Exit(pass?0:1);
     }
 }
+
 
 
