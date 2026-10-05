@@ -177,3 +177,22 @@ Android Development Build: Succeeded, Build Report warnings 0 / errors 0. APK 14
 - Subjective finger feel/display readability/SFX/haptic/transition feel remains user confirmation. System gesture/hardware Back was not retested in this visual-only Sprint; the previously unconfirmed manual check remains.
 - Final PNG hashes match the initial supplied files. Scene preservation audit: zero changes outside Collection. Build-generated settings/import whitespace/resources/temp output were removed.
 - Changed files: Assets/Editor/Sprint8CollectionBuilder.cs and Sprint8CollectionPlayProbe.cs; Assets/Scripts/UI/PlanetCollectionView.cs; Assets/Scenes/Game.unity; collection_prev_icon.png, collection_next_icon.png, collection_stage_frame.png, collection_progress_frame.png (+new meta); docs/CURRENT_TASK.md, DEVLOG.md and NEXT_TASK.md.
+
+# Sprint 8.2.1 — Collection navigation button fine tuning
+
+- Previous/Next visual RectTransforms enlarge exactly 18% in both dimensions, with both button centers unchanged. Source PNGs and preserveAspect are unchanged; matching UI rectangles preserve each sprite's slightly different native aspect ratio.
+- 1080×1920 visual Rect: 145.80×181.44 → 172.04×214.10 px. Actual aspect-fitted sprite width 145.80→172.04 px. Hit rectangle: 162×201.60 → 176.04×237.89 px.
+- 1080×2400 with Safe Area visual Rect: 139.97×204.12 → 165.16×240.86 px; hit 169.00×267.62 px. 1080×1440 visual Rect: 145.80×136.08 → 172.04×160.57 px; hit 176.04×178.42 px.
+- Previous center remains x=0.085, Next x=0.915, both y=0.6125 of Safe Area. No X/Y center changes. Expanded hit bounds: center ±0.0815 in X, y 0.55055–0.67445. The final hit width was tightened after a conservative Tall rendered-planet disk test detected overlap in the first candidate. Visual size and centers stayed unchanged.
+- Automated checks measure both visual Rects and exact scale; confirm full visual coverage by hit Rect, Safe Area bounds, unchanged centers, aspect preservation and separation from the rendered planet disk. All three responsive sizes and locked layouts pass.
+- Existing Collection probe passes all five actual stages, Preview/save isolation, navigation boundaries and button events, Planet 02–05 locks, Back/HOME/GAME flow. Missing Script: 0. No navigation, save, restoration or gameplay code changed.
+- Serialized Scene audit: every block outside Previous/Next and their Icon RectTransforms is unchanged. Builder uses a navigation-only helper; Back button builder is untouched. No PNG changes.
+- Evidence: Validation/sprint8_2_1_collection.txt, sprint8_2_1_scene_preservation.txt and sprint8_2_1_* logs/renders. Render names include collection_stage1/stage3/complete/tall_safe/short and locked variants.
+
+Android Development Build succeeded with Build Warning/Error 0. APK 149495326 bytes, SHA256 0CCA5FFA3DBBC242B02F5A606CF5478DD55D24393E0580756B1DCAC1F01099E1. Post-build and final clean probes pass; final compiler warning/error 0, shader warning 0, runtime error 0, Missing Script 0. Earlier post-build rendering logged the existing 414 package shader precision warnings; no package changes were made, and final clean diagnostics contain none.
+
+SM-S942N (Android 16, 1080×2340): adb install-r Success and cold launch Success. Native Collection shows larger arrows with clear planet separation and no clipping. Expanded hit tap (1040,890) opens Planet 02; Previous/Next through Planet 05 and disabled boundary pass. Stage 1 preview changes Hero/lore while actual Stage 2 remains highlighted and restoration remains 28%. Back→HOME→PLAY starts Score 0 with three Pieces and no stale Game Over; Playing HOME confirm→Collection returns actual Stage 2. Device save before/after: Energy 110→110, actual Stage 2→2, Best 15930→15930, migration version 2→2. No presets or save edits were performed.
+
+PID Logcat: crash/game exceptions 0 and Unity warnings 0. One existing AssetPackManager ClassNotFoundException remains, reported separately. Physical finger comfort and subjective visual balance remain user confirmation; ADB touch navigation and screenshot bounds are verified. Device images and preferences/log evidence use Validation/sprint8_2_1_device_* paths.
+
+Changed files: navigation geometry in Game.unity and Sprint8CollectionBuilder.cs, geometry assertions/output paths in Sprint8CollectionPlayProbe.cs, and three task documents. All other Scene blocks and original PNGs are unchanged. Build-generated settings/resources/temp output were removed.

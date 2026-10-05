@@ -33,8 +33,8 @@ public static class Sprint8CollectionBuilder
         var name=Text("Name",nameFrame.transform,"",46,.16f,.22f,.84f,.64f);
         var hero=Image("Hero",root,null,.14f,.405f,.86f,.725f);
         var heroLock=Image("HeroLock",root,Art+Names[7]+".png",.34f,.455f,.66f,.66f);
-        var prev=Button("Previous",root,Names[3],.01f,.56f,.16f,.665f);
-        var next=Button("Next",root,Names[4],.84f,.56f,.99f,.665f);
+        var prev=NavigationButton("Previous",root,Names[3],.085f);
+        var next=NavigationButton("Next",root,Names[4],.915f);
         var state=Text("Status",root,"",28,.10f,.365f,.90f,.405f);
         var progressFrame=Image("ProgressFrame",root,Art+"collection_progress_frame.png",.08f,.29f,.92f,.41f);Fit(progressFrame);
         Text("RestorationLabel",progressFrame.transform,"복원도",22,.085f,.42f,.235f,.59f);
@@ -98,5 +98,6 @@ public static class Sprint8CollectionBuilder
     static RectTransform UI(string name,Transform parent,float x0,float y0,float x1,float y1){var r=new GameObject(name,typeof(RectTransform)).GetComponent<RectTransform>();r.SetParent(parent,false);r.anchorMin=new Vector2(x0,y0);r.anchorMax=new Vector2(x1,y1);r.offsetMin=r.offsetMax=Vector2.zero;return r;}
     static Image Image(string name,Transform parent,string path,float x0,float y0,float x1,float y1){var i=UI(name,parent,x0,y0,x1,y1).gameObject.AddComponent<Image>();if(path!=null)i.sprite=AssetDatabase.LoadAssetAtPath<Sprite>(path);i.preserveAspect=true;i.raycastTarget=false;return i;}
     static Button Button(string name,Transform parent,string asset,float x0,float y0,float x1,float y1){var r=UI(name,parent,x0,y0,x1,y1);var hit=r.gameObject.AddComponent<Image>();hit.color=Color.clear;var b=r.gameObject.AddComponent<Button>();b.targetGraphic=hit;Image("Icon",r,Art+asset+".png",.05f,.05f,.95f,.95f);return b;}
+    static Button NavigationButton(string name,Transform parent,string asset,float center){var b=Button(name,parent,asset,center-.0815f,.55055f,center+.0815f,.67445f);var icon=(RectTransform)b.transform.Find("Icon");icon.anchorMin=new Vector2(.011349693f,.05f);icon.anchorMax=new Vector2(.988650307f,.95f);return b;}
     static Text Text(string name,Transform parent,string value,int size,float x0,float y0,float x1,float y1){var t=UI(name,parent,x0,y0,x1,y1).gameObject.AddComponent<Text>();t.font=Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");t.text=value;t.fontSize=size;t.fontStyle=FontStyle.Bold;t.alignment=TextAnchor.MiddleCenter;t.color=new Color(.96f,.98f,1);t.raycastTarget=false;t.resizeTextForBestFit=true;t.resizeTextMinSize=15;t.resizeTextMaxSize=size;return t;}
 }

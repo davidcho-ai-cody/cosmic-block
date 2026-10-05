@@ -82,7 +82,7 @@ public static class Sprint8CollectionPlayProbe
             sr.anchorMin=inset?new Vector2(.02f,.04f):Vector2.zero;sr.anchorMax=inset?new Vector2(.98f,.94f):Vector2.one;sr.offsetMin=sr.offsetMax=Vector2.zero;Canvas.ForceUpdateCanvases();
             var bg=view.transform.Find("Background");bg.GetComponent<AspectFillBackground>().enabled=false;
             var br=(RectTransform)bg;var img=bg.GetComponent<Image>();var full=(RectTransform)canvas.transform;float scale=Mathf.Max(full.rect.width/img.sprite.rect.width,full.rect.height/img.sprite.rect.height);br.anchorMin=br.anchorMax=new Vector2(.5f,.5f);br.sizeDelta=img.sprite.rect.size*scale;br.anchoredPosition=sr.InverseTransformPoint(full.TransformPoint(full.rect.center));
-            Canvas.ForceUpdateCanvases();Bounds(name);cam.Render();RenderTexture.active=rt;tex=new Texture2D(w,h,TextureFormat.RGB24,false);tex.ReadPixels(new Rect(0,0,w,h),0,0);tex.Apply();Directory.CreateDirectory("Validation");File.WriteAllBytes("Validation/sprint8_2_collection_"+name+".png",tex.EncodeToPNG());bg.GetComponent<AspectFillBackground>().enabled=true;
+            Canvas.ForceUpdateCanvases();Bounds(name);cam.Render();RenderTexture.active=rt;tex=new Texture2D(w,h,TextureFormat.RGB24,false);tex.ReadPixels(new Rect(0,0,w,h),0,0);tex.Apply();Directory.CreateDirectory("Validation");File.WriteAllBytes("Validation/sprint8_2_1_collection_"+name+".png",tex.EncodeToPNG());bg.GetComponent<AspectFillBackground>().enabled=true;
         }
         finally{canvas.renderMode=mode;canvas.worldCamera=wc;cam.targetTexture=target;cam.orthographic=ortho;cam.orthographicSize=size;RenderTexture.active=active;sr.anchorMin=min;sr.anchorMax=max;sr.offsetMin=omin;sr.offsetMax=omax;sa.enabled=enabled;if(tex!=null)UnityEngine.Object.DestroyImmediate(tex);rt.Release();UnityEngine.Object.DestroyImmediate(rt);}
     }
@@ -91,6 +91,21 @@ public static class Sprint8CollectionPlayProbe
         Rect area=World((RectTransform)safe);
         Rect prev=World((RectTransform)view.transform.Find("Previous")),next=World((RectTransform)view.transform.Find("Next"));
         Req(Vector2.Distance(prev.size,next.size)<.1f,"matching navigation hit rects");
+        Rect previousIcon=World((RectTransform)view.transform.Find("Previous/Icon")),nextIcon=World((RectTransform)view.transform.Find("Next/Icon"));
+        Req(Vector2.Distance(previousIcon.size,nextIcon.size)<.1f,"matching navigation visual rects");
+        Req(Mathf.Abs(previousIcon.width/(area.width*.15f*.9f)-1.18f)<.0001f&&Mathf.Abs(previousIcon.height/(area.height*.105f*.9f)-1.18f)<.0001f,"navigation visual enlargement 18 percent");
+        Rect heroRect=World((RectTransform)view.transform.Find("Hero"));var heroSprite=view.transform.Find("Hero").GetComponent<Image>().sprite;
+        float heroScale=Mathf.Min(heroRect.width/heroSprite.rect.width,heroRect.height/heroSprite.rect.height);Vector2 heroRadii=heroSprite.rect.size*heroScale*.5f;
+        foreach(string nav in new[]{"Previous","Next"}){
+            Rect hit=World((RectTransform)view.transform.Find(nav)),icon=World((RectTransform)view.transform.Find(nav+"/Icon"));
+            Req(hit.xMin>=area.xMin&&hit.xMax<=area.xMax&&hit.yMin>=area.yMin&&hit.yMax<=area.yMax,"navigation hit within safe area");
+            Req(icon.xMin>=hit.xMin&&icon.xMax<=hit.xMax&&icon.yMin>=hit.yMin&&icon.yMax<=hit.yMax,"navigation visual fully touchable");
+            Req(Mathf.Abs(hit.center.x-(area.xMin+area.width*(nav=="Previous"?.085f:.915f)))<.1f&&Mathf.Abs(hit.center.y-(area.yMin+area.height*.6125f))<.1f,"navigation center unchanged");
+            Vector2 nearest=new Vector2(Mathf.Clamp(heroRect.center.x,hit.xMin,hit.xMax),Mathf.Clamp(heroRect.center.y,hit.yMin,hit.yMax));Vector2 delta=nearest-heroRect.center;
+            Req(delta.x*delta.x/(heroRadii.x*heroRadii.x)+delta.y*delta.y/(heroRadii.y*heroRadii.y)>1,"navigation hit clear of rendered planet disk");
+            Req(view.transform.Find(nav+"/Icon").GetComponent<Image>().preserveAspect,"navigation aspect preserved");
+        }
+        results.Add("NAV "+name+": visual="+previousIcon.size+" hit="+prev.size+" scale=1.18 centers unchanged");
         var pf=view.transform.Find("ProgressFrameArea/ProgressFrame") as RectTransform;
         if(pf.gameObject.activeSelf){
             Rect pr=World(pf);
@@ -143,6 +158,6 @@ public static class Sprint8CollectionPlayProbe
     {
         EditorApplication.update-=Check;Application.logMessageReceived-=Log;
         for(int i=0;i<3;i++){if(had[i])PlayerPrefs.SetInt(keys[i],saved[i]);else PlayerPrefs.DeleteKey(keys[i]);}PlayerPrefs.Save();
-        Directory.CreateDirectory("Validation");File.WriteAllText("Validation/sprint8_2_collection.txt",string.Join("\n",results)+"\n"+(pass?"SPRINT8_COLLECTION_PASS":fail));if(pass)Debug.Log("SPRINT8_COLLECTION_PASS");else Debug.LogError(fail);EditorApplication.Exit(pass?0:1);
+        Directory.CreateDirectory("Validation");File.WriteAllText("Validation/sprint8_2_1_collection.txt",string.Join("\n",results)+"\n"+(pass?"SPRINT8_COLLECTION_PASS":fail));if(pass)Debug.Log("SPRINT8_COLLECTION_PASS");else Debug.LogError(fail);EditorApplication.Exit(pass?0:1);
     }
 }
