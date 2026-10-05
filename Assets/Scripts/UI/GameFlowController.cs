@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 namespace CosmicBlock.UI
 {
-    public enum FlowScreen { Home, Game }
+    public enum FlowScreen { Home, Game, Collection }
 
     public sealed class GameFlowController : MonoBehaviour
     {
@@ -25,6 +25,8 @@ namespace CosmicBlock.UI
         [SerializeField] Button continueButton;
         [SerializeField] Button confirmHomeButton;
         [SerializeField] HomeViewController homeView;
+        [SerializeField] PlanetCollectionView collectionView;
+        public PlanetCollectionView CollectionView => collectionView;
 
         public FlowScreen Screen { get; private set; }
         public bool QuitRequested { get; private set; }
@@ -47,6 +49,19 @@ namespace CosmicBlock.UI
 
         public void ConfigureHomeView(HomeViewController view){homeView=view;}
 
+        public void ConfigureCollection(PlanetCollectionView view) => collectionView = view;
+        public void ShowCollection()
+        {
+            if (Screen != FlowScreen.Home || collectionView == null || session == null) return;
+            homeView?.HideTransient(); homeRoot.SetActive(false);
+            collectionView.gameObject.SetActive(true); collectionView.Open(session.Restoration);
+            Screen = FlowScreen.Collection;
+        }
+        public void ReturnFromCollection()
+        {
+            if (Screen != FlowScreen.Collection) return;
+            collectionView.gameObject.SetActive(false); RefreshHome(); homeRoot.SetActive(true); Screen=FlowScreen.Home;
+        }
         void Awake() => AddListeners();
         void Start() { if (StartInGameForAutomation) { StartInGameForAutomation=false; Play(); } else ShowHome(); }
         void Update() { if (Keyboard.current != null && Keyboard.current.escapeKey.wasPressedThisFrame) HandleBack(); }
@@ -54,6 +69,7 @@ namespace CosmicBlock.UI
         public void Play()
         {
             if (session == null) return;
+            if (collectionView != null) collectionView.gameObject.SetActive(false);
             HideHomeConfirmation();
             session.ResetTransientFeedback();
             homeRoot.SetActive(false); SetGameVisible(true); session.Retry(); Screen=FlowScreen.Game; QuitRequested=false;
@@ -61,6 +77,7 @@ namespace CosmicBlock.UI
 
         public void ShowHome()
         {
+            if (collectionView != null) collectionView.gameObject.SetActive(false);
             HideHomeConfirmation(); homeView?.HideTransient();
             if (session != null) { session.ResetTransientFeedback(); session.Retry(); }
             SetGameVisible(false); RefreshHome(); homeRoot.SetActive(true); Screen=FlowScreen.Home;
@@ -91,6 +108,7 @@ namespace CosmicBlock.UI
 
         public void HandleBack()
         {
+            if (Screen == FlowScreen.Collection) { ReturnFromCollection(); return; }
             if (Screen == FlowScreen.Home)
             {
                 RequestQuit();

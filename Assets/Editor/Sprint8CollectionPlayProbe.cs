@@ -1,0 +1,99 @@
+using System;
+using System.Collections.Generic;
+using System.IO;
+using CosmicBlock.Core;
+using CosmicBlock.UI;
+using UnityEditor;
+using UnityEditor.SceneManagement;
+using UnityEngine;
+using UnityEngine.UI;
+public static class Sprint8CollectionPlayProbe
+{
+    static double started;static int frames;static string errors="";
+    static readonly List<string> results=new List<string>();
+    static readonly string[] keys={PlanetRestoration.DefaultKey,PlanetRestoration.VersionKey,GameSession.DefaultBestScoreKey};
+    static readonly int[] saved=new int[3];static readonly bool[] had=new bool[3];
+    static GameSession session;static GameFlowController flow;static PlanetCollectionView view;static Transform safe;
+    public static void Run()
+    {
+        for(int i=0;i<3;i++){had[i]=PlayerPrefs.HasKey(keys[i]);saved[i]=PlayerPrefs.GetInt(keys[i]);}
+        PlayerPrefs.SetInt(keys[0],0);PlayerPrefs.SetInt(keys[1],PlanetRestoration.CurrentVersion);PlayerPrefs.Save();
+        EditorSceneManager.OpenScene("Assets/Scenes/Game.unity");started=EditorApplication.timeSinceStartup;
+        Application.logMessageReceived+=Log;EditorApplication.update+=Check;EditorApplication.EnterPlaymode();
+    }
+    static void Check()
+    {
+        if(EditorApplication.timeSinceStartup-started>180){Finish(false,"timeout");return;}
+        if(!EditorApplication.isPlaying||++frames<35)return;
+        try
+        {
+            session=UnityEngine.Object.FindAnyObjectByType<GameSession>();flow=UnityEngine.Object.FindAnyObjectByType<GameFlowController>();view=flow.CollectionView;
+            safe=GameObject.Find("GameCanvas").transform.Find("SafeArea");Req(view!=null&&flow.Screen==FlowScreen.Home,"cold HOME");Req(safe.GetComponentsInChildren<PlanetCollectionView>(true).Length==1,"single collection view");
+            int score=session.Score,best=session.BestScore;var board=session.Model;
+            for(int stage=1;stage<=5;stage++)
+            {
+                int energy=(stage-1)*100;session.DebugSetPlanetEnergy(energy);
+                flow.HomeRoot.transform.Find("MainActions/PlanetCollectionButton").GetComponent<Button>().onClick.Invoke();
+                Req(flow.Screen==FlowScreen.Collection&&!flow.HomeRoot.activeSelf&&view.gameObject.activeSelf,"entry");
+                Req(view.CurrentStage==stage&&view.PreviewStage==stage&&view.HeroSprite.name.Contains("Stage0"+stage),"current stage "+stage);
+                Req(view.Slots.Length==5,"five slots");view.SendMessage("Update");Req(view.Slots[stage-1].transform.localScale.x>=1&&view.Slots[stage-1].transform.localScale.x<=1.041f,"current pulse");
+                for(int j=1;j<=5;j++)
+                {
+                    Req(view.IsStageLocked(j)==(j>stage),"lock "+j);Req(view.Slots[j-1].interactable==(j<=stage),"slot input "+j);
+                    Req(view.Slots[j-1].transform.Find("Lock").gameObject.activeSelf==(j>stage),"lock visual "+j);
+                    Req(view.Slots[j-1].transform.Find("Thumbnail").GetComponent<Image>().color.a==(j<=stage?1:.3f),"thumbnail alpha");
+                }
+                var slotShapes=new CosmicBlock.Blocks.BlockShape[3];for(int q=0;q<3;q++)slotShapes[q]=session.Slots[q].Shape;string currentLore=view.Message;view.Slots[0].onClick.Invoke();Req(view.PreviewStage==1&&view.HeroSprite.name.Contains("Stage01"),"past preview");
+                Req(stage==1||view.Message!=currentLore,"lore changes");view.Preview(5);Req(view.PreviewStage==(stage==5?5:1),"future preview blocked");
+                Req(session.Restoration.CurrentEnergy==energy&&PlayerPrefs.GetInt(keys[0])==energy&&PlayerPrefs.GetInt(keys[1])==PlanetRestoration.CurrentVersion&&session.Score==score&&session.BestScore==best&&session.Model==board,"save and run isolation");
+                view.GoBack();Req(flow.Screen==FlowScreen.Home&&session.Score==score,"back HOME");flow.ShowCollection();Req(view.PreviewStage==stage,"reentry current");
+                if(stage==5)Req(view.Progress==1&&view.Status.Contains("복원 완료"),"completed");
+                for(int p=1;p<5;p++){view.Next();Req(view.PlanetIndex==p&&view.Message==PlanetCollectionData.LockedMessage,"locked planet "+p);for(int j=1;j<=5;j++)Req(view.IsStageLocked(j)&&!view.Slots[j-1].interactable,"all locked");Req(!view.transform.Find("Hero").gameObject.activeSelf&&view.transform.Find("HeroLock").gameObject.activeSelf,"lock hero");Req(!view.transform.Find("Progress").gameObject.activeSelf,"locked progress hidden");}
+                view.Next();Req(view.PlanetIndex==4,"next boundary");for(int p=3;p>=0;p--){view.Previous();Req(view.PlanetIndex==p,"previous");}view.Previous();Req(view.PlanetIndex==0,"prev boundary");
+                flow.HandleBack();Req(flow.Screen==FlowScreen.Home,"Android back");for(int q=0;q<3;q++)Req(session.Slots[q].Shape==slotShapes[q],"no piece resupply on collection navigation");results.Add("PASS stage "+stage+": sprites, locks, lore, preview isolation, reentry, navigation.");
+            }
+            session.DebugSetPlanetEnergy(250);flow.ShowCollection();
+            Capture(1080,1920,"9x16",false);Capture(1080,2400,"tall_safe",true);Capture(1080,1440,"short",false);
+            view.Next();Capture(1080,1920,"locked_9x16",false);Capture(1080,2400,"locked_tall_safe",true);Capture(1080,1440,"locked_short",false);
+            flow.ReturnFromCollection();flow.Play();Req(flow.Screen==FlowScreen.Game&&session.State==GameState.Playing,"HOME GAME");flow.RequestHome();flow.ConfirmHome();Req(flow.Screen==FlowScreen.Home,"GAME HOME");
+            Req(!PlanetDebugPanel.ShouldShow(false),"release DEV hidden");Req(view.GetComponentsInChildren<PlanetDebugPanel>(true).Length==0,"no collection DEV UI");Req(errors.Length==0,"runtime errors "+errors);
+            results.Add("PASS responsive bounds/text, HOME GAME flow, release DEV contract; runtime errors 0.");Finish(true,"");
+        }
+        catch(Exception e){Finish(false,e.ToString());}
+    }
+    static void Capture(int w,int h,string name,bool inset)
+    {
+        var canvas=GameObject.Find("GameCanvas").GetComponent<Canvas>();var cam=Camera.main;var sr=(RectTransform)safe;var sa=sr.GetComponent<SafeArea>();bool enabled=sa.enabled;
+        var mode=canvas.renderMode;var wc=canvas.worldCamera;var target=cam.targetTexture;bool ortho=cam.orthographic;float size=cam.orthographicSize;var active=RenderTexture.active;
+        var min=sr.anchorMin;var max=sr.anchorMax;var omin=sr.offsetMin;var omax=sr.offsetMax;var rt=new RenderTexture(w,h,24);Texture2D tex=null;
+        try
+        {
+            sa.enabled=false;rt.Create();cam.targetTexture=rt;cam.orthographic=true;cam.orthographicSize=h/2f;canvas.renderMode=RenderMode.ScreenSpaceCamera;canvas.worldCamera=cam;canvas.planeDistance=10;
+            sr.anchorMin=inset?new Vector2(.02f,.04f):Vector2.zero;sr.anchorMax=inset?new Vector2(.98f,.94f):Vector2.one;sr.offsetMin=sr.offsetMax=Vector2.zero;Canvas.ForceUpdateCanvases();
+            var bg=view.transform.Find("Background");bg.GetComponent<AspectFillBackground>().enabled=false;
+            var br=(RectTransform)bg;var img=bg.GetComponent<Image>();var full=(RectTransform)canvas.transform;float scale=Mathf.Max(full.rect.width/img.sprite.rect.width,full.rect.height/img.sprite.rect.height);br.anchorMin=br.anchorMax=new Vector2(.5f,.5f);br.sizeDelta=img.sprite.rect.size*scale;br.anchoredPosition=sr.InverseTransformPoint(full.TransformPoint(full.rect.center));
+            Canvas.ForceUpdateCanvases();Bounds(name);cam.Render();RenderTexture.active=rt;tex=new Texture2D(w,h,TextureFormat.RGB24,false);tex.ReadPixels(new Rect(0,0,w,h),0,0);tex.Apply();Directory.CreateDirectory("Validation");File.WriteAllBytes("Validation/sprint8_collection_"+name+".png",tex.EncodeToPNG());bg.GetComponent<AspectFillBackground>().enabled=true;
+        }
+        finally{canvas.renderMode=mode;canvas.worldCamera=wc;cam.targetTexture=target;cam.orthographic=ortho;cam.orthographicSize=size;RenderTexture.active=active;sr.anchorMin=min;sr.anchorMax=max;sr.offsetMin=omin;sr.offsetMax=omax;sa.enabled=enabled;if(tex!=null)UnityEngine.Object.DestroyImmediate(tex);rt.Release();UnityEngine.Object.DestroyImmediate(rt);}
+    }
+    static void Bounds(string name)
+    {
+        Rect area=World((RectTransform)safe);
+        foreach(string path in new[]{"Title","Back","Previous","Next","Hero","HeroLock","NameFrameArea","StageArea","MessageFrameArea"})
+        {
+            var t=view.transform.Find(path);if(!t.gameObject.activeSelf)continue;Rect r=World((RectTransform)t);Req(r.xMin>=area.xMin-.1f&&r.xMax<=area.xMax+.1f&&r.yMin>=area.yMin-.1f&&r.yMax<=area.yMax+.1f,"safe bounds "+name+" "+path);
+        }
+        foreach(var t in view.GetComponentsInChildren<Text>())Req(t.cachedTextGenerator.characterCountVisible>=t.text.Replace("\n","").Length,"text clipping "+name+" "+t.name);
+        for(int i=1;i<5;i++)Req(!World((RectTransform)view.Slots[i-1].transform).Overlaps(World((RectTransform)view.Slots[i].transform)),"slots overlap");
+        results.Add("PASS "+name+": Safe Area, hero/logo/frame bounds, five slots, text visibility.");
+    }
+    static Rect World(RectTransform r){var c=new Vector3[4];r.GetWorldCorners(c);return Rect.MinMaxRect(c[0].x,c[0].y,c[2].x,c[2].y);}
+    static void Req(bool v,string m){if(!v)throw new Exception("Sprint8: "+m);}
+    static void Log(string m,string trace,LogType t){if(t==LogType.Error||t==LogType.Exception||t==LogType.Assert)errors+=m+"\n";}
+    static void Finish(bool pass,string fail)
+    {
+        EditorApplication.update-=Check;Application.logMessageReceived-=Log;
+        for(int i=0;i<3;i++){if(had[i])PlayerPrefs.SetInt(keys[i],saved[i]);else PlayerPrefs.DeleteKey(keys[i]);}PlayerPrefs.Save();
+        Directory.CreateDirectory("Validation");File.WriteAllText("Validation/sprint8_collection.txt",string.Join("\n",results)+"\n"+(pass?"SPRINT8_COLLECTION_PASS":fail));if(pass)Debug.Log("SPRINT8_COLLECTION_PASS");else Debug.LogError(fail);EditorApplication.Exit(pass?0:1);
+    }
+}

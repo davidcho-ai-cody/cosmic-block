@@ -135,3 +135,7 @@ Implemented stage-local 0–100 Energy, 0–400 persistence migration, cleared-c
 
 ## Sprint 6.5 QA Hotfix — Planet Progress Reset
 Development builds expose a subtle Home `DEV` launcher with Planet presets 0/90/190/290/390. Presets update only `CosmicBlock.Planet01Energy`, preserve migration version and Best Score, cancel transient Planet presentation, and refresh Home/Game HUD immediately. Release builds hide the launcher and panel through `Debug.isDebugBuild`. Stage 5 now shows one `100% RESTORED` line.
+
+## Sprint 8 — Planet Collection
+
+Added read-only CollectionRoot using nine supplied PNG components and existing Planet 01 stage sprites. HOME geometry/gameplay/save rules remain unchanged. Twenty existing regression entry points plus the new Collection probe passed; responsive renders passed at 1080×1920, 1080×2400 with Safe Area and 1080×1440. Android Development build/install/cold launch and actual Stage preview/navigation/save isolation passed on SM-S942N. See docs/DEVLOG.md for diagnostics, images and the known AssetPackManager exception. Extra hardware Back/relaunch confirmation awaits phone unlock/reconnection.

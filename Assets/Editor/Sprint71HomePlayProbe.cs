@@ -49,12 +49,12 @@ public static class Sprint71HomePlayProbe
             results.Add("PASS D: HOME Planet sprite/stage/progress sync at 0/90/190/290/390/400.");
 
             int energy=session.Restoration.CurrentEnergy,score=session.Score;
-            home.Find("MainActions/PlanetCollectionButton").GetComponent<Button>().onClick.Invoke();Req(homeView.ToastVisible&&flow.Screen==FlowScreen.Home&&session.Score==score&&session.Restoration.CurrentEnergy==energy&&session.BestScore==savedBest,"collection toast isolation");
-            homeView.HideTransient();home.Find("BottomActions/SettingsButton").GetComponent<Button>().onClick.Invoke();Req(homeView.SettingsVisible,"settings opens");home.Find("SettingsPanel/Card/Close").GetComponent<Button>().onClick.Invoke();Req(!homeView.SettingsVisible,"settings closes");
+            home.Find("MainActions/PlanetCollectionButton").GetComponent<Button>().onClick.Invoke();Req(!homeView.ToastVisible&&flow.Screen==FlowScreen.Collection&&session.Score==score&&session.Restoration.CurrentEnergy==energy&&session.BestScore==savedBest,"collection view isolation");
+            flow.ReturnFromCollection();homeView.HideTransient();home.Find("BottomActions/SettingsButton").GetComponent<Button>().onClick.Invoke();Req(homeView.SettingsVisible,"settings opens");home.Find("SettingsPanel/Card/Close").GetComponent<Button>().onClick.Invoke();Req(!homeView.SettingsVisible,"settings closes");
             home.Find("BottomActions/QuitButton").GetComponent<Button>().onClick.Invoke();Req(homeView.QuitVisible,"quit confirm opens");home.Find("QuitConfirmPanel/Card/Cancel").GetComponent<Button>().onClick.Invoke();Req(!homeView.QuitVisible&&!flow.QuitRequested,"quit cancel");
             Req(home.Find("DevButton").gameObject.activeSelf&&PlanetDebugPanel.ShouldShow(true)&&!PlanetDebugPanel.ShouldShow(false),"DEV build/release contract");
             Req(!ContainsLegacy(home),"legacy English HOME text");
-            results.Add("PASS E-F-G: Collection toast, settings shell, quit cancel, DEV contract, legacy text removed.");
+            results.Add("PASS E-F-G: Collection view, settings shell, quit cancel, DEV contract, legacy text removed.");
 
             Capture(1080,1920,"9x16");Capture(1080,2400,"tall_safe");Capture(1080,1440,"short");
             results.Add("PASS responsive HOME renders: 1080x1920, 1080x2400, 1080x1440.");

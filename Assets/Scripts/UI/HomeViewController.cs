@@ -80,8 +80,7 @@ namespace CosmicBlock.UI
 
         public void ShowCollectionNotice()
         {
-            if(toastRoutine!=null)StopCoroutine(toastRoutine);
-            toastRoot.SetActive(true);toastRoutine=StartCoroutine(HideToast());
+            flow?.ShowCollection();
         }
 
         public void ShowSettings(){settingsPanel.SetActive(true);}

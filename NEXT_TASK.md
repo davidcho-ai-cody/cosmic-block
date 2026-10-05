@@ -1,8 +1,5 @@
 # NEXT TASK
 
-Run final Android device QA for Planet Restoration, then plan the next sprint only after subjective checks are confirmed.
+Finish user device review of Sprint 8 Collection (finger hit areas, readability and Android Back/relaunch after phone unlock). See docs/NEXT_TASK.md.
 
-Pending user checks: Planet prominence, clear-to-energy clarity, stage transition quality, 100% celebration, background compatibility, and 500 Energy pacing.
-
-## Sprint 6.5 completed
-Planet Restoration now communicates clear → energy flight → absorption → stage healing. Next work should begin from the post-Sprint-6.5 Android device QA findings without changing the 0–400 migration contract.
+Do not implement Planet 02–05 unlock rules, new planet sprites or another sprint without a new instruction. Preserve existing HOME design and gameplay/energy/save/transition contracts.
