@@ -8,7 +8,8 @@ namespace CosmicBlock.UI
         [SerializeField] GameFlowController flow;
         [SerializeField] Sprite[] sprites;
         [SerializeField] Image hero, progress;
-        [SerializeField] GameObject heroLock;
+        [SerializeField] GameObject heroLock, progressFrame;
+        [SerializeField] Text percentage;
         [SerializeField] Text planetNumber, planetName, status, message;
         [SerializeField] Button back, previous, next;
         [SerializeField] Button[] slots;
@@ -22,6 +23,7 @@ namespace CosmicBlock.UI
         public Sprite HeroSprite => hero.sprite;
         public string Message => message.text;
         public string Status => status.text;
+        public string Percentage => percentage.text;
         public float Progress => progress.rectTransform.anchorMax.x;
         public Button[] Slots => slots;
         public bool IsStageLocked(int stage) => PlanetIndex!=0||stage>CurrentStage;
@@ -33,6 +35,7 @@ namespace CosmicBlock.UI
             planetNumber=number;planetName=name;status=state;message=lore;
             back=goBack;previous=prev;next=forward;slots=buttons;thumbnails=images;locks=lockIcons;labels=names;
         }
+        public void ConfigureProgress(GameObject frame,Text value){progressFrame=frame;percentage=value;}
         void Awake()
         {
             back.onClick.AddListener(GoBack);previous.onClick.AddListener(Previous);next.onClick.AddListener(Next);
@@ -50,7 +53,8 @@ namespace CosmicBlock.UI
             planetNumber.text="행성 "+(PlanetIndex+1).ToString("00");planetName.text=PlanetCollectionData.PlanetNames[PlanetIndex];
             hero.gameObject.SetActive(known);heroLock.SetActive(!known);if(known)hero.sprite=sprites[PreviewStage-1];
             message.text=known?PlanetCollectionData.StageMessages[PreviewStage-1]:PlanetCollectionData.LockedMessage;
-            status.text=!known?"아직 잠겨 있습니다.":restoration.IsRestored?"복원 완료 · 100%":"복원도 "+restoration.Percent+"%  ·  "+PreviewStage+"단계 "+PlanetCollectionData.StageNames[PreviewStage-1];
+            status.text=known?"":"아직 잠겨 있습니다.";status.gameObject.SetActive(!known);
+            percentage.text=restoration.Percent+"%";progressFrame.SetActive(known);
             progress.transform.parent.gameObject.SetActive(known);progress.rectTransform.anchorMax=new Vector2(known?restoration.Percent/100f:0,1);
             for(int i=0;i<5;i++)
             {

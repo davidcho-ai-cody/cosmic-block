@@ -121,3 +121,59 @@ Evidence: Validation/sprint8_1_regression_summary.txt, sprint8_1_collection.txt,
 - Device captures: Validation/sprint8_1_device_collection.png, preview1.png, preview3.png, locked.png, home.png, android_back.png, game.png, reentry.png (each with sprint8_1_device_ prefix). The android_back image documents the unconfirmed input check, not a successful HOME return.
 - Final Scene preservation: no changes outside Collection. Build-generated settings, temporary output and import whitespace changes were removed.
 - Main files: Assets/Editor/Sprint8CollectionBuilder.cs, Sprint8CollectionPlayProbe.cs; Assets/Scripts/UI/PlanetCollectionView.cs, CollectionStageRing.cs (+meta); Assets/Scenes/Game.unity; user-provided collection_stage_frame.png; docs/CURRENT_TASK.md, DEVLOG.md, NEXT_TASK.md.
+
+# Sprint 8.2 — Planet Collection Final Visual Polish
+
+## Implementation and preserved scope
+
+- User-provided Previous/Next PNGs replace the previous sprites. Hit rectangles and anchors are unchanged: Previous (0.01,0.56)-(0.16,0.665); Next (0.84,0.56)-(0.99,0.665). Their clear Image targets use rectangular raycasts; icons preserve their individual source aspect ratios. Disabled icon alpha remains 0.35.
+- At 1080×1920, both button hit rectangles measure 162×201.6 px; centers measured from the screen top are (91.8,744) and (988.2,744). Tall Safe Area: 155.52×226.8; Short: 162×151.2. Visible icon width is 145.8 px at 9:16. Left/right artwork has slightly different native aspect ratios, so its aspect-preserved visible heights differ by about 0.43 px.
+- New collection_progress_frame.png contains fixed Unity Text 복원도 (22), dynamic Warm Gold percentage (32), and the existing Unity Image track/fill. The actual PlanetRestoration.Percent drives both text and the existing anchor-width fill. The previous plain known-planet caption is hidden; locked-planet messaging remains.
+- Energy 0 / 205 / 400 renders actual restoration 0% / 51% / 100%, with corresponding rendered fill width ratios 0 / 0.51 / 1. All three states use identical frame/text/track geometry. Preview does not change the actual percentage.
+- Supplied collection_stage_frame2.png was renamed to the required collection_stage_frame.png, preserving all PNG bytes and the existing Sprite GUID. No new artwork was generated or processed.
+- Stage container y anchors: 0.135–0.345 → 0.125–0.345 (+4.76%). The source canvas remains 2172×724 (3:1); the supplied new artwork has taller interior space. FitInParent preserves aspect ratio. Actual fitted frame height stays 334.96 px at 9:16 and 321.56 px at Tall (width limited); Short grows 302.4→316.8 px.
+- Planet thumbnail fitted diameter grows about 8.9% in 9:16/Tall and 14.1% in Short. Thumbnail Image rectangles: 135.59×91.95, 130.17×88.27 and 128.24×86.96 px respectively. Original five planet sprites, actual-stage ring/pulse, future dim/locks and thin Gold connectors remain.
+- The 9:16 thumbnail-to-number gap is about 25.2 px and number-to-name gap about 5.0 px. Planet/number/name areas are separated. Number font 18 and name font 25 are preserved; five centers remain equally spaced at 0.14/0.32/0.50/0.68/0.86 inside the stage frame. No collection_stage_slot sprite is rendered.
+- Message center y moves 0.0675→0.10 of Safe Area height: upward 62.4 / 70.2 / 46.8 px across 9:16/Tall/Short. Original message sprite, lore, dimensions and font 27 remain. Visible stage/message frame edges remain separated in all tested layouts.
+- Title, Name and Hero geometry are unchanged. No game rules, energy/save/migration/unlock rules, HOME design, Board/Piece, Combo, fragment/transition/SFX/haptic behavior were changed.
+
+## Asset audit and import settings
+
+All four supplied PNGs have RGBA alpha and truly transparent exterior pixels. Read-only inspection found no baked background. Source hashes remain unchanged after integration.
+
+| Asset | Source dimensions | Alpha 0 / partial / 255 |
+|---|---|---|
+| collection_prev_icon.png | 1371×1147 | 730109 / 842428 / 0 |
+| collection_next_icon.png | 1374×1145 | 679088 / 894142 / 0 |
+| collection_progress_frame.png | 2172×724 | 876375 / 696089 / 64 |
+| collection_stage_frame.png | 2172×724 | 420903 / 1151530 / 95 |
+
+Sprite/Single; input alpha; alpha transparency enabled; no mipmaps; Bilinear/Clamp. Editor texture compression is Uncompressed. Android uses ASTC 6×6, quality 100; max 1024 for icons and 2048 for frames. Frame imports retain their aspect ratio (2048×683 after scaling).
+
+## Automated and rendered validation
+
+- All 21 regression entry points passed (Sprint 0–7.6.1 plus Collection and earlier touch/readability/hotfix probes). Missing Script scan: 0.
+- Final Collection probe also invokes the actual Previous/Next button events, checks boundaries, measures real Fill/track widths, checks 0%/51%/100%, frame text separation, five planets, label spacing, ring/locks/dim state, actual-stage reentry and save/run isolation.
+- Preview/navigation leave Energy, migration version, Best Score, run Score, Board and Piece supply unchanged. HOME/GAME and Release DEV visibility contract passed.
+- Rendered and visually inspected requested stage1/stage3/complete/tall_safe/short images and three locked layouts. Safe Area, text clipping, title centering, planet/frame/message separation passed.
+- Serialized Scene comparison normalizes regenerated Unity IDs by hierarchy and component type. All non-Collection scene blocks are unchanged.
+- Evidence: Validation/sprint8_2_asset_audit.txt, sprint8_2_collection.txt, sprint8_2_regression_summary.txt, sprint8_2_scene_preservation.txt and sprint8_2_* logs.
+- Required renders: Validation/sprint8_2_collection_stage1.png, sprint8_2_collection_stage3.png, sprint8_2_collection_complete.png, sprint8_2_collection_tall_safe.png, sprint8_2_collection_short.png. Additional locked_9x16/locked_tall_safe/locked_short renders use the same prefix.
+
+Android Development Build: Succeeded, Build Report warnings 0 / errors 0. APK 149495326 bytes; SHA256 297557BB8DACC41462D3C75F1EFEBBC0C85C23C808B432EC3F37C34EBBEAE06B. Final/post-build Collection probes passed. Final clean diagnostics and device results follow below.
+
+## Final diagnostics and SM-S942N verification
+
+- Final cleaned-scene Collection probe: PASS; C# compiler warning/error 0, shader warning 0, runtime error 0. Missing Script scan: 0. Earlier script-reload/post-build render logs contain 414 existing render-pipelines.core D3D11 precision-conversion shader warnings; package shaders were not modified. After removing build-generated pipeline/settings changes, the final clean probe logged none. Earlier logs remain available.
+- SM-S942N R3KL20DY0KF, Android 16/API 36, physical 1080×2340: ADB device; adb install -r Success; cold launch Success. The phone was initially locked, then confirmed unlocked with the app in focus before UI testing.
+- Native HOME → Collection shows Planet 01 Stage 1, 0%, a genuinely empty bar, the new navigation/progress/stage artwork, spaced stage labels and the closer Message frame. Source alpha is correct, with no opaque rectangular background.
+- Tap (1040,890) in the Next rectangle above the visible icon successfully opens locked Planet 02, confirming that the touch target extends beyond opaque artwork. Navigation through Planet 05 stops at the disabled Next boundary; Previous returns through Planet 01. Disabled icons remain dim.
+- Stage 2 touch at actual Stage 1 is blocked; current Hero/lore/ring remain Stage 1. Current-stage selection/reentry is preserved. Full past-stage preview across all five actual stages was verified automatically; no device presets were used to fabricate later stages.
+- Back icon → HOME passed. HOME → PLAY shows Score 0, an empty Board and three Pieces, without Game Over or stale Journey feedback. Playing HOME confirmation → HOME → Collection returns to actual Stage 1 / 0%.
+- Actual device save before→after: Planet01Energy 0→0; actual restoration Stage 1→1; PlanetRestorationVersion 2→2; BestScore 15930→15930. No save keys were reset or deleted.
+- PID-scoped Logcat: Crash/FATAL EXCEPTION/AndroidJavaException/NullReferenceException/MissingReferenceException/UnityException 0; Unity warnings 0; new game-code errors 0. One existing E Unity ClassNotFoundException for com.google.android.play.core.assetpacks.AssetPackManager remains, separated as explicitly allowed by the Sprint instruction.
+- Required native image: Validation/sprint8_2_device_collection.png. Other device images: sprint8_2_device_home.png, future_locked.png, locked.png, planet05.png, back_home.png, game.png, home_confirm.png and reentry.png (each with sprint8_2_device_ prefix).
+- Device evidence: Validation/sprint8_2_device_status.txt, device_install.txt, device_launch.txt, device_logcat.txt, device_prefs_before.txt and device_prefs_after.txt (each with sprint8_2_ prefix).
+- Subjective finger feel/display readability/SFX/haptic/transition feel remains user confirmation. System gesture/hardware Back was not retested in this visual-only Sprint; the previously unconfirmed manual check remains.
+- Final PNG hashes match the initial supplied files. Scene preservation audit: zero changes outside Collection. Build-generated settings/import whitespace/resources/temp output were removed.
+- Changed files: Assets/Editor/Sprint8CollectionBuilder.cs and Sprint8CollectionPlayProbe.cs; Assets/Scripts/UI/PlanetCollectionView.cs; Assets/Scenes/Game.unity; collection_prev_icon.png, collection_next_icon.png, collection_stage_frame.png, collection_progress_frame.png (+new meta); docs/CURRENT_TASK.md, DEVLOG.md and NEXT_TASK.md.

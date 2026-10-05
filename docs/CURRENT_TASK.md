@@ -1,11 +1,15 @@
-# Sprint 8.1 — Planet Collection Visual Polish
+# Sprint 8.2 — Planet Collection Final Visual Polish
 
-Scope: center the Collection title on Safe Area and simplify the five-stage restoration row. Gameplay, restoration/save rules, navigation and preview selection remain unchanged.
+Collection-only visual changes: new Previous/Next sprites, a restoration progress frame, taller internal stage frame design, larger thumbnails and closer Message placement. Title, Name, Hero, HOME/GAME, score/energy/restoration/save/navigation/preview rules are preserved.
 
-The user-replaced collection_stage_frame.png is 2172×724 (3:1). It is reimported as a single Sprite, input alpha/transparency, bilinear/clamp, no mipmaps; Android ASTC 6×6. Audit: 737842 fully transparent pixels, 834617 partially transparent pixels, 69 opaque pixels. The source PNG is used directly.
+The supplied stage frame arrived as collection_stage_frame2.png while the documented collection_stage_frame.png was absent. Its PNG bytes are preserved; only the filename is aligned to the documented path, retaining the existing Sprite metadata/GUID.
 
-Title X anchors change from 0.16–0.96 to 0.10–0.90. Width, aspect and Y anchors 0.845–0.985 are preserved; the Back button remains independent.
+Progress composition: collection_progress_frame.png + Unity fixed 복원도 label (22) + dynamic Warm Gold percentage (32) + existing Unity track/fill. All three 0%/51%/100% states use the same layout.
 
-The new row contains five original planet sprites, four thin Gold UI connectors, small stage numbers and larger stage names. No collection_stage_slot.png is rendered; its file remains in the project. A thin procedural Cyan ring and the existing 1.00–1.04 pulse mark the actual current stage. Future stages retain dim thumbnails, smaller lock icons and dim labels. No new raster art is created.
+Navigation touch rectangles and positions are unchanged, with identical left/right RectTransforms and aspect-preserved new sprites. Disabled alpha remains 0.35.
 
-Completed: all 20 existing regressions and final Collection probe PASS; all three resolutions rendered and inspected. Final compiler/shader warnings and runtime errors 0; Missing Script 0. Android Development Build warnings/errors 0, installed/cold-launched on SM-S942N. Preview, locked Planet 02, Back icon, HOME/GAME and prefs isolation verified. Known AssetPackManager exception and unconfirmed ADB system Back are detailed in DEVLOG.md.
+Stage container anchors change from y 0.135–0.345 to 0.125–0.345 (+4.76% container height). New art has the same 2172×724 canvas ratio with more interior height. Thumbnails grow about 8.9% in 9:16/Tall and 14.1% in Short. Existing ring, pulse, thin connectors, dim/lock states and stage names remain.
+
+Message center moves upward by 3.25% of Safe Area height: 62.4px at 9:16, 70.2px for the tested Tall Safe Area, and 46.8px at Short. The original message asset and lore are preserved.
+
+Completed: all 21 regression probes PASS; responsive renders PASS; Missing Script 0; final clean C# and shader warnings/errors 0; Android Development Build warnings/errors 0; SM-S942N install-r/cold launch and Collection/HOME/GAME touch flows PASS. Device Energy 0 / Stage 1 / Best 15930 / migration version 2 are unchanged. One existing AssetPackManager ClassNotFoundException is separated from game-code runtime errors. Subjective feel/readability remains user confirmation. See DEVLOG.md for detailed evidence.

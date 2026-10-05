@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public static class Sprint8CollectionBuilder
 {
     const string Art="Assets/Art/UI/Collection/";
-    static readonly string[] Names={"collection_title","collection_back_icon","collection_planet_name_frame","collection_prev_icon","collection_next_icon","collection_stage_frame","collection_stage_slot","collection_lock_icon","collection_message_frame"};
+    static readonly string[] Names={"collection_title","collection_back_icon","collection_planet_name_frame","collection_prev_icon","collection_next_icon","collection_stage_frame","collection_stage_slot","collection_lock_icon","collection_message_frame","collection_progress_frame"};
     static readonly string[] Stages={"Desolate","Awakening","Recovering","Thriving","Restored"};
     public static void Build()
     {
@@ -36,26 +36,29 @@ public static class Sprint8CollectionBuilder
         var prev=Button("Previous",root,Names[3],.01f,.56f,.16f,.665f);
         var next=Button("Next",root,Names[4],.84f,.56f,.99f,.665f);
         var state=Text("Status",root,"",28,.10f,.365f,.90f,.405f);
-        var track=UI("Progress",root,.26f,.348f,.74f,.357f).gameObject.AddComponent<Image>();track.color=new Color(.025f,.06f,.14f,.9f);track.raycastTarget=false;
+        var progressFrame=Image("ProgressFrame",root,Art+"collection_progress_frame.png",.08f,.29f,.92f,.41f);Fit(progressFrame);
+        Text("RestorationLabel",progressFrame.transform,"복원도",22,.085f,.42f,.235f,.59f);
+        var percentage=Text("Percentage",progressFrame.transform,"",32,.24f,.40f,.375f,.61f);percentage.color=new Color(1,.79f,.32f);
+        var track=UI("Progress",progressFrame.transform,.42f,.455f,.88f,.555f).gameObject.AddComponent<Image>();track.color=new Color(.025f,.06f,.14f,.9f);track.raycastTarget=false;
         var fill=UI("Fill",track.transform,0,0,1,1).gameObject.AddComponent<Image>();fill.color=new Color(.3f,.85f,1,1);fill.raycastTarget=false;
-        var stageArea=UI("StageArea",root,.035f,.135f,.965f,.345f);
+        var stageArea=UI("StageArea",root,.035f,.125f,.965f,.345f);
         var frame=Image("Frame",stageArea,Art+Names[5]+".png",0,0,1,1);Fit(frame);
         var buttons=new Button[5];var thumbs=new Image[5];var locks=new GameObject[5];var labels=new Text[5];var sprites=new Sprite[5];
         for(int i=0;i<5;i++)
         {
             sprites[i]=AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Art/Planets/Planet01/Planet01_Stage0"+(i+1)+"_"+Stages[i]+".png");if(sprites[i]==null)throw new Exception("STOP: missing existing planet stage "+(i+1));
             float center=.14f+i*.18f;
-            var slot=UI("Stage"+(i+1),frame.transform,center-.075f,.48f,center+.075f,.76f);
+            var slot=UI("Stage"+(i+1),frame.transform,center-.075f,.49f,center+.075f,.795f);
             var hit=slot.gameObject.AddComponent<Image>();hit.color=Color.clear;hit.raycastPadding=new Vector4(0,-70,0,-15);buttons[i]=slot.gameObject.AddComponent<Button>();buttons[i].targetGraphic=hit;buttons[i].transition=Selectable.Transition.None;
-            thumbs[i]=Image("Thumbnail",slot,null,.05f,.04f,.95f,.94f);
-            if(i<4){var line=Image("Connector"+(i+1),frame.transform,null,center+.065f,.618f,center+.115f,.626f);line.color=new Color(.8f,.78f,.35f,.65f);line.transform.SetAsFirstSibling();}
+            thumbs[i]=Image("Thumbnail",slot,null,.05f,.05f,.95f,.95f);
+            if(i<4){var line=Image("Connector"+(i+1),frame.transform,null,center+.065f,.6385f,center+.115f,.6465f);line.color=new Color(.8f,.78f,.35f,.65f);line.transform.SetAsFirstSibling();}
             var ring=UI("CurrentRing",slot,0,0,1,1).gameObject.AddComponent<CollectionStageRing>();ring.raycastTarget=false;ring.color=new Color(.35f,.85f,1,.8f);
             locks[i]=Image("Lock",slot,Art+Names[7]+".png",.59f,.02f,.99f,.42f).gameObject;
-            Text("StageNumber"+(i+1),frame.transform,(i+1)+"단계",18,center-.083f,.39f,center+.083f,.48f);labels[i]=Text("StageLabel"+(i+1),frame.transform,"",25,center-.083f,.29f,center+.083f,.39f);
+            Text("StageNumber"+(i+1),frame.transform,(i+1)+"단계",18,center-.083f,.355f,center+.083f,.43f);labels[i]=Text("StageLabel"+(i+1),frame.transform,"",25,center-.083f,.24f,center+.083f,.34f);
         }
-        var loreFrame=Image("MessageFrame",root,Art+Names[8]+".png",.08f,.005f,.92f,.13f);Fit(loreFrame);
+        var loreFrame=Image("MessageFrame",root,Art+Names[8]+".png",.08f,.0375f,.92f,.1625f);Fit(loreFrame);
         var lore=Text("Message",loreFrame.transform,"",27,.14f,.25f,.86f,.65f);
-        var view=root.gameObject.AddComponent<PlanetCollectionView>();view.Configure(flow,sprites,hero,fill,heroLock.gameObject,number,name,state,lore,back,prev,next,buttons,thumbs,locks,labels);flow.ConfigureCollection(view);
+        var view=root.gameObject.AddComponent<PlanetCollectionView>();view.Configure(flow,sprites,hero,fill,heroLock.gameObject,number,name,state,lore,back,prev,next,buttons,thumbs,locks,labels);view.ConfigureProgress(progressFrame.gameObject,percentage);flow.ConfigureCollection(view);
         root.gameObject.SetActive(false);PreserveHomeBackgroundSize(originalScene,safe);EditorUtility.SetDirty(flow);EditorSceneManager.MarkSceneDirty(scene);EditorSceneManager.SaveScene(scene);AssetDatabase.SaveAssets();Debug.Log("SPRINT8_COLLECTION_READY");
     }
             static void PreserveHomeBackgroundSize(string source,Transform safe)
