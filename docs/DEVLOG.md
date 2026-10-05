@@ -67,3 +67,57 @@ Images: Validation/sprint8_collection_9x16.png, sprint8_collection_tall_safe.png
 - Device screenshots: sprint8_device_home.png, sprint8_device_planet01.png, sprint8_device_preview1.png, sprint8_device_preview2.png, sprint8_device_future_locked.png, sprint8_device_locked.png, sprint8_device_planet05.png, sprint8_device_reentry.png, sprint8_device_game.png, sprint8_device_home_confirm.png (all under Validation/).
 
 Only Collection UI/navigation, its scene/assets and automated checks were added. Board/Piece/Score/Combo/line clear/energy/save/transition/SFX/haptic rules and HOME design were preserved. Build-generated pipeline/settings/performance-resource changes were removed.
+
+# Sprint 8.1 — Planet Collection Visual Polish
+
+## Scope and assets
+
+- Title X anchors: 0.16–0.96 → 0.10–0.90, independently centered on Safe Area. Width and Y anchors remain unchanged.
+- User-replaced collection_stage_frame.png: 2172×724, 3:1. Transparent/partial/opaque pixel counts: 737842/834617/69. SHA256 F20F4E7F14594A23616B787BBC9A8C6FE8067A819D1AD7D45B3D41A0375F7A21. Source PNG was not processed.
+- Reimported Sprite/Single, input alpha, transparency, no mipmaps, bilinear/clamp; Android ASTC 6×6, max size 2048.
+- Removed five SlotFrame objects from Collection rendering; collection_stage_slot.png remains in the project.
+- Five identical base thumbnail areas have centers 0.14, 0.32, 0.50, 0.68, 0.86 inside the fitted frame. Existing original stage sprites are reused.
+- Four thin Gold Image connectors, a procedural Cyan current-stage ring, and the existing 1.00–1.04 pulse. No new raster assets.
+- Stage numbers use size 18, names size 25 (responsive best fit). Names/numbers are inside the frame with padding. Completed/current thumbnails stay alpha 1; future thumbnails alpha 0.3 with small lock overlays and text alpha 0.65.
+- Current highlighting follows the actual stage when past-stage preview changes the Hero.
+- HOME design, Hero/name/message/progress dimensions, navigation button hit areas and all game/restoration/save/preview/navigation rules are preserved.
+- Builder now resolves the HOME background's actual serialized transform ID to preserve its existing size.
+
+## Title center measurements
+
+| Resolution | Previous center X | New center X | Safe Area center X | Final absolute offset |
+|---|---:|---:|---:|---:|
+| 1080×1920 | 604.8 | 540 | 540 | 0 px |
+| 1080×2400 with Safe Area | 602.208 | 540 | 540 | 0.000031 px |
+| 1080×1440 | 604.8 | 540 | 540 | 0.000031 px |
+
+Previous positions are derived from the previous 0.56 anchor center at the same tested Safe Area. The corresponding prior offsets are 64.8/62.208/64.8 px; thus full-width previous center X is 604.8.
+
+## Automated and visual validation
+
+All 20 existing regression entry points passed, along with the Collection probe. Final Collection probe passed after adjusting label padding: five stages, current rings, dim future labels, number/name hierarchy, preview/Save/Best/Energy/current-stage isolation, reentry, locked planets 02–05, navigation bounds, HOME/GAME flow and Release DEV contract.
+
+Numeric checks cover title centering, five equal-spaced stage areas, equal proportions, thumbnail/frame bounds, visible frame padding, separation of number/name/thumbnail, no old slot sprite rendering, Safe Area and text clipping.
+
+Rendered and inspected Planet 01 at 1080×1920, 1080×2400 with Safe Area insets, and 1080×1440, plus locked layouts. Files: Validation/sprint8_1_collection_9x16.png, sprint8_1_collection_tall_safe.png, sprint8_1_collection_short.png, and corresponding locked variants.
+
+Scene preservation comparison normalizes Unity-generated local IDs and compares serialized objects by hierarchy path/component type. Result: all non-Collection scene blocks unchanged, including HOME, Board/Piece, feedback, flow and restoration objects.
+
+Evidence: Validation/sprint8_1_regression_summary.txt, sprint8_1_collection.txt, sprint8_1_scene_preservation.txt, sprint8_asset_alpha.txt and sprint8_1_* logs. Final build/device diagnostics follow below.
+
+## Final diagnostics, Android and remaining manual checks
+
+- Final cleaned-scene probe: PASS; C# compiler warnings/errors 0, Shader warnings 0, runtime errors 0. Missing Script scan: 0.
+- Earlier script-reload/build render probes each logged 414 existing render-pipelines.core D3D11 path-tracing/lightmap precision warnings. Package shaders were not changed. After restoring build-generated pipeline/settings changes, the final clean probe logged none; original diagnostic logs remain available.
+- Android Development Build Report: Succeeded, warnings 0, errors 0. APK 149507151 bytes, built 2026-10-05 20:21:03. SHA256 4C709BDB62DAC2D6553A71D8C8F58539B44F7060B97840B2C5F07796E42C0F17.
+- SM-S942N (R3KL20DY0KF), Android 16, 1080×2340: normal device, adb install -r Success, cold launch Success.
+- Native Collection displays the centered title, new stage frame, five direct planet thumbnails, thin connectors, separate labels and Stage 5 current ring/pulse.
+- Existing device state is Energy 400 / actual Stage 5 / Best 15930. Stage 1 and Stage 3 taps preview the corresponding Hero and lore while Stage 5 remains highlighted. Planet 02 remains locked. Back icon → HOME passed. Reentry reads actual Stage 5.
+- HOME → PLAY passed: Score 0, empty Board, three Pieces, no immediate Game Over or stale milestone overlay. Playing HOME confirm → HOME → Collection also passed.
+- Actual device prefs before/after: Planet01Energy 400→400, PlanetRestorationVersion 2→2, BestScore 15930→15930. No device presets were applied.
+- Logcat: FATAL EXCEPTION/crash/AndroidJavaException/NullReferenceException/MissingReferenceException/UnityException 0; Unity warnings 0. One existing E Unity ClassNotFoundException for com.google.android.play.core.assetpacks.AssetPackManager remains and is reported separately as permitted by the instructions.
+- Additional ADB KEYCODE_BACK injection did not return Collection to HOME. No PASS is claimed for system Back; gesture/hardware Back needs manual confirmation. The Back icon is verified. Input/navigation code was preserved as required; the previous Sprint also left this hardware check unconfirmed.
+- Subjective readability/touch/SFX/haptic/transition feel remains a user check.
+- Device captures: Validation/sprint8_1_device_collection.png, preview1.png, preview3.png, locked.png, home.png, android_back.png, game.png, reentry.png (each with sprint8_1_device_ prefix). The android_back image documents the unconfirmed input check, not a successful HOME return.
+- Final Scene preservation: no changes outside Collection. Build-generated settings, temporary output and import whitespace changes were removed.
+- Main files: Assets/Editor/Sprint8CollectionBuilder.cs, Sprint8CollectionPlayProbe.cs; Assets/Scripts/UI/PlanetCollectionView.cs, CollectionStageRing.cs (+meta); Assets/Scenes/Game.unity; user-provided collection_stage_frame.png; docs/CURRENT_TASK.md, DEVLOG.md, NEXT_TASK.md.

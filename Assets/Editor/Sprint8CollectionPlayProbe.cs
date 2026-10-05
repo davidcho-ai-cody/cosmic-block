@@ -42,6 +42,11 @@ public static class Sprint8CollectionPlayProbe
                     Req(view.IsStageLocked(j)==(j>stage),"lock "+j);Req(view.Slots[j-1].interactable==(j<=stage),"slot input "+j);
                     Req(view.Slots[j-1].transform.Find("Lock").gameObject.activeSelf==(j>stage),"lock visual "+j);
                     Req(view.Slots[j-1].transform.Find("Thumbnail").GetComponent<Image>().color.a==(j<=stage?1:.3f),"thumbnail alpha");
+                    Req(view.Slots[j-1].transform.Find("CurrentRing").gameObject.activeSelf==(j==stage),"current stage ring");
+                    var label=view.Slots[j-1].transform.parent.Find("StageLabel"+j).GetComponent<Text>();
+                    var number=view.Slots[j-1].transform.parent.Find("StageNumber"+j).GetComponent<Text>();
+                    Req(number.fontSize<label.fontSize,"number/name hierarchy");
+                    Req(label.color.a==(j<=stage?1:.65f),"future labels dim");
                 }
                 var slotShapes=new CosmicBlock.Blocks.BlockShape[3];for(int q=0;q<3;q++)slotShapes[q]=session.Slots[q].Shape;string currentLore=view.Message;view.Slots[0].onClick.Invoke();Req(view.PreviewStage==1&&view.HeroSprite.name.Contains("Stage01"),"past preview");
                 Req(stage==1||view.Message!=currentLore,"lore changes");view.Preview(5);Req(view.PreviewStage==(stage==5?5:1),"future preview blocked");
@@ -72,13 +77,33 @@ public static class Sprint8CollectionPlayProbe
             sr.anchorMin=inset?new Vector2(.02f,.04f):Vector2.zero;sr.anchorMax=inset?new Vector2(.98f,.94f):Vector2.one;sr.offsetMin=sr.offsetMax=Vector2.zero;Canvas.ForceUpdateCanvases();
             var bg=view.transform.Find("Background");bg.GetComponent<AspectFillBackground>().enabled=false;
             var br=(RectTransform)bg;var img=bg.GetComponent<Image>();var full=(RectTransform)canvas.transform;float scale=Mathf.Max(full.rect.width/img.sprite.rect.width,full.rect.height/img.sprite.rect.height);br.anchorMin=br.anchorMax=new Vector2(.5f,.5f);br.sizeDelta=img.sprite.rect.size*scale;br.anchoredPosition=sr.InverseTransformPoint(full.TransformPoint(full.rect.center));
-            Canvas.ForceUpdateCanvases();Bounds(name);cam.Render();RenderTexture.active=rt;tex=new Texture2D(w,h,TextureFormat.RGB24,false);tex.ReadPixels(new Rect(0,0,w,h),0,0);tex.Apply();Directory.CreateDirectory("Validation");File.WriteAllBytes("Validation/sprint8_collection_"+name+".png",tex.EncodeToPNG());bg.GetComponent<AspectFillBackground>().enabled=true;
+            Canvas.ForceUpdateCanvases();Bounds(name);cam.Render();RenderTexture.active=rt;tex=new Texture2D(w,h,TextureFormat.RGB24,false);tex.ReadPixels(new Rect(0,0,w,h),0,0);tex.Apply();Directory.CreateDirectory("Validation");File.WriteAllBytes("Validation/sprint8_1_collection_"+name+".png",tex.EncodeToPNG());bg.GetComponent<AspectFillBackground>().enabled=true;
         }
         finally{canvas.renderMode=mode;canvas.worldCamera=wc;cam.targetTexture=target;cam.orthographic=ortho;cam.orthographicSize=size;RenderTexture.active=active;sr.anchorMin=min;sr.anchorMax=max;sr.offsetMin=omin;sr.offsetMax=omax;sa.enabled=enabled;if(tex!=null)UnityEngine.Object.DestroyImmediate(tex);rt.Release();UnityEngine.Object.DestroyImmediate(rt);}
     }
     static void Bounds(string name)
     {
         Rect area=World((RectTransform)safe);
+        float titleX=World((RectTransform)view.transform.Find("Title")).center.x;
+        Req(Mathf.Abs(titleX-area.center.x)<.1f,"title centered");
+        results.Add("Title "+name+": previous offset="+(area.width*.06f)+" current offset="+(titleX-area.center.x));
+        foreach(var image in view.GetComponentsInChildren<Image>(true))Req(image.sprite==null||image.sprite.name!="collection_stage_slot","old slot sprite absent");
+        Rect frame=World((RectTransform)view.Slots[0].transform.parent);
+        for(int i=0;i<5;i++){
+            Rect thumb=World((RectTransform)view.Slots[i].transform.Find("Thumbnail"));
+            Req(thumb.xMin>=frame.xMin&&thumb.xMax<=frame.xMax&&thumb.yMin>=frame.yMin&&thumb.yMax<=frame.yMax,"thumbnail inside frame");
+            Rect label=World((RectTransform)view.Slots[i].transform.parent.Find("StageLabel"+(i+1)));
+            Req(label.yMin>=frame.yMin+frame.height*.27f&&label.yMax<=frame.yMax,"label inside visible frame padding");
+            Rect number=World((RectTransform)view.Slots[i].transform.parent.Find("StageNumber"+(i+1)));
+            Req(label.yMax<=number.yMin+.1f&&number.yMax<=thumb.yMin+2,"labels separated from thumbnail");
+            Req(view.Slots[i].transform.Find("CurrentRing").gameObject.activeSelf==(view.PlanetIndex==0&&i+1==view.CurrentStage),"current ring");
+            if(i>0){
+                Rect prior=World((RectTransform)view.Slots[i-1].transform);
+                Rect current=World((RectTransform)view.Slots[i].transform);
+                Req(Mathf.Abs(prior.width/prior.height-current.width/current.height)<.02f,"equal thumbnail proportions");
+                Req(Mathf.Abs((current.center.x-prior.center.x)/frame.width-.18f)<.005f,"equal spacing");
+            }
+        }
         foreach(string path in new[]{"Title","Back","Previous","Next","Hero","HeroLock","NameFrameArea","StageArea","MessageFrameArea"})
         {
             var t=view.transform.Find(path);if(!t.gameObject.activeSelf)continue;Rect r=World((RectTransform)t);Req(r.xMin>=area.xMin-.1f&&r.xMax<=area.xMax+.1f&&r.yMin>=area.yMin-.1f&&r.yMax<=area.yMax+.1f,"safe bounds "+name+" "+path);
@@ -94,6 +119,6 @@ public static class Sprint8CollectionPlayProbe
     {
         EditorApplication.update-=Check;Application.logMessageReceived-=Log;
         for(int i=0;i<3;i++){if(had[i])PlayerPrefs.SetInt(keys[i],saved[i]);else PlayerPrefs.DeleteKey(keys[i]);}PlayerPrefs.Save();
-        Directory.CreateDirectory("Validation");File.WriteAllText("Validation/sprint8_collection.txt",string.Join("\n",results)+"\n"+(pass?"SPRINT8_COLLECTION_PASS":fail));if(pass)Debug.Log("SPRINT8_COLLECTION_PASS");else Debug.LogError(fail);EditorApplication.Exit(pass?0:1);
+        Directory.CreateDirectory("Validation");File.WriteAllText("Validation/sprint8_1_collection.txt",string.Join("\n",results)+"\n"+(pass?"SPRINT8_COLLECTION_PASS":fail));if(pass)Debug.Log("SPRINT8_COLLECTION_PASS");else Debug.LogError(fail);EditorApplication.Exit(pass?0:1);
     }
 }

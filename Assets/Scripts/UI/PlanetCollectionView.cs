@@ -56,8 +56,9 @@ namespace CosmicBlock.UI
             {
                 bool unlocked=!IsStageLocked(i+1);slots[i].interactable=unlocked;
                 thumbnails[i].gameObject.SetActive(known);thumbnails[i].sprite=sprites[i];thumbnails[i].color=new Color(1,1,1,unlocked?1:.3f);
-                locks[i].SetActive(!unlocked);var lockRect=(RectTransform)locks[i].transform;lockRect.anchorMin=known?new Vector2(.59f,.02f):new Vector2(.24f,.20f);lockRect.anchorMax=known?new Vector2(.99f,.42f):new Vector2(.76f,.76f);labels[i].text=(i+1)+"단계\n"+(known?PlanetCollectionData.StageNames[i]:"???");
-                labels[i].color=known&&i+1==CurrentStage?new Color(.55f,.9f,1):Color.white;slots[i].transform.localScale=Vector3.one;
+                locks[i].SetActive(!unlocked);var lockRect=(RectTransform)locks[i].transform;lockRect.anchorMin=known?new Vector2(.72f,.03f):new Vector2(.24f,.20f);lockRect.anchorMax=known?new Vector2(.98f,.29f):new Vector2(.76f,.76f);labels[i].text=known?PlanetCollectionData.StageNames[i]:"???";
+                labels[i].color=known&&i+1==CurrentStage?new Color(.55f,.9f,1):unlocked?Color.white:new Color(.55f,.62f,.72f,.65f);slots[i].transform.parent.Find("StageNumber"+(i+1)).GetComponent<Text>().color=labels[i].color;
+                slots[i].transform.Find("CurrentRing").gameObject.SetActive(known&&i+1==CurrentStage);slots[i].transform.localScale=Vector3.one;
             }
             previous.interactable=PlanetIndex>0;next.interactable=PlanetIndex<4;previous.transform.Find("Icon").GetComponent<Image>().color=new Color(1,1,1,previous.interactable?1:.35f);next.transform.Find("Icon").GetComponent<Image>().color=new Color(1,1,1,next.interactable?1:.35f);
         }
