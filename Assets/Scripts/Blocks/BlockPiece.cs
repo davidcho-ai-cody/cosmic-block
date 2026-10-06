@@ -17,6 +17,7 @@ namespace CosmicBlock.Blocks
         public static readonly Color DragOutlineColor = new Color(1f, .76f, .28f, .98f);
         private static readonly Color RestOutlineColor = new Color(1f, 1f, 1f, .20f);
         public BlockShape Shape { get; private set; }
+        public Sprite AppearanceSprite { get; private set; }
         public bool IsConsumed { get; private set; }
         public RectTransform Rect => (RectTransform)transform;
         public Vector3 OriginWorld => Rect.TransformPoint(new Vector3(Rect.rect.xMin + cellSize / 2,
@@ -31,6 +32,7 @@ namespace CosmicBlock.Blocks
                 Destroy(visual.gameObject);
             }
             Shape = shape; IsConsumed = false;
+            AppearanceSprite = board.BlockSprite(paletteIndex);
             GetComponent<Image>().color = new Color(0, 0, 0, .001f);
             GetComponent<Image>().raycastTarget = true;
             visuals = new Image[shape.Cells.Count];
@@ -41,13 +43,17 @@ namespace CosmicBlock.Blocks
                 rect.SetParent(transform, false);
                 rect.anchorMin = rect.anchorMax = new Vector2(0, 1);
                 visuals[i] = rect.gameObject.AddComponent<Image>();
-                visuals[i].color = Palette[paletteIndex % Palette.Length];
+                visuals[i].sprite = AppearanceSprite;
+                visuals[i].preserveAspect = true;
+                visuals[i].color = AppearanceSprite != null ? Color.white : Palette[paletteIndex % Palette.Length];
                 visuals[i].raycastTarget = false;
                 var highlight = rect.gameObject.AddComponent<Outline>();
+                highlight.enabled = AppearanceSprite == null;
                 highlight.effectColor = RestOutlineColor;
-                highlight.effectDistance = new Vector2(-1.5f, 1.5f);
+                highlight.effectDistance = AppearanceSprite != null ? Vector2.zero : new Vector2(-1.5f, 1.5f);
                 highlight.useGraphicAlpha = true;
                 var shade = rect.gameObject.AddComponent<Shadow>();
+                shade.enabled = AppearanceSprite == null;
                 shade.effectColor = new Color(.02f, .03f, .10f, .28f);
                 shade.effectDistance = new Vector2(2, -2);
                 shade.useGraphicAlpha = true;
@@ -65,8 +71,9 @@ namespace CosmicBlock.Blocks
             foreach (var outline in cellOutlines)
             {
                 if (outline == null) continue;
+                outline.enabled = dragging || AppearanceSprite == null;
                 outline.effectColor = dragging ? DragOutlineColor : RestOutlineColor;
-                outline.effectDistance = dragging ? new Vector2(3.25f, -3.25f) : new Vector2(-1.5f, 1.5f);
+                outline.effectDistance = dragging ? new Vector2(3.25f, -3.25f) : AppearanceSprite != null ? Vector2.zero : new Vector2(-1.5f, 1.5f);
                 outline.useGraphicAlpha = !dragging;
             }
         }

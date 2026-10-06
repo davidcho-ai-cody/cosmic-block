@@ -65,6 +65,7 @@ namespace CosmicBlock.Core
             State = GameState.Resolving;
             board.ClearPreview();
             if (!Model.TryPlace(piece.Shape, x, y)) { State = GameState.Playing; return false; }
+            board.PaintPlacement(piece.Shape, x, y, piece.AppearanceSprite);
             LastClear = Model.ClearCompletedLines();
             Combo = LastClear.LineCount > 0 ? (int)Math.Min(int.MaxValue, (long)Combo + 1) : 0;
             int previousScore = Score;

@@ -196,3 +196,60 @@ SM-S942N (Android 16, 1080×2340): adb install-r Success and cold launch Success
 PID Logcat: crash/game exceptions 0 and Unity warnings 0. One existing AssetPackManager ClassNotFoundException remains, reported separately. Physical finger comfort and subjective visual balance remain user confirmation; ADB touch navigation and screenshot bounds are verified. Device images and preferences/log evidence use Validation/sprint8_2_1_device_* paths.
 
 Changed files: navigation geometry in Game.unity and Sprint8CollectionBuilder.cs, geometry assertions/output paths in Sprint8CollectionPlayProbe.cs, and three task documents. All other Scene blocks and original PNGs are unchanged. Build-generated settings/resources/temp output were removed.
+
+# Sprint 9 — GAME Visual Rebuild
+
+## Scope / source assets / import
+
+All nine final user PNGs are used separately, without pixel edits, stretching or baked dynamic numbers. Source RGBA/transparent exterior pixels were inspected and hashes recorded in Validation/sprint9_asset_audit.txt.
+
+| Source | Dimensions | Application |
+|---|---|---|
+| game_home_button.png | 1341×1173 | Existing PlayingHomeButton / confirmation flow |
+| game_best_score_frame.png | 2019×779 | BestFrame with dynamic TMP value |
+| game_planet_status_frame.png | 2018×779 | Planet Status decoration behind actual stage sprite/data |
+| game_board_frame.png | 1299×1211 | Separate BoardFrame sibling, original aspect ratio |
+| game_empty_cell.png | 1254×1254 | Existing 64 Cell Images |
+| game_block_blue.png | 1254×1254 | Blue Piece cells and matching placed Board cells |
+| game_block_purple.png | 1254×1254 | Purple Piece cells and matching placed Board cells |
+| game_block_gold.png | 1254×1254 | Gold Piece cells and matching placed Board cells |
+| game_piece_slot.png | 1283×1226 | Same three existing whole-slot drag targets |
+
+Sprite/Single and FullRect; input alpha / alpha transparency; Bilinear/Clamp; no mipmaps. Editor Uncompressed; Android ASTC 6×6 quality 100, max 1024 for tile/button/slot and 2048 for frames. PNG source bytes are unchanged.
+
+The project previously used Legacy Text, despite the document assuming existing TMP. Dynamic score/Best use the TMP font/settings/shader resources bundled with the already-installed uGUI package, including the LiberationSans OFL license. No external package or game feature was added. Existing hidden Legacy score fields remain for compatibility with GameHud and old regression probes.
+
+## Layout / rendering / preservation
+
+- HOME icon remains bound to the existing confirmation flow; sufficient rectangular hit target. No Retry/save reset is called by the new artwork.
+- SCORE is centered above a larger current value, without another frame. Best has its own image at the upper right. Values are formatted with invariant thousands separators and TMP auto sizing.
+- Planet Status uses the existing current/next stage sprites and restoration presentation. Overall % follows PresentedEnergy, preserving fragment-arrival timing. Existing stage-local Bar, overflow and transition rules remain; only bar/label geometry and rounded rendering changed.
+- Board is still the same Grid/BoardView with 64 immediate Cell children. Decorative BoardFrame is a sibling, not a source of cell coordinates. SquareBoardLayout uses min(SafeWidth×0.66, SafeHeight×0.36), center (0.5,0.415); frame height is BoardSide/0.74 with its source ratio. Tested Board sides: 691.2 / 684.288 / 518.4 at 9:16/Tall Safe/Short.
+- BlockArea uses anchors (0.02,0.02)-(0.98,0.16), equal existing Slot roots, gap 20 and horizontal padding 8. Original shape sizing rules, whole-slot hit forwarding, offset 110 and drag scale 1.05 remain.
+- Empty cells have restrained tint; placed cells preserve the Piece's Blue/Purple/Gold sprite. Normal extra outlines/shadows are disabled for sprite skins. Valid Warm Gold / invalid Muted Red preview and the existing Gold dragging outline remain.
+- Existing ThemeFill decorations under GAME HOME/Planet Status were removed because they covered the new art. HOME/Collection ThemeFill objects were not touched.
+- Game Over and HOME confirmation siblings draw above GAME HUD/frames. Existing Clear effect/particle/Score Pop/Combo pools and Planet central transition objects/data remain unchanged.
+- BoardModel, Shape pool, generator, score/combo/energy/save/game-over rules, DragHandler/SlotDragHandler, clear timing/SFX/haptic and PlanetRestorationView transition code are unchanged. GameSession only forwards appearance to BoardView after valid model placement, before clearing; it does not change validation, state, rewards or supply order.
+- Scene comparison by hierarchy/component with normalized local IDs: all HOME/Collection/clear feedback/planet flight/transition/confirmation/Game Over blocks unchanged. Two Collection icon anchor literals were restored after Unity rounded their floats during scene save.
+
+## Validation (final build/device results follow)
+
+Initial and final-presentation regression suites execute all 22 entry points (Sprint 0–8.2.1 / earlier hotfix probes / Sprint 9). Sprint 9 checks all catalog shapes via actual slot-edge drag events, matching palette cells, invalid drop isolation, three-piece refill, 64-coordinate roundtrips per resolution, TMP glyph bounds at 999 / 15,930 / 999,999 / 9,999,999, HOME/Collection/GAME, Game Over/Retry and save isolation. Final responsive and Android diagnostics are recorded below when complete.
+
+Evidence: Validation/sprint9_game.txt, sprint9_regression_summary.txt, sprint9_scene_preservation.txt and sprint9_* logs. GAME renders: sprint9_game_9x16.png, game_tall_safe.png, game_short.png, game_placed.png and game_over.png (each prefixed sprint9_). Additional value/drag/feedback captures are being generated.
+
+## Final validation / Android (2026-10-06)
+
+- All 22 regression entry points PASS on final presentation, including Sprint 0–8.2.1, earlier UX/flow/Journey fixes and Sprint 9. Final Sprint 9 probe: 1,794 assertions. All catalog shapes use actual pointer/slot events; 64 coordinate roundtrips at each captured resolution; invalid drop, consumption/refill, palette placement, score/Best glyph bounds and clean flows PASS.
+- Responsive 1080×1920 / 1080×2400 + Safe Area / 1080×1440 PASS: square Board sides 691.2 / 684.288 / 518.4, all 64 cells aligned, no clipping/overlap/Safe Area intrusion. Actual glyph bounds pass at 999 / 15,930 / 999,999 / 9,999,999. Clear row+column highlights align with their real cell geometry.
+- Source SHA-256 verification: all nine PNG files unchanged. Normalized protected scene comparison: 0 changed blocks (HOME/Collection/Clear feedback/Planet energy flight/central transition/confirmation/Game Over). Temporary build settings/URP serialization and performance artifacts were cleaned up.
+- Final Compiler Warning/Error 0; final clean Editor Shader Warning 0; Runtime Game Error 0; Missing Script 0. Initial TMP native compilation recorded 3 large-method splitting notices (TMP_TextParsingUtilities.cctor and GenerateTextMesh in TextMeshPro/TextMeshProUGUI). They describe C++ compilation optimization, not C# failures. Same-code incremental Android build: Succeeded, Warning 0, Error 0. Intermediate postbuild D3D11 import recorded 414 existing URP precision warnings; retained in logs, final clean confirm run 0. No package edits or warning filters.
+- Final APK: Builds/Android/Development/CosmicBlock-dev.apk; 151796683 bytes; SHA256 207638CB6E8D6C474E7ECC2192AF5078019605B3261A77ACEA76907A4C325F2A. First native compile took about 22 minutes; final incremental build reused native outputs.
+- SM-S942N / R3KL20DY0KF / Android 16 API 36 / 1080×2340: authorized device, adb install -r Success, cold launch and foreground activity PASS. Package name unchanged. No uninstall, preset/reset, migration or development gameplay hooks were used on the phone.
+- Actual ADB drag QA: invalid outside-board drop returns, then 23 placements starting at slot edges. First 22 screenshot boards match predicted 64-cell state. One Row Clear produces score 260 at step 6 and Energy 290→300, Stage 3→4 with next-stage energy 0/100. Final score 690. Final remaining 2x2 has zero legal positions; Game Over overlay verified visually (overlay naturally occludes the screenshot board classifier on step 23).
+- Real Retry: Score 0, empty Board, three Pieces, no stale overlay. HOME confirmation Cancel/Confirm, HOME→Collection, Next→Planet 02 Locked, Prev→Planet 01, Back→HOME→GAME clean run PASS. Device left in GAME for user review. Hardware/gesture Android Back and subjective feel are not newly certified by this visual Sprint.
+- Save before/after install: Best 15930 / Planet Energy 290 / restoration version 2 unchanged. After actual one Clear: Best 15930 / Energy 300 / version 2, preserved through Game Over/Retry/HOME/Collection/new GAME. Increase is the existing +10 reward, not save alteration by visual code. Editor probe snapshots and restores original save keys.
+- PID-scoped cold-launch-to-final Logcat: crash/fatal 0, managed/new game exception 0, Unity warning 0. One pre-existing AssetPackManager ClassNotFoundException at startup remains separately documented; no new exception or crash follows. Physical touch comfort, readability and SFX/haptic/transition feel remain user confirmation.
+- Evidence: sprint9_regression_summary.txt, sprint9_game.txt, sprint9_scene_preservation.txt, sprint9_device_validation.txt, sprint9_device_moves.json, sprint9_device_prefs_{before,after_install,after_gameplay,after_home,final}.txt, sprint9_device_logcat.txt. Build logs: sprint9_android_build.log (initial 3 notices), sprint9_android_incremental.log (0/0). Editor final: sprint9_confirm_clean.log (0/0).
+- Renders: sprint9_game_9x16.png, sprint9_game_tall_safe.png, sprint9_game_short.png, sprint9_game_placed.png, sprint9_game_over.png; best_999/15930/999999/9999999, drag_valid/drag_invalid/clear_feedback with sprint9_ prefix. Android: sprint9_device_game.png, first_placement.png, move_6.png (Stage 4), move_23.png (Game Over), retry/confirm/cancel/collection/locked/final with sprint9_device_ prefix.
+- Changed runtime files: BoardView.cs, BlockPiece.cs, GameSession.cs (appearance forwarding only), SquareBoardLayout.cs, new GameVisualPresentation.cs. Scene: Game.unity. Editor: new Sprint9GameBuilder.cs and Sprint9GamePlayProbe.cs. Art/import: nine Game PNGs/metas, essential TMP resources/fonts/license. Documentation: README and docs/CURRENT_TASK, NEXT_TASK, DEVLOG. Git uses the existing origin/main with ordinary commit/push after checks.
