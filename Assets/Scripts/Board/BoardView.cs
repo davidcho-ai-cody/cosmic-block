@@ -15,6 +15,9 @@ namespace CosmicBlock.Board {
   public static readonly Color InvalidBorder=new Color(.82f,.32f,.38f,.96f);
   [SerializeField] Image[] cells;
   [SerializeField] Sprite emptySprite;[SerializeField] Sprite[] blockSprites;
+  [SerializeField] float spriteVisualScale=1;
+  public float SpriteVisualScale=>spriteVisualScale;
+  public void ConfigureDensity(float scale){spriteVisualScale=scale;foreach(var cell in cells){var effect=cell.GetComponent<CosmicBlock.UI.CellSpriteDensity>();if(effect==null)effect=cell.gameObject.AddComponent<CosmicBlock.UI.CellSpriteDensity>();effect.Configure(scale);}}
   readonly Sprite[] placedSprites=new Sprite[64];
   public bool HasVisualSkin=>emptySprite!=null;
   public Sprite BlockSprite(int index)=>blockSprites==null||blockSprites.Length==0?null:blockSprites[index%blockSprites.Length];

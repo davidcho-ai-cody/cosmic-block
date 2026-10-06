@@ -305,6 +305,7 @@ GameObject:
   - component: {fileID: 62170696}
   - component: {fileID: 62170697}
   - component: {fileID: 62170698}
+  - component: {fileID: 62170699}
   m_Layer: 0
   m_Name: Cell_1_5
   m_TagString: Untagged
@@ -384,6 +385,19 @@ MonoBehaviour:
   m_EffectColor: {r: 0.3, g: 0.72, b: 0.88, a: 0.58}
   m_EffectDistance: {x: 0, y: 0}
   m_UseGraphicAlpha: 0
+--- !u!114 &62170699
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 62170694}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6dee3e6104c2ed4eba2b60a34aebe49, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::CosmicBlock.UI.CellSpriteDensity
+  visualScale: 1.2
 --- !u!1 &67019946
 GameObject:
   m_ObjectHideFlags: 0
@@ -508,6 +522,7 @@ GameObject:
   - component: {fileID: 73934615}
   - component: {fileID: 73934616}
   - component: {fileID: 73934617}
+  - component: {fileID: 73934618}
   m_Layer: 0
   m_Name: Cell_7_3
   m_TagString: Untagged
@@ -587,6 +602,19 @@ MonoBehaviour:
   m_EffectColor: {r: 0.3, g: 0.72, b: 0.88, a: 0.58}
   m_EffectDistance: {x: 0, y: 0}
   m_UseGraphicAlpha: 0
+--- !u!114 &73934618
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 73934613}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6dee3e6104c2ed4eba2b60a34aebe49, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::CosmicBlock.UI.CellSpriteDensity
+  visualScale: 1.2
 --- !u!1 &74865812
 GameObject:
   m_ObjectHideFlags: 0
@@ -870,6 +898,7 @@ GameObject:
   - component: {fileID: 86568218}
   - component: {fileID: 86568219}
   - component: {fileID: 86568220}
+  - component: {fileID: 86568221}
   m_Layer: 0
   m_Name: Cell_4_3
   m_TagString: Untagged
@@ -949,6 +978,19 @@ MonoBehaviour:
   m_EffectColor: {r: 0.3, g: 0.72, b: 0.88, a: 0.58}
   m_EffectDistance: {x: 0, y: 0}
   m_UseGraphicAlpha: 0
+--- !u!114 &86568221
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 86568216}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6dee3e6104c2ed4eba2b60a34aebe49, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::CosmicBlock.UI.CellSpriteDensity
+  visualScale: 1.2
 --- !u!1 &92872933
 GameObject:
   m_ObjectHideFlags: 0
@@ -1097,6 +1139,7 @@ GameObject:
   - component: {fileID: 105327210}
   - component: {fileID: 105327211}
   - component: {fileID: 105327212}
+  - component: {fileID: 105327213}
   m_Layer: 0
   m_Name: Cell_0_6
   m_TagString: Untagged
@@ -1176,6 +1219,19 @@ MonoBehaviour:
   m_EffectColor: {r: 0.3, g: 0.72, b: 0.88, a: 0.58}
   m_EffectDistance: {x: 0, y: 0}
   m_UseGraphicAlpha: 0
+--- !u!114 &105327213
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 105327208}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6dee3e6104c2ed4eba2b60a34aebe49, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::CosmicBlock.UI.CellSpriteDensity
+  visualScale: 1.2
 --- !u!1 &114771444
 GameObject:
   m_ObjectHideFlags: 0
@@ -1982,6 +2038,7 @@ GameObject:
   - component: {fileID: 201456491}
   - component: {fileID: 201456492}
   - component: {fileID: 201456493}
+  - component: {fileID: 201456494}
   m_Layer: 0
   m_Name: Cell_6_1
   m_TagString: Untagged
@@ -2061,6 +2118,19 @@ MonoBehaviour:
   m_EffectColor: {r: 0.3, g: 0.72, b: 0.88, a: 0.58}
   m_EffectDistance: {x: 0, y: 0}
   m_UseGraphicAlpha: 0
+--- !u!114 &201456494
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 201456489}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6dee3e6104c2ed4eba2b60a34aebe49, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::CosmicBlock.UI.CellSpriteDensity
+  visualScale: 1.2
 --- !u!1 &202484854
 GameObject:
   m_ObjectHideFlags: 0
@@ -3284,6 +3354,7 @@ GameObject:
   - component: {fileID: 253924729}
   - component: {fileID: 253924730}
   - component: {fileID: 253924731}
+  - component: {fileID: 253924732}
   m_Layer: 0
   m_Name: Cell_0_2
   m_TagString: Untagged
@@ -3363,6 +3434,19 @@ MonoBehaviour:
   m_EffectColor: {r: 0.3, g: 0.72, b: 0.88, a: 0.58}
   m_EffectDistance: {x: 0, y: 0}
   m_UseGraphicAlpha: 0
+--- !u!114 &253924732
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 253924727}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6dee3e6104c2ed4eba2b60a34aebe49, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::CosmicBlock.UI.CellSpriteDensity
+  visualScale: 1.2
 --- !u!1 &254707318
 GameObject:
   m_ObjectHideFlags: 0
@@ -3707,6 +3791,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CosmicBlock.Blocks.BlockPiece
   restCellLimit: 78
+  densitySlotFit: 1
 --- !u!1 &286829751
 GameObject:
   m_ObjectHideFlags: 0
@@ -3719,6 +3804,7 @@ GameObject:
   - component: {fileID: 286829753}
   - component: {fileID: 286829754}
   - component: {fileID: 286829755}
+  - component: {fileID: 286829756}
   m_Layer: 0
   m_Name: Cell_4_5
   m_TagString: Untagged
@@ -3798,6 +3884,19 @@ MonoBehaviour:
   m_EffectColor: {r: 0.3, g: 0.72, b: 0.88, a: 0.58}
   m_EffectDistance: {x: 0, y: 0}
   m_UseGraphicAlpha: 0
+--- !u!114 &286829756
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 286829751}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6dee3e6104c2ed4eba2b60a34aebe49, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::CosmicBlock.UI.CellSpriteDensity
+  visualScale: 1.2
 --- !u!1 &295757370
 GameObject:
   m_ObjectHideFlags: 0
@@ -4201,6 +4300,7 @@ GameObject:
   - component: {fileID: 318573151}
   - component: {fileID: 318573152}
   - component: {fileID: 318573153}
+  - component: {fileID: 318573154}
   m_Layer: 0
   m_Name: Cell_5_7
   m_TagString: Untagged
@@ -4280,6 +4380,19 @@ MonoBehaviour:
   m_EffectColor: {r: 0.3, g: 0.72, b: 0.88, a: 0.58}
   m_EffectDistance: {x: 0, y: 0}
   m_UseGraphicAlpha: 0
+--- !u!114 &318573154
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 318573149}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6dee3e6104c2ed4eba2b60a34aebe49, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::CosmicBlock.UI.CellSpriteDensity
+  visualScale: 1.2
 --- !u!1 &326025867
 GameObject:
   m_ObjectHideFlags: 0
@@ -4292,6 +4405,7 @@ GameObject:
   - component: {fileID: 326025869}
   - component: {fileID: 326025870}
   - component: {fileID: 326025871}
+  - component: {fileID: 326025872}
   m_Layer: 0
   m_Name: Cell_6_0
   m_TagString: Untagged
@@ -4371,6 +4485,19 @@ MonoBehaviour:
   m_EffectColor: {r: 0.3, g: 0.72, b: 0.88, a: 0.58}
   m_EffectDistance: {x: 0, y: 0}
   m_UseGraphicAlpha: 0
+--- !u!114 &326025872
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 326025867}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6dee3e6104c2ed4eba2b60a34aebe49, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::CosmicBlock.UI.CellSpriteDensity
+  visualScale: 1.2
 --- !u!1 &326232645
 GameObject:
   m_ObjectHideFlags: 0
@@ -4494,6 +4621,7 @@ GameObject:
   - component: {fileID: 365785535}
   - component: {fileID: 365785536}
   - component: {fileID: 365785537}
+  - component: {fileID: 365785538}
   m_Layer: 0
   m_Name: Cell_1_0
   m_TagString: Untagged
@@ -4573,6 +4701,19 @@ MonoBehaviour:
   m_EffectColor: {r: 0.3, g: 0.72, b: 0.88, a: 0.58}
   m_EffectDistance: {x: 0, y: 0}
   m_UseGraphicAlpha: 0
+--- !u!114 &365785538
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 365785533}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6dee3e6104c2ed4eba2b60a34aebe49, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::CosmicBlock.UI.CellSpriteDensity
+  visualScale: 1.2
 --- !u!1 &367594878
 GameObject:
   m_ObjectHideFlags: 0
@@ -5395,6 +5536,7 @@ GameObject:
   - component: {fileID: 397512841}
   - component: {fileID: 397512842}
   - component: {fileID: 397512843}
+  - component: {fileID: 397512844}
   m_Layer: 0
   m_Name: Cell_7_2
   m_TagString: Untagged
@@ -5474,6 +5616,19 @@ MonoBehaviour:
   m_EffectColor: {r: 0.3, g: 0.72, b: 0.88, a: 0.58}
   m_EffectDistance: {x: 0, y: 0}
   m_UseGraphicAlpha: 0
+--- !u!114 &397512844
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 397512839}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6dee3e6104c2ed4eba2b60a34aebe49, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::CosmicBlock.UI.CellSpriteDensity
+  visualScale: 1.2
 --- !u!1 &403675631
 GameObject:
   m_ObjectHideFlags: 0
@@ -6114,6 +6269,7 @@ GameObject:
   - component: {fileID: 437277908}
   - component: {fileID: 437277909}
   - component: {fileID: 437277910}
+  - component: {fileID: 437277911}
   m_Layer: 0
   m_Name: Cell_7_4
   m_TagString: Untagged
@@ -6193,6 +6349,19 @@ MonoBehaviour:
   m_EffectColor: {r: 0.3, g: 0.72, b: 0.88, a: 0.58}
   m_EffectDistance: {x: 0, y: 0}
   m_UseGraphicAlpha: 0
+--- !u!114 &437277911
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 437277906}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6dee3e6104c2ed4eba2b60a34aebe49, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::CosmicBlock.UI.CellSpriteDensity
+  visualScale: 1.2
 --- !u!1 &445544870
 GameObject:
   m_ObjectHideFlags: 0
@@ -6657,6 +6826,7 @@ GameObject:
   - component: {fileID: 495689582}
   - component: {fileID: 495689583}
   - component: {fileID: 495689584}
+  - component: {fileID: 495689585}
   m_Layer: 0
   m_Name: Cell_5_0
   m_TagString: Untagged
@@ -6736,6 +6906,19 @@ MonoBehaviour:
   m_EffectColor: {r: 0.3, g: 0.72, b: 0.88, a: 0.58}
   m_EffectDistance: {x: 0, y: 0}
   m_UseGraphicAlpha: 0
+--- !u!114 &495689585
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 495689580}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6dee3e6104c2ed4eba2b60a34aebe49, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::CosmicBlock.UI.CellSpriteDensity
+  visualScale: 1.2
 --- !u!1 &495801540
 GameObject:
   m_ObjectHideFlags: 0
@@ -7059,6 +7242,7 @@ GameObject:
   - component: {fileID: 514553091}
   - component: {fileID: 514553092}
   - component: {fileID: 514553093}
+  - component: {fileID: 514553094}
   m_Layer: 0
   m_Name: Cell_1_7
   m_TagString: Untagged
@@ -7138,6 +7322,19 @@ MonoBehaviour:
   m_EffectColor: {r: 0.3, g: 0.72, b: 0.88, a: 0.58}
   m_EffectDistance: {x: 0, y: 0}
   m_UseGraphicAlpha: 0
+--- !u!114 &514553094
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 514553089}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6dee3e6104c2ed4eba2b60a34aebe49, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::CosmicBlock.UI.CellSpriteDensity
+  visualScale: 1.2
 --- !u!1 &517707362
 GameObject:
   m_ObjectHideFlags: 0
@@ -7261,6 +7458,7 @@ GameObject:
   - component: {fileID: 549506611}
   - component: {fileID: 549506612}
   - component: {fileID: 549506613}
+  - component: {fileID: 549506614}
   m_Layer: 0
   m_Name: Cell_7_5
   m_TagString: Untagged
@@ -7340,6 +7538,19 @@ MonoBehaviour:
   m_EffectColor: {r: 0.3, g: 0.72, b: 0.88, a: 0.58}
   m_EffectDistance: {x: 0, y: 0}
   m_UseGraphicAlpha: 0
+--- !u!114 &549506614
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 549506609}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6dee3e6104c2ed4eba2b60a34aebe49, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::CosmicBlock.UI.CellSpriteDensity
+  visualScale: 1.2
 --- !u!1 &557989872
 GameObject:
   m_ObjectHideFlags: 0
@@ -7690,6 +7901,7 @@ GameObject:
   - component: {fileID: 570410541}
   - component: {fileID: 570410542}
   - component: {fileID: 570410543}
+  - component: {fileID: 570410544}
   m_Layer: 0
   m_Name: Cell_2_4
   m_TagString: Untagged
@@ -7769,6 +7981,19 @@ MonoBehaviour:
   m_EffectColor: {r: 0.3, g: 0.72, b: 0.88, a: 0.58}
   m_EffectDistance: {x: 0, y: 0}
   m_UseGraphicAlpha: 0
+--- !u!114 &570410544
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 570410539}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6dee3e6104c2ed4eba2b60a34aebe49, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::CosmicBlock.UI.CellSpriteDensity
+  visualScale: 1.2
 --- !u!1 &582443052
 GameObject:
   m_ObjectHideFlags: 0
@@ -8085,6 +8310,7 @@ GameObject:
   - component: {fileID: 587938811}
   - component: {fileID: 587938812}
   - component: {fileID: 587938813}
+  - component: {fileID: 587938814}
   m_Layer: 0
   m_Name: Cell_7_6
   m_TagString: Untagged
@@ -8164,6 +8390,19 @@ MonoBehaviour:
   m_EffectColor: {r: 0.3, g: 0.72, b: 0.88, a: 0.58}
   m_EffectDistance: {x: 0, y: 0}
   m_UseGraphicAlpha: 0
+--- !u!114 &587938814
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 587938809}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6dee3e6104c2ed4eba2b60a34aebe49, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::CosmicBlock.UI.CellSpriteDensity
+  visualScale: 1.2
 --- !u!1 &593321760
 GameObject:
   m_ObjectHideFlags: 0
@@ -8985,6 +9224,7 @@ GameObject:
   - component: {fileID: 656492076}
   - component: {fileID: 656492077}
   - component: {fileID: 656492078}
+  - component: {fileID: 656492079}
   m_Layer: 0
   m_Name: Cell_4_6
   m_TagString: Untagged
@@ -9064,6 +9304,19 @@ MonoBehaviour:
   m_EffectColor: {r: 0.3, g: 0.72, b: 0.88, a: 0.58}
   m_EffectDistance: {x: 0, y: 0}
   m_UseGraphicAlpha: 0
+--- !u!114 &656492079
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 656492074}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6dee3e6104c2ed4eba2b60a34aebe49, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::CosmicBlock.UI.CellSpriteDensity
+  visualScale: 1.2
 --- !u!1 &657736571
 GameObject:
   m_ObjectHideFlags: 0
@@ -9975,6 +10228,7 @@ GameObject:
   - component: {fileID: 737814829}
   - component: {fileID: 737814830}
   - component: {fileID: 737814831}
+  - component: {fileID: 737814832}
   m_Layer: 0
   m_Name: Cell_1_6
   m_TagString: Untagged
@@ -10054,6 +10308,19 @@ MonoBehaviour:
   m_EffectColor: {r: 0.3, g: 0.72, b: 0.88, a: 0.58}
   m_EffectDistance: {x: 0, y: 0}
   m_UseGraphicAlpha: 0
+--- !u!114 &737814832
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 737814827}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6dee3e6104c2ed4eba2b60a34aebe49, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::CosmicBlock.UI.CellSpriteDensity
+  visualScale: 1.2
 --- !u!1 &743416470
 GameObject:
   m_ObjectHideFlags: 0
@@ -10066,6 +10333,7 @@ GameObject:
   - component: {fileID: 743416472}
   - component: {fileID: 743416473}
   - component: {fileID: 743416474}
+  - component: {fileID: 743416475}
   m_Layer: 0
   m_Name: Cell_6_2
   m_TagString: Untagged
@@ -10145,6 +10413,19 @@ MonoBehaviour:
   m_EffectColor: {r: 0.3, g: 0.72, b: 0.88, a: 0.58}
   m_EffectDistance: {x: 0, y: 0}
   m_UseGraphicAlpha: 0
+--- !u!114 &743416475
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 743416470}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6dee3e6104c2ed4eba2b60a34aebe49, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::CosmicBlock.UI.CellSpriteDensity
+  visualScale: 1.2
 --- !u!1 &756807324
 GameObject:
   m_ObjectHideFlags: 0
@@ -10558,6 +10839,7 @@ GameObject:
   - component: {fileID: 783533925}
   - component: {fileID: 783533926}
   - component: {fileID: 783533927}
+  - component: {fileID: 783533928}
   m_Layer: 0
   m_Name: Cell_5_5
   m_TagString: Untagged
@@ -10637,6 +10919,19 @@ MonoBehaviour:
   m_EffectColor: {r: 0.3, g: 0.72, b: 0.88, a: 0.58}
   m_EffectDistance: {x: 0, y: 0}
   m_UseGraphicAlpha: 0
+--- !u!114 &783533928
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 783533923}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6dee3e6104c2ed4eba2b60a34aebe49, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::CosmicBlock.UI.CellSpriteDensity
+  visualScale: 1.2
 --- !u!1 &786374389
 GameObject:
   m_ObjectHideFlags: 0
@@ -11221,6 +11516,7 @@ GameObject:
   - component: {fileID: 828572302}
   - component: {fileID: 828572303}
   - component: {fileID: 828572304}
+  - component: {fileID: 828572305}
   m_Layer: 0
   m_Name: Cell_3_0
   m_TagString: Untagged
@@ -11300,6 +11596,19 @@ MonoBehaviour:
   m_EffectColor: {r: 0.3, g: 0.72, b: 0.88, a: 0.58}
   m_EffectDistance: {x: 0, y: 0}
   m_UseGraphicAlpha: 0
+--- !u!114 &828572305
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 828572300}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6dee3e6104c2ed4eba2b60a34aebe49, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::CosmicBlock.UI.CellSpriteDensity
+  visualScale: 1.2
 --- !u!1 &853640877
 GameObject:
   m_ObjectHideFlags: 0
@@ -11466,6 +11775,7 @@ GameObject:
   - component: {fileID: 856487837}
   - component: {fileID: 856487838}
   - component: {fileID: 856487839}
+  - component: {fileID: 856487840}
   m_Layer: 0
   m_Name: Cell_2_5
   m_TagString: Untagged
@@ -11545,6 +11855,19 @@ MonoBehaviour:
   m_EffectColor: {r: 0.3, g: 0.72, b: 0.88, a: 0.58}
   m_EffectDistance: {x: 0, y: 0}
   m_UseGraphicAlpha: 0
+--- !u!114 &856487840
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 856487835}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6dee3e6104c2ed4eba2b60a34aebe49, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::CosmicBlock.UI.CellSpriteDensity
+  visualScale: 1.2
 --- !u!1 &856643657
 GameObject:
   m_ObjectHideFlags: 0
@@ -11557,6 +11880,7 @@ GameObject:
   - component: {fileID: 856643659}
   - component: {fileID: 856643660}
   - component: {fileID: 856643661}
+  - component: {fileID: 856643662}
   m_Layer: 0
   m_Name: Cell_7_0
   m_TagString: Untagged
@@ -11636,6 +11960,19 @@ MonoBehaviour:
   m_EffectColor: {r: 0.3, g: 0.72, b: 0.88, a: 0.58}
   m_EffectDistance: {x: 0, y: 0}
   m_UseGraphicAlpha: 0
+--- !u!114 &856643662
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 856643657}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6dee3e6104c2ed4eba2b60a34aebe49, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::CosmicBlock.UI.CellSpriteDensity
+  visualScale: 1.2
 --- !u!1 &862065994
 GameObject:
   m_ObjectHideFlags: 0
@@ -11727,6 +12064,7 @@ GameObject:
   - component: {fileID: 868286477}
   - component: {fileID: 868286478}
   - component: {fileID: 868286479}
+  - component: {fileID: 868286480}
   m_Layer: 0
   m_Name: Cell_6_7
   m_TagString: Untagged
@@ -11806,6 +12144,19 @@ MonoBehaviour:
   m_EffectColor: {r: 0.3, g: 0.72, b: 0.88, a: 0.58}
   m_EffectDistance: {x: 0, y: 0}
   m_UseGraphicAlpha: 0
+--- !u!114 &868286480
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 868286475}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6dee3e6104c2ed4eba2b60a34aebe49, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::CosmicBlock.UI.CellSpriteDensity
+  visualScale: 1.2
 --- !u!1 &872506135
 GameObject:
   m_ObjectHideFlags: 0
@@ -12097,6 +12448,7 @@ GameObject:
   - component: {fileID: 910248983}
   - component: {fileID: 910248984}
   - component: {fileID: 910248985}
+  - component: {fileID: 910248986}
   m_Layer: 0
   m_Name: Cell_6_6
   m_TagString: Untagged
@@ -12176,6 +12528,19 @@ MonoBehaviour:
   m_EffectColor: {r: 0.3, g: 0.72, b: 0.88, a: 0.58}
   m_EffectDistance: {x: 0, y: 0}
   m_UseGraphicAlpha: 0
+--- !u!114 &910248986
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 910248981}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6dee3e6104c2ed4eba2b60a34aebe49, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::CosmicBlock.UI.CellSpriteDensity
+  visualScale: 1.2
 --- !u!1 &912176523
 GameObject:
   m_ObjectHideFlags: 0
@@ -12684,6 +13049,7 @@ GameObject:
   - component: {fileID: 923752933}
   - component: {fileID: 923752934}
   - component: {fileID: 923752935}
+  - component: {fileID: 923752936}
   m_Layer: 0
   m_Name: Cell_3_5
   m_TagString: Untagged
@@ -12763,6 +13129,19 @@ MonoBehaviour:
   m_EffectColor: {r: 0.3, g: 0.72, b: 0.88, a: 0.58}
   m_EffectDistance: {x: 0, y: 0}
   m_UseGraphicAlpha: 0
+--- !u!114 &923752936
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 923752931}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6dee3e6104c2ed4eba2b60a34aebe49, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::CosmicBlock.UI.CellSpriteDensity
+  visualScale: 1.2
 --- !u!1 &925733197
 GameObject:
   m_ObjectHideFlags: 0
@@ -12775,6 +13154,7 @@ GameObject:
   - component: {fileID: 925733199}
   - component: {fileID: 925733200}
   - component: {fileID: 925733201}
+  - component: {fileID: 925733202}
   m_Layer: 0
   m_Name: Cell_2_2
   m_TagString: Untagged
@@ -12854,6 +13234,19 @@ MonoBehaviour:
   m_EffectColor: {r: 0.3, g: 0.72, b: 0.88, a: 0.58}
   m_EffectDistance: {x: 0, y: 0}
   m_UseGraphicAlpha: 0
+--- !u!114 &925733202
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 925733197}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6dee3e6104c2ed4eba2b60a34aebe49, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::CosmicBlock.UI.CellSpriteDensity
+  visualScale: 1.2
 --- !u!1 &927892935
 GameObject:
   m_ObjectHideFlags: 0
@@ -13274,6 +13667,7 @@ GameObject:
   - component: {fileID: 950559041}
   - component: {fileID: 950559042}
   - component: {fileID: 950559043}
+  - component: {fileID: 950559044}
   m_Layer: 0
   m_Name: Cell_1_2
   m_TagString: Untagged
@@ -13353,6 +13747,19 @@ MonoBehaviour:
   m_EffectColor: {r: 0.3, g: 0.72, b: 0.88, a: 0.58}
   m_EffectDistance: {x: 0, y: 0}
   m_UseGraphicAlpha: 0
+--- !u!114 &950559044
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 950559039}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6dee3e6104c2ed4eba2b60a34aebe49, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::CosmicBlock.UI.CellSpriteDensity
+  visualScale: 1.2
 --- !u!1 &957963255
 GameObject:
   m_ObjectHideFlags: 0
@@ -14089,6 +14496,7 @@ GameObject:
   - component: {fileID: 1052025198}
   - component: {fileID: 1052025199}
   - component: {fileID: 1052025200}
+  - component: {fileID: 1052025201}
   m_Layer: 0
   m_Name: Cell_0_3
   m_TagString: Untagged
@@ -14168,6 +14576,19 @@ MonoBehaviour:
   m_EffectColor: {r: 0.3, g: 0.72, b: 0.88, a: 0.58}
   m_EffectDistance: {x: 0, y: 0}
   m_UseGraphicAlpha: 0
+--- !u!114 &1052025201
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1052025196}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6dee3e6104c2ed4eba2b60a34aebe49, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::CosmicBlock.UI.CellSpriteDensity
+  visualScale: 1.2
 --- !u!1 &1058273508
 GameObject:
   m_ObjectHideFlags: 0
@@ -14829,6 +15250,7 @@ GameObject:
   - component: {fileID: 1077748265}
   - component: {fileID: 1077748266}
   - component: {fileID: 1077748267}
+  - component: {fileID: 1077748268}
   m_Layer: 0
   m_Name: Cell_3_3
   m_TagString: Untagged
@@ -14908,6 +15330,19 @@ MonoBehaviour:
   m_EffectColor: {r: 0.3, g: 0.72, b: 0.88, a: 0.58}
   m_EffectDistance: {x: 0, y: 0}
   m_UseGraphicAlpha: 0
+--- !u!114 &1077748268
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1077748263}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6dee3e6104c2ed4eba2b60a34aebe49, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::CosmicBlock.UI.CellSpriteDensity
+  visualScale: 1.2
 --- !u!1 &1079189243
 GameObject:
   m_ObjectHideFlags: 0
@@ -15178,6 +15613,7 @@ GameObject:
   - component: {fileID: 1104668524}
   - component: {fileID: 1104668523}
   - component: {fileID: 1104668526}
+  - component: {fileID: 1104668527}
   m_Layer: 0
   m_Name: Cell_7_7
   m_TagString: Untagged
@@ -15257,6 +15693,19 @@ MonoBehaviour:
   m_EffectColor: {r: 0.3, g: 0.72, b: 0.88, a: 0.58}
   m_EffectDistance: {x: 0, y: 0}
   m_UseGraphicAlpha: 0
+--- !u!114 &1104668527
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1104668522}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6dee3e6104c2ed4eba2b60a34aebe49, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::CosmicBlock.UI.CellSpriteDensity
+  visualScale: 1.2
 --- !u!1 &1105747380
 GameObject:
   m_ObjectHideFlags: 0
@@ -17147,6 +17596,7 @@ GameObject:
   - component: {fileID: 1235391189}
   - component: {fileID: 1235391190}
   - component: {fileID: 1235391191}
+  - component: {fileID: 1235391192}
   m_Layer: 0
   m_Name: Cell_3_4
   m_TagString: Untagged
@@ -17226,6 +17676,19 @@ MonoBehaviour:
   m_EffectColor: {r: 0.3, g: 0.72, b: 0.88, a: 0.58}
   m_EffectDistance: {x: 0, y: 0}
   m_UseGraphicAlpha: 0
+--- !u!114 &1235391192
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1235391187}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6dee3e6104c2ed4eba2b60a34aebe49, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::CosmicBlock.UI.CellSpriteDensity
+  visualScale: 1.2
 --- !u!1 &1239301981
 GameObject:
   m_ObjectHideFlags: 0
@@ -18175,6 +18638,7 @@ GameObject:
   - component: {fileID: 1324664870}
   - component: {fileID: 1324664871}
   - component: {fileID: 1324664872}
+  - component: {fileID: 1324664873}
   m_Layer: 0
   m_Name: Cell_6_4
   m_TagString: Untagged
@@ -18254,6 +18718,19 @@ MonoBehaviour:
   m_EffectColor: {r: 0.3, g: 0.72, b: 0.88, a: 0.58}
   m_EffectDistance: {x: 0, y: 0}
   m_UseGraphicAlpha: 0
+--- !u!114 &1324664873
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1324664868}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6dee3e6104c2ed4eba2b60a34aebe49, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::CosmicBlock.UI.CellSpriteDensity
+  visualScale: 1.2
 --- !u!1 &1331957253
 GameObject:
   m_ObjectHideFlags: 0
@@ -18570,6 +19047,7 @@ GameObject:
   - component: {fileID: 1357735188}
   - component: {fileID: 1357735189}
   - component: {fileID: 1357735190}
+  - component: {fileID: 1357735191}
   m_Layer: 0
   m_Name: Cell_2_3
   m_TagString: Untagged
@@ -18649,6 +19127,19 @@ MonoBehaviour:
   m_EffectColor: {r: 0.3, g: 0.72, b: 0.88, a: 0.58}
   m_EffectDistance: {x: 0, y: 0}
   m_UseGraphicAlpha: 0
+--- !u!114 &1357735191
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1357735186}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6dee3e6104c2ed4eba2b60a34aebe49, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::CosmicBlock.UI.CellSpriteDensity
+  visualScale: 1.2
 --- !u!1 &1368193780
 GameObject:
   m_ObjectHideFlags: 0
@@ -18661,6 +19152,7 @@ GameObject:
   - component: {fileID: 1368193782}
   - component: {fileID: 1368193783}
   - component: {fileID: 1368193784}
+  - component: {fileID: 1368193785}
   m_Layer: 0
   m_Name: Cell_4_4
   m_TagString: Untagged
@@ -18740,6 +19232,19 @@ MonoBehaviour:
   m_EffectColor: {r: 0.3, g: 0.72, b: 0.88, a: 0.58}
   m_EffectDistance: {x: 0, y: 0}
   m_UseGraphicAlpha: 0
+--- !u!114 &1368193785
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1368193780}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6dee3e6104c2ed4eba2b60a34aebe49, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::CosmicBlock.UI.CellSpriteDensity
+  visualScale: 1.2
 --- !u!1 &1370841471
 GameObject:
   m_ObjectHideFlags: 0
@@ -19355,6 +19860,7 @@ GameObject:
   - component: {fileID: 1407851079}
   - component: {fileID: 1407851080}
   - component: {fileID: 1407851081}
+  - component: {fileID: 1407851082}
   m_Layer: 0
   m_Name: Cell_0_0
   m_TagString: Untagged
@@ -19434,6 +19940,19 @@ MonoBehaviour:
   m_EffectColor: {r: 0.3, g: 0.72, b: 0.88, a: 0.58}
   m_EffectDistance: {x: 0, y: 0}
   m_UseGraphicAlpha: 0
+--- !u!114 &1407851082
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1407851077}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6dee3e6104c2ed4eba2b60a34aebe49, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::CosmicBlock.UI.CellSpriteDensity
+  visualScale: 1.2
 --- !u!1 &1411935161
 GameObject:
   m_ObjectHideFlags: 0
@@ -19771,6 +20290,7 @@ GameObject:
   - component: {fileID: 1424954141}
   - component: {fileID: 1424954142}
   - component: {fileID: 1424954143}
+  - component: {fileID: 1424954144}
   m_Layer: 0
   m_Name: Cell_5_3
   m_TagString: Untagged
@@ -19850,6 +20370,19 @@ MonoBehaviour:
   m_EffectColor: {r: 0.3, g: 0.72, b: 0.88, a: 0.58}
   m_EffectDistance: {x: 0, y: 0}
   m_UseGraphicAlpha: 0
+--- !u!114 &1424954144
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1424954139}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6dee3e6104c2ed4eba2b60a34aebe49, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::CosmicBlock.UI.CellSpriteDensity
+  visualScale: 1.2
 --- !u!1 &1425116989
 GameObject:
   m_ObjectHideFlags: 0
@@ -19905,6 +20438,7 @@ GameObject:
   - component: {fileID: 1425674152}
   - component: {fileID: 1425674153}
   - component: {fileID: 1425674154}
+  - component: {fileID: 1425674155}
   m_Layer: 0
   m_Name: Cell_6_5
   m_TagString: Untagged
@@ -19984,6 +20518,19 @@ MonoBehaviour:
   m_EffectColor: {r: 0.3, g: 0.72, b: 0.88, a: 0.58}
   m_EffectDistance: {x: 0, y: 0}
   m_UseGraphicAlpha: 0
+--- !u!114 &1425674155
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1425674150}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6dee3e6104c2ed4eba2b60a34aebe49, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::CosmicBlock.UI.CellSpriteDensity
+  visualScale: 1.2
 --- !u!1 &1425863857
 GameObject:
   m_ObjectHideFlags: 0
@@ -19996,6 +20543,7 @@ GameObject:
   - component: {fileID: 1425863859}
   - component: {fileID: 1425863860}
   - component: {fileID: 1425863861}
+  - component: {fileID: 1425863862}
   m_Layer: 0
   m_Name: Cell_2_0
   m_TagString: Untagged
@@ -20075,6 +20623,19 @@ MonoBehaviour:
   m_EffectColor: {r: 0.3, g: 0.72, b: 0.88, a: 0.58}
   m_EffectDistance: {x: 0, y: 0}
   m_UseGraphicAlpha: 0
+--- !u!114 &1425863862
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1425863857}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6dee3e6104c2ed4eba2b60a34aebe49, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::CosmicBlock.UI.CellSpriteDensity
+  visualScale: 1.2
 --- !u!1 &1434160058
 GameObject:
   m_ObjectHideFlags: 0
@@ -20162,6 +20723,7 @@ GameObject:
   - component: {fileID: 1437511168}
   - component: {fileID: 1437511169}
   - component: {fileID: 1437511170}
+  - component: {fileID: 1437511171}
   m_Layer: 0
   m_Name: Cell_2_1
   m_TagString: Untagged
@@ -20241,6 +20803,19 @@ MonoBehaviour:
   m_EffectColor: {r: 0.3, g: 0.72, b: 0.88, a: 0.58}
   m_EffectDistance: {x: 0, y: 0}
   m_UseGraphicAlpha: 0
+--- !u!114 &1437511171
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1437511166}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6dee3e6104c2ed4eba2b60a34aebe49, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::CosmicBlock.UI.CellSpriteDensity
+  visualScale: 1.2
 --- !u!114 &1443312760
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20859,6 +21434,7 @@ GameObject:
   - component: {fileID: 1459080956}
   - component: {fileID: 1459080957}
   - component: {fileID: 1459080958}
+  - component: {fileID: 1459080959}
   m_Layer: 0
   m_Name: Cell_3_1
   m_TagString: Untagged
@@ -20938,6 +21514,19 @@ MonoBehaviour:
   m_EffectColor: {r: 0.3, g: 0.72, b: 0.88, a: 0.58}
   m_EffectDistance: {x: 0, y: 0}
   m_UseGraphicAlpha: 0
+--- !u!114 &1459080959
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1459080954}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6dee3e6104c2ed4eba2b60a34aebe49, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::CosmicBlock.UI.CellSpriteDensity
+  visualScale: 1.2
 --- !u!1 &1460109297
 GameObject:
   m_ObjectHideFlags: 0
@@ -21025,6 +21614,7 @@ GameObject:
   - component: {fileID: 1461571477}
   - component: {fileID: 1461571478}
   - component: {fileID: 1461571479}
+  - component: {fileID: 1461571480}
   m_Layer: 0
   m_Name: Cell_0_5
   m_TagString: Untagged
@@ -21104,6 +21694,19 @@ MonoBehaviour:
   m_EffectColor: {r: 0.3, g: 0.72, b: 0.88, a: 0.58}
   m_EffectDistance: {x: 0, y: 0}
   m_UseGraphicAlpha: 0
+--- !u!114 &1461571480
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1461571475}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6dee3e6104c2ed4eba2b60a34aebe49, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::CosmicBlock.UI.CellSpriteDensity
+  visualScale: 1.2
 --- !u!1 &1463185094
 GameObject:
   m_ObjectHideFlags: 0
@@ -21405,6 +22008,7 @@ GameObject:
   - component: {fileID: 1476247332}
   - component: {fileID: 1476247333}
   - component: {fileID: 1476247334}
+  - component: {fileID: 1476247335}
   m_Layer: 0
   m_Name: Cell_7_1
   m_TagString: Untagged
@@ -21484,6 +22088,19 @@ MonoBehaviour:
   m_EffectColor: {r: 0.3, g: 0.72, b: 0.88, a: 0.58}
   m_EffectDistance: {x: 0, y: 0}
   m_UseGraphicAlpha: 0
+--- !u!114 &1476247335
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1476247330}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6dee3e6104c2ed4eba2b60a34aebe49, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::CosmicBlock.UI.CellSpriteDensity
+  visualScale: 1.2
 --- !u!1 &1481252294
 GameObject:
   m_ObjectHideFlags: 0
@@ -21599,6 +22216,7 @@ MonoBehaviour:
   m_Name:
   m_EditorClassIdentifier: Assembly-CSharp::CosmicBlock.Blocks.BlockPiece
   restCellLimit: 78
+  densitySlotFit: 1
 --- !u!1 &1484737397
 GameObject:
   m_ObjectHideFlags: 0
@@ -21805,6 +22423,7 @@ GameObject:
   - component: {fileID: 1493242606}
   - component: {fileID: 1493242607}
   - component: {fileID: 1493242608}
+  - component: {fileID: 1493242609}
   m_Layer: 0
   m_Name: Cell_0_4
   m_TagString: Untagged
@@ -21884,6 +22503,19 @@ MonoBehaviour:
   m_EffectColor: {r: 0.3, g: 0.72, b: 0.88, a: 0.58}
   m_EffectDistance: {x: 0, y: 0}
   m_UseGraphicAlpha: 0
+--- !u!114 &1493242609
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1493242604}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6dee3e6104c2ed4eba2b60a34aebe49, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::CosmicBlock.UI.CellSpriteDensity
+  visualScale: 1.2
 --- !u!1 &1498289921
 GameObject:
   m_ObjectHideFlags: 0
@@ -22129,6 +22761,7 @@ GameObject:
   - component: {fileID: 1505863271}
   - component: {fileID: 1505863272}
   - component: {fileID: 1505863273}
+  - component: {fileID: 1505863274}
   m_Layer: 0
   m_Name: Cell_0_7
   m_TagString: Untagged
@@ -22208,6 +22841,19 @@ MonoBehaviour:
   m_EffectColor: {r: 0.3, g: 0.72, b: 0.88, a: 0.58}
   m_EffectDistance: {x: 0, y: 0}
   m_UseGraphicAlpha: 0
+--- !u!114 &1505863274
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1505863269}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6dee3e6104c2ed4eba2b60a34aebe49, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::CosmicBlock.UI.CellSpriteDensity
+  visualScale: 1.2
 --- !u!1 &1514545286
 GameObject:
   m_ObjectHideFlags: 0
@@ -22460,6 +23106,7 @@ GameObject:
   - component: {fileID: 1533533635}
   - component: {fileID: 1533533636}
   - component: {fileID: 1533533637}
+  - component: {fileID: 1533533638}
   m_Layer: 0
   m_Name: Cell_0_1
   m_TagString: Untagged
@@ -22539,6 +23186,19 @@ MonoBehaviour:
   m_EffectColor: {r: 0.3, g: 0.72, b: 0.88, a: 0.58}
   m_EffectDistance: {x: 0, y: 0}
   m_UseGraphicAlpha: 0
+--- !u!114 &1533533638
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1533533633}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6dee3e6104c2ed4eba2b60a34aebe49, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::CosmicBlock.UI.CellSpriteDensity
+  visualScale: 1.2
 --- !u!1 &1534469572
 GameObject:
   m_ObjectHideFlags: 0
@@ -22833,6 +23493,7 @@ GameObject:
   - component: {fileID: 1543075631}
   - component: {fileID: 1543075632}
   - component: {fileID: 1543075633}
+  - component: {fileID: 1543075634}
   m_Layer: 0
   m_Name: Cell_6_3
   m_TagString: Untagged
@@ -22912,6 +23573,19 @@ MonoBehaviour:
   m_EffectColor: {r: 0.3, g: 0.72, b: 0.88, a: 0.58}
   m_EffectDistance: {x: 0, y: 0}
   m_UseGraphicAlpha: 0
+--- !u!114 &1543075634
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1543075629}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6dee3e6104c2ed4eba2b60a34aebe49, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::CosmicBlock.UI.CellSpriteDensity
+  visualScale: 1.2
 --- !u!1 &1545500486
 GameObject:
   m_ObjectHideFlags: 0
@@ -23396,6 +24070,7 @@ GameObject:
   - component: {fileID: 1561294278}
   - component: {fileID: 1561294279}
   - component: {fileID: 1561294280}
+  - component: {fileID: 1561294281}
   m_Layer: 0
   m_Name: Cell_3_6
   m_TagString: Untagged
@@ -23475,6 +24150,19 @@ MonoBehaviour:
   m_EffectColor: {r: 0.3, g: 0.72, b: 0.88, a: 0.58}
   m_EffectDistance: {x: 0, y: 0}
   m_UseGraphicAlpha: 0
+--- !u!114 &1561294281
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1561294276}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6dee3e6104c2ed4eba2b60a34aebe49, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::CosmicBlock.UI.CellSpriteDensity
+  visualScale: 1.2
 --- !u!1 &1569166016
 GameObject:
   m_ObjectHideFlags: 0
@@ -24069,6 +24757,7 @@ GameObject:
   - component: {fileID: 1598234062}
   - component: {fileID: 1598234063}
   - component: {fileID: 1598234064}
+  - component: {fileID: 1598234065}
   m_Layer: 0
   m_Name: Cell_4_7
   m_TagString: Untagged
@@ -24148,6 +24837,19 @@ MonoBehaviour:
   m_EffectColor: {r: 0.3, g: 0.72, b: 0.88, a: 0.58}
   m_EffectDistance: {x: 0, y: 0}
   m_UseGraphicAlpha: 0
+--- !u!114 &1598234065
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1598234060}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6dee3e6104c2ed4eba2b60a34aebe49, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::CosmicBlock.UI.CellSpriteDensity
+  visualScale: 1.2
 --- !u!1 &1602157403
 GameObject:
   m_ObjectHideFlags: 0
@@ -24235,6 +24937,7 @@ GameObject:
   - component: {fileID: 1602528916}
   - component: {fileID: 1602528917}
   - component: {fileID: 1602528918}
+  - component: {fileID: 1602528919}
   m_Layer: 0
   m_Name: Cell_3_7
   m_TagString: Untagged
@@ -24314,6 +25017,19 @@ MonoBehaviour:
   m_EffectColor: {r: 0.3, g: 0.72, b: 0.88, a: 0.58}
   m_EffectDistance: {x: 0, y: 0}
   m_UseGraphicAlpha: 0
+--- !u!114 &1602528919
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1602528914}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6dee3e6104c2ed4eba2b60a34aebe49, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::CosmicBlock.UI.CellSpriteDensity
+  visualScale: 1.2
 --- !u!1 &1607048247
 GameObject:
   m_ObjectHideFlags: 0
@@ -24862,6 +25578,7 @@ GameObject:
   - component: {fileID: 1628617622}
   - component: {fileID: 1628617623}
   - component: {fileID: 1628617624}
+  - component: {fileID: 1628617625}
   m_Layer: 0
   m_Name: Cell_2_6
   m_TagString: Untagged
@@ -24941,6 +25658,19 @@ MonoBehaviour:
   m_EffectColor: {r: 0.3, g: 0.72, b: 0.88, a: 0.58}
   m_EffectDistance: {x: 0, y: 0}
   m_UseGraphicAlpha: 0
+--- !u!114 &1628617625
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1628617620}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6dee3e6104c2ed4eba2b60a34aebe49, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::CosmicBlock.UI.CellSpriteDensity
+  visualScale: 1.2
 --- !u!1 &1632783472
 GameObject:
   m_ObjectHideFlags: 0
@@ -25581,6 +26311,7 @@ GameObject:
   - component: {fileID: 1685992499}
   - component: {fileID: 1685992500}
   - component: {fileID: 1685992501}
+  - component: {fileID: 1685992502}
   m_Layer: 0
   m_Name: Cell_2_7
   m_TagString: Untagged
@@ -25660,6 +26391,19 @@ MonoBehaviour:
   m_EffectColor: {r: 0.3, g: 0.72, b: 0.88, a: 0.58}
   m_EffectDistance: {x: 0, y: 0}
   m_UseGraphicAlpha: 0
+--- !u!114 &1685992502
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1685992497}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6dee3e6104c2ed4eba2b60a34aebe49, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::CosmicBlock.UI.CellSpriteDensity
+  visualScale: 1.2
 --- !u!1 &1689458940
 GameObject:
   m_ObjectHideFlags: 0
@@ -25997,6 +26741,7 @@ GameObject:
   - component: {fileID: 1713886223}
   - component: {fileID: 1713886224}
   - component: {fileID: 1713886225}
+  - component: {fileID: 1713886226}
   m_Layer: 0
   m_Name: Cell_3_2
   m_TagString: Untagged
@@ -26076,6 +26821,19 @@ MonoBehaviour:
   m_EffectColor: {r: 0.3, g: 0.72, b: 0.88, a: 0.58}
   m_EffectDistance: {x: 0, y: 0}
   m_UseGraphicAlpha: 0
+--- !u!114 &1713886226
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1713886221}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6dee3e6104c2ed4eba2b60a34aebe49, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::CosmicBlock.UI.CellSpriteDensity
+  visualScale: 1.2
 --- !u!1 &1722623211
 GameObject:
   m_ObjectHideFlags: 0
@@ -26088,6 +26846,7 @@ GameObject:
   - component: {fileID: 1722623213}
   - component: {fileID: 1722623214}
   - component: {fileID: 1722623215}
+  - component: {fileID: 1722623216}
   m_Layer: 0
   m_Name: Cell_5_2
   m_TagString: Untagged
@@ -26167,6 +26926,19 @@ MonoBehaviour:
   m_EffectColor: {r: 0.3, g: 0.72, b: 0.88, a: 0.58}
   m_EffectDistance: {x: 0, y: 0}
   m_UseGraphicAlpha: 0
+--- !u!114 &1722623216
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1722623211}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6dee3e6104c2ed4eba2b60a34aebe49, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::CosmicBlock.UI.CellSpriteDensity
+  visualScale: 1.2
 --- !u!114 &1722669845
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26483,6 +27255,7 @@ GameObject:
   - component: {fileID: 1758777644}
   - component: {fileID: 1758777645}
   - component: {fileID: 1758777646}
+  - component: {fileID: 1758777647}
   m_Layer: 0
   m_Name: Cell_5_4
   m_TagString: Untagged
@@ -26562,6 +27335,19 @@ MonoBehaviour:
   m_EffectColor: {r: 0.3, g: 0.72, b: 0.88, a: 0.58}
   m_EffectDistance: {x: 0, y: 0}
   m_UseGraphicAlpha: 0
+--- !u!114 &1758777647
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1758777642}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6dee3e6104c2ed4eba2b60a34aebe49, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::CosmicBlock.UI.CellSpriteDensity
+  visualScale: 1.2
 --- !u!1 &1761396892
 GameObject:
   m_ObjectHideFlags: 0
@@ -27105,6 +27891,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CosmicBlock.Blocks.BlockPiece
   restCellLimit: 78
+  densitySlotFit: 1
 --- !u!1 &1808256067
 GameObject:
   m_ObjectHideFlags: 0
@@ -27425,6 +28212,7 @@ GameObject:
   - component: {fileID: 1825138928}
   - component: {fileID: 1825138929}
   - component: {fileID: 1825138930}
+  - component: {fileID: 1825138931}
   m_Layer: 0
   m_Name: Cell_4_1
   m_TagString: Untagged
@@ -27504,6 +28292,19 @@ MonoBehaviour:
   m_EffectColor: {r: 0.3, g: 0.72, b: 0.88, a: 0.58}
   m_EffectDistance: {x: 0, y: 0}
   m_UseGraphicAlpha: 0
+--- !u!114 &1825138931
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1825138926}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6dee3e6104c2ed4eba2b60a34aebe49, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::CosmicBlock.UI.CellSpriteDensity
+  visualScale: 1.2
 --- !u!1 &1833689048
 GameObject:
   m_ObjectHideFlags: 0
@@ -28008,6 +28809,7 @@ GameObject:
   - component: {fileID: 1877741249}
   - component: {fileID: 1877741250}
   - component: {fileID: 1877741251}
+  - component: {fileID: 1877741252}
   m_Layer: 0
   m_Name: Cell_1_4
   m_TagString: Untagged
@@ -28087,6 +28889,19 @@ MonoBehaviour:
   m_EffectColor: {r: 0.3, g: 0.72, b: 0.88, a: 0.58}
   m_EffectDistance: {x: 0, y: 0}
   m_UseGraphicAlpha: 0
+--- !u!114 &1877741252
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1877741247}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6dee3e6104c2ed4eba2b60a34aebe49, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::CosmicBlock.UI.CellSpriteDensity
+  visualScale: 1.2
 --- !u!1 &1889668522
 GameObject:
   m_ObjectHideFlags: 0
@@ -28634,6 +29449,7 @@ GameObject:
   - component: {fileID: 1929852067}
   - component: {fileID: 1929852068}
   - component: {fileID: 1929852069}
+  - component: {fileID: 1929852070}
   m_Layer: 0
   m_Name: Cell_5_6
   m_TagString: Untagged
@@ -28713,6 +29529,19 @@ MonoBehaviour:
   m_EffectColor: {r: 0.3, g: 0.72, b: 0.88, a: 0.58}
   m_EffectDistance: {x: 0, y: 0}
   m_UseGraphicAlpha: 0
+--- !u!114 &1929852070
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1929852065}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6dee3e6104c2ed4eba2b60a34aebe49, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::CosmicBlock.UI.CellSpriteDensity
+  visualScale: 1.2
 --- !u!1 &1930172039
 GameObject:
   m_ObjectHideFlags: 0
@@ -29757,6 +30586,7 @@ GameObject:
   - component: {fileID: 2010894929}
   - component: {fileID: 2010894930}
   - component: {fileID: 2010894931}
+  - component: {fileID: 2010894932}
   m_Layer: 0
   m_Name: Cell_5_1
   m_TagString: Untagged
@@ -29836,6 +30666,19 @@ MonoBehaviour:
   m_EffectColor: {r: 0.3, g: 0.72, b: 0.88, a: 0.58}
   m_EffectDistance: {x: 0, y: 0}
   m_UseGraphicAlpha: 0
+--- !u!114 &2010894932
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2010894927}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6dee3e6104c2ed4eba2b60a34aebe49, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::CosmicBlock.UI.CellSpriteDensity
+  visualScale: 1.2
 --- !u!1 &2024474745
 GameObject:
   m_ObjectHideFlags: 0
@@ -29927,6 +30770,7 @@ GameObject:
   - component: {fileID: 2028454091}
   - component: {fileID: 2028454092}
   - component: {fileID: 2028454093}
+  - component: {fileID: 2028454094}
   m_Layer: 0
   m_Name: Cell_4_0
   m_TagString: Untagged
@@ -30006,6 +30850,19 @@ MonoBehaviour:
   m_EffectColor: {r: 0.3, g: 0.72, b: 0.88, a: 0.58}
   m_EffectDistance: {x: 0, y: 0}
   m_UseGraphicAlpha: 0
+--- !u!114 &2028454094
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2028454089}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6dee3e6104c2ed4eba2b60a34aebe49, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::CosmicBlock.UI.CellSpriteDensity
+  visualScale: 1.2
 --- !u!1 &2032470937
 GameObject:
   m_ObjectHideFlags: 0
@@ -30379,6 +31236,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 61e901ce7c2bfc343940e9b409c6bf41, type: 3}
   - {fileID: 21300000, guid: 8bd01e1dd6e44604c9e6284ad16bd1a6, type: 3}
   - {fileID: 21300000, guid: 6cc86ad98f539b74d8ce7548035e8a61, type: 3}
+  spriteVisualScale: 1.2
 --- !u!224 &2050233816
 RectTransform:
   m_ObjectHideFlags: 0
@@ -31590,6 +32448,7 @@ GameObject:
   - component: {fileID: 2083967969}
   - component: {fileID: 2083967970}
   - component: {fileID: 2083967971}
+  - component: {fileID: 2083967972}
   m_Layer: 0
   m_Name: Cell_1_3
   m_TagString: Untagged
@@ -31669,6 +32528,19 @@ MonoBehaviour:
   m_EffectColor: {r: 0.3, g: 0.72, b: 0.88, a: 0.58}
   m_EffectDistance: {x: 0, y: 0}
   m_UseGraphicAlpha: 0
+--- !u!114 &2083967972
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2083967967}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6dee3e6104c2ed4eba2b60a34aebe49, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::CosmicBlock.UI.CellSpriteDensity
+  visualScale: 1.2
 --- !u!1 &2084842226
 GameObject:
   m_ObjectHideFlags: 0
@@ -31831,6 +32703,7 @@ GameObject:
   - component: {fileID: 2093896880}
   - component: {fileID: 2093896881}
   - component: {fileID: 2093896882}
+  - component: {fileID: 2093896883}
   m_Layer: 0
   m_Name: Cell_1_1
   m_TagString: Untagged
@@ -31910,6 +32783,19 @@ MonoBehaviour:
   m_EffectColor: {r: 0.3, g: 0.72, b: 0.88, a: 0.58}
   m_EffectDistance: {x: 0, y: 0}
   m_UseGraphicAlpha: 0
+--- !u!114 &2093896883
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2093896878}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6dee3e6104c2ed4eba2b60a34aebe49, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::CosmicBlock.UI.CellSpriteDensity
+  visualScale: 1.2
 --- !u!1 &2100419744
 GameObject:
   m_ObjectHideFlags: 0
@@ -32092,6 +32978,7 @@ GameObject:
   - component: {fileID: 2106152597}
   - component: {fileID: 2106152598}
   - component: {fileID: 2106152599}
+  - component: {fileID: 2106152600}
   m_Layer: 0
   m_Name: Cell_4_2
   m_TagString: Untagged
@@ -32171,6 +33058,19 @@ MonoBehaviour:
   m_EffectColor: {r: 0.3, g: 0.72, b: 0.88, a: 0.58}
   m_EffectDistance: {x: 0, y: 0}
   m_UseGraphicAlpha: 0
+--- !u!114 &2106152600
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2106152595}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6dee3e6104c2ed4eba2b60a34aebe49, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::CosmicBlock.UI.CellSpriteDensity
+  visualScale: 1.2
 --- !u!1 &2117170097
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,25 +1,31 @@
-# Sprint 9.1 — GAME Layout Match & Polish
+# Sprint 9.1.1 — Board & Piece Density Polish
 
-Implemented against the attached GAME layout reference. Existing nine PNGs, all gameplay/save/transition/feedback rules, HOME/Collection and original slot input forwarding remain. No hint or new in-game Retry button was added.
+Baseline: 941f48b (Sprint 9.1). Only Sprite mesh density and Slot internal Piece fitting are changed. Board/Frame/Slot outer Rects, Planet/Score/Home/Best positions, vertical layout, Grid centers, pointer conversion, shape offsets, rules and saves remain.
 
-At 1080×1920 (top-left x/y, Canvas units):
+At full Safe Area 1080×1920, alpha >=20/255 source bounds (the original PNG is read only):
 
-| Element | Sprint 9 | Sprint 9.1 |
-|---|---|---|
-| Board Rect | (194.4,777.6), 691.2² | (76,562), 928²; +34.26% |
-| Slot 0 Rect | (29.6,1612.8), 326.93×268.8 | (18.8,1560), 336.8×324; +3.02% width / +20.54% height |
-| Slot Sprite aspect-fit area | 281.3×268.8 | 336.8×321.84; +19.73% linear |
-| Planet Status Rect | (32.4,245.65), 1015.2×391.9 | (21.6,232), 1036.8×260; height −33.66% |
-| Planet Rect to real Board gap | 140.05 | 70 |
-| Real Board to Slot gap | 144 | 70 |
-| Current Score max font | 70 | 106; +51.43% |
+| Metric | Before | After |
+|---|---:|---:|
+| Cell center pitch | 115.5 | 115.5 |
+| Logical Cell Rect | 103.5² | 103.5² |
+| Empty visible pixels | 86.91×83.36 | 104.29×100.03 |
+| Blue visible pixels | 83.03×79.23 | 99.64×95.08 |
+| Purple visible pixels | 92.19×85.26 | 110.63×102.31 |
+| Gold visible pixels | 92.19×86.17 | 110.63×103.40 |
+| Empty width / center pitch | 75.25% | 90.30% |
+| Block width / center pitch | 71.89–79.82% | 86.27–95.78% |
+| Frame inner cyan rim to first visible Empty pixel X/Y | 42.34 / 39.57 | 33.65 / 31.14 |
+| Frame outer Rect to first visible Empty pixel X/Y | 70.34 / 71.57 | 61.65 / 63.14 |
+| Slot Rect | 336.8×324 | 336.8×324 |
+| Piece Available Rect | effective common 3-cell envelope 245.28² | 276.18×265.68 |
+| Logical Piece cell at rest | 77.76 | 84.56 |
+| H3 visible bounds by palette | 229.90–236.78 × 59.53–64.74 | 262.52–271.51 × 77.68–84.48 |
+| V3 visible bounds by palette | 62.38–69.26 × 227.05–232.26 | 81.40–90.39 × 258.80–265.60 |
 
-An initial 20% enlargement exposed overlap with the original frame's thick internal ornaments. GameFrameMesh splits the existing image into UI regions: corners/middle ornaments preserve isotropic scaling and straight strips expand. Planet Status uses the same approach to preserve its circular ornament while becoming wider/flatter. No pixels, alpha or import settings are modified. Board is still a separate 64-child Grid and the frame remains noninteractive decoration.
+CellSpriteDensity expands artwork 1.20 around each existing cell center, including its Preview/Outline mesh. Images remain noninteractive where they previously were. BoardView configures density; BlockPiece uses the same mesh for resting/dragged artwork. BlockDragHandler and logical SetGeometry/OriginWorld calculations are unchanged; drag scale 1.05, offset and Warm Gold/Muted Red/Gold Outline remain.
 
-Planet Stage/Energy Text components are disabled for rendering but retained and updated internally. Current stage sprite/name, overall restoration %, and existing stage-local Bar remain. The existing stage-local Bar is retained within the requested preservation scope; energy thresholds/rewards/timing are unchanged. Slot root size is increased; rest cell cap 64→78 is presentation-only. Drag geometry/scale 1.05/offset 110, validation and consumed-slot guards remain.
+Slot fit: 82% of the existing root Rect is available, with existing 6 spacing. min(width/shape columns, height/shape rows), subtracting spacing, is capped by the widest/tallest catalog shape using the same rule. All shapes share one cell scale, so Single cannot fill the Slot. The initial 90% trial overlapped the V3 frame; direct renders led to the final common 82% rule. All 8 shapes are captured at all 3 resolutions.
 
-All 23 regression entry points PASS, including Sprint 9 and Sprint 9.1; Sprint 9.1 has 2,099 assertions. Responsive 1080×1920 / Tall Safe / Short PASS; Board sides 928 / 891.648 / 696. Tall gaps remain 67.2, Short 52.5. Raw source SHA-256 unchanged for all nine PNGs; protected HOME/Collection/feedback/transitions/modals scene comparison shows 0 changes. Missing Script 0. Final Development build warnings/errors 0; compiler warnings/errors 0; clean Editor runtime warnings/errors 0. SM-S942N Android 16 install -r and launch succeeded. Native touch/preview/drop/clear/refill/HOME cancel-confirm/new run verified. No crash/new game error; existing AssetPackManager ClassNotFoundException logged once. Installation preserved Energy 335 / Best 15930 / version 2; one natural Clear changed Energy to 345. Final clean run: Score 0, empty Board, three Pieces; permanent values 345/15930/2. Commit title: fix: align game layout with visual reference.
+Frame inner rim was sampled on the saved renders (cyan inner edge x=50 / y=540), then compared with alpha bounds. Near-transparent glow is excluded by the stated alpha threshold. Board frame inset and grid padding values are deliberately unchanged: growing visual pixels reduces visible frame padding while preserving the required outer Rect and exact Cell centers. No source pixels, texture import settings or Save keys were modified.
 
-The TMP probe now iterates actual characterCount instead of the capacity array; old unused entries can retain previous glyph geometry after shortening text. The same glyph-bound checks and truncation checks are retained. Production TMP drawing is unchanged by this harness correction.
-
-Evidence under Validation/sprint91_*: empty/placed/reference_1280, Tall/Short, score sizes, drag/clear/game-over captures, layout_measurements.json, regression summary and scene preservation. Original Sprint 9 renders were backed up as sprint91_before_* before regressions overwrote old capture names.
+All 24 regression entry points pass. Final alpha bounds probe: 12,371 assertions PASS, all 8 shapes at all 3 resolutions; 64 coordinate roundtrips, pixel separation, frame containment and Slot containment. Missing Script 0. Final incremental Development build warnings/errors 0; final clean Editor shader/C# warnings and runtime errors 0. First native build had the three existing TMP splitting notices; initial post-build shader import had 414 existing precision warnings, final clean run 0. Protected HOME/Collection/feedback/modal scene diff 0; preserved GAME and all Cell RectTransforms diff 0; all 9 original PNG hashes unchanged. SM-S942N Android 16 install -r and launch succeeded; save before/after install 0/15930/2. Native QA has 12 matching edge drops over H3/H2/V2/V3/L/Reverse L and four HOME/PLAY flows. USB disconnected before Single/Square and final Logcat checks; user cannot reconnect now, so remaining physical checks are deferred. Delivery uses completed required automated checks and the available native evidence.

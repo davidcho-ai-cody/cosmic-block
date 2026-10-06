@@ -10,11 +10,15 @@ namespace CosmicBlock.Blocks
     public sealed class BlockPiece : MonoBehaviour
     {
         private static int paletteIndex;
+        private static readonly Vector2Int CatalogBounds = GetCatalogBounds();
+        private static Vector2Int GetCatalogBounds() { var bounds = Vector2Int.one; foreach (var shape in BlockCatalog.Shapes) { bounds.x = Mathf.Max(bounds.x, shape.Width); bounds.y = Mathf.Max(bounds.y, shape.Height); } return bounds; }
         private static readonly Color[] Palette = { new Color(.30f,.58f,.96f), new Color(.60f,.42f,.91f), new Color(.94f,.69f,.30f) };
         private Image[] visuals;
         private Outline[] cellOutlines;
         private float cellSize;
         [SerializeField] private float restCellLimit = 64;
+        [SerializeField] private bool densitySlotFit;
+        public void ConfigureDensitySlotFit() => densitySlotFit = true;
         public void ConfigureRestCellLimit(float value) => restCellLimit = Mathf.Max(1, value);
         public static readonly Color DragOutlineColor = new Color(1f, .76f, .28f, .98f);
         private static readonly Color RestOutlineColor = new Color(1f, 1f, 1f, .20f);
@@ -49,6 +53,7 @@ namespace CosmicBlock.Blocks
                 visuals[i].preserveAspect = true;
                 visuals[i].color = AppearanceSprite != null ? Color.white : Palette[paletteIndex % Palette.Length];
                 visuals[i].raycastTarget = false;
+                if(board.SpriteVisualScale != 1) rect.gameObject.AddComponent<CosmicBlock.UI.CellSpriteDensity>().Configure(board.SpriteVisualScale);
                 var highlight = rect.gameObject.AddComponent<Outline>();
                 highlight.enabled = AppearanceSprite == null;
                 highlight.effectColor = RestOutlineColor;
@@ -105,7 +110,11 @@ namespace CosmicBlock.Blocks
         public void FitSlot()
         {
             if (Shape == null || !(transform.parent is RectTransform slot)) return;
-            float size = Mathf.Max(1, Mathf.Min(restCellLimit, slot.rect.width * .24f, slot.rect.height * .24f));
+            // A common catalog cell cap keeps Single/H2 proportional to H3/V3. Shape bounds still constrain every fit.
+            float availableWidth = slot.rect.width * .82f, availableHeight = slot.rect.height * .82f;
+            float shapeFit = Mathf.Min((availableWidth - (Shape.Width - 1) * 6) / Shape.Width, (availableHeight - (Shape.Height - 1) * 6) / Shape.Height);
+            float catalogFit = Mathf.Min((availableWidth - (CatalogBounds.x - 1) * 6) / CatalogBounds.x, (availableHeight - (CatalogBounds.y - 1) * 6) / CatalogBounds.y);
+            float size = densitySlotFit ? Mathf.Max(1, Mathf.Min(shapeFit, catalogFit)) : Mathf.Max(1, Mathf.Min(restCellLimit, slot.rect.width * .24f, slot.rect.height * .24f));
             SetGeometry(size, 6);
         }
         private void LateUpdate()

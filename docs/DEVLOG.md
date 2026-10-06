@@ -288,3 +288,39 @@ PID-scoped startup/run log: existing AssetPackManager ClassNotFoundException onc
 Changed files: GameVisualPresentation, SquareBoardLayout, BlockPiece (presentation cap only), GameFrameMesh, Sprint91GameBuilder/PlayProbe and their metas, Sprint9GameBuilder helper access, Sprint9GamePlayProbe TMP observation helper, Game scene, README and docs/CURRENT_TASK/NEXT_TASK/DEVLOG. Original nine PNG hashes unchanged; protected scene block diff 0. Final screenshots include sprint91_game_empty/placed/tall_safe/short, reference_1280 and native drag_preview/retry_drop/home/new_run; before/reference/after comparison is sprint91_visual_comparison.md.
 
 Delivery commit title: fix: align game layout with visual reference. Normal origin/main push; no remote changes, force push or history rewrite.
+
+# Sprint 9.1.1 — Board & Piece Density Polish (2026-10-06/07)
+
+Baseline 941f48b. The attached target/current screenshots showed wide black gaps despite the enlarged Board. Changed only Cell/Block artwork mesh size and Slot internal fitting. Board/Frame/Slot outer Rect, all Cell RectTransforms, Planet/Score/Home/Best layout, vertical group spacing, source PNGs, logical centers, pointer conversion, shape offsets, rules, HOME/Collection and saves remain.
+
+## Before / After at 1080×1920
+
+Source alpha >=20/255 bounds; exclude near-transparent glow. Cell center pitch 115.5→115.5, logical Cell Rect 103.5²→103.5². Visible Empty 86.91×83.36→104.29×100.03; Blue 83.03×79.23→99.64×95.08; Purple 92.19×85.26→110.63×102.31; Gold 92.19×86.17→110.63×103.40. Width/pitch: Empty 75.25%→90.30%, blocks 71.89–79.82%→86.27–95.78%. Artwork expansion is 20%, all Sprite aspects unchanged. Actual static alpha pixel gaps remain positive at every resolution.
+
+Frame inner cyan rim to first visible Empty pixel X/Y 42.34/39.57→33.65/31.14. Frame outer Rect to pixel X/Y 70.34/71.57→61.65/63.14. Rim sampled on the before/after renders (inner boundary x=50/y=540); original Alpha bounds determine Cell pixel bounds. Frame/Grid padding and all centers remain exactly unchanged: visible growth reduces the remaining padding without moving coordinates.
+
+Slot Rect 336.8×324 unchanged. Prior effective common 3-cell envelope 245.28²; final allocated Available Rect 276.18×265.68. Rest logical cell 77.76→84.56, existing 6 spacing. H3 visible bounds: width 229.90–236.78→262.52–271.51, height 59.53–64.74→77.68–84.48. V3: width 62.38–69.26→81.40–90.39, height 227.05–232.26→258.80–265.60. Ranges reflect the three original palette PNGs. H3 uses about 78–81% of Slot width, V3 80–82% of height. No shape-specific scale; available 82% root Rect uses min dimension fit after spacing, capped by actual maximum catalog bounds for a common cell size. Single remains proportional. The initial 90% trial caused V3/frame overlap; direct render inspection led to 82%.
+
+## Implementation / validation
+
+CellSpriteDensity expands UI mesh around existing centers. BoardView serializes/configures 1.20 and BlockPiece applies the same effect to Piece cells. This is vertex presentation, no bitmap edits/import changes. BlockPiece common fit uses actual Shape/Catalog Bounds. BlockDragHandler, SetGeometry/OriginWorld coordinate math, SlotDragHandler full-slot policy, consumed guards, scale 1.05, offset, Warm Gold/Muted Red preview and Gold outline remain. Builders only configure existing scene components.
+
+All 24 regression entry points PASS (previous 23 plus Sprint911). Final alpha probe 12,371 assertions PASS, 8 shapes at standard/Tall Safe/Short, 64 coordinate roundtrips, actual Alpha pixel bounds inside Frame/Slots and positive horizontal/vertical gaps, palette/valid-invalid/consumption/refill, Clear/score/combo/restoration, HOME/Collection/GameOver/Retry and save isolation. Existing probes cover row/column/simultaneous clear and restoration timing. Directly inspected before/reference/after, H3/V3, Tall and Short renders. Protected HOME/Collection/feedback/modal scene diff 0; GAME and all Cell RectTransform diff 0; 9 PNG SHA-256 hashes unchanged. Missing Script 0.
+
+Final incremental BuildReport: Succeeded, warnings 0/errors 0. C# compiler warning/error 0. Final clean Editor shader/runtime-game warning/error 0. First native build had 3 unchanged TMP large-method C++ splitting notices; first post-build shader import had 414 existing URP precision warnings, followed by clean zero-warning runs. No package changes or warning suppression.
+
+## Android / deferred physical QA
+
+SM-S942N / R3KL20DY0KF / Android 16 connected as device. Install -r Success; cold launch and HOME→GAME Success. Energy 0 / Best 15930 / migration 2 before and after install, unchanged. The existing Development APK was updated without uninstall/reset/DEV presets. APK SHA-256 40EF7E037D796BEF5A2DCC329921E95A77654B89B1DF4AC50131D4937652B9B3; actual APK 151823240 bytes (BuildReport total includes symbols).
+
+Native QA: 12 matching drops from multiple Slot corners/blank areas over H3/H2/V2/V3/L/Reverse L; targets include Board top-left/bottom-left/bottom-right edges. Four HOME→PLAY cycles completed. An initial swipe from the extreme screen edge (31,1682) did not begin drag; (100,1720), another blank area in the same Slot, placed H3 correctly. Cause of the extreme-edge rejection was not conclusively established; it is not claimed as a full extreme-edge PASS, and input/system settings were not changed. Subsequent four interior-corner patterns all matched.
+
+USB disconnected before Single/Square2×2 and final Logcat collection. User replied that reconnection is currently unavailable. These native checks remain deferred; they passed automated tests. No crash was observed during launch/12 drops, but final native Logcat zero-error is not claimed. Observed Android DexFile finalizer AssertionError also appears in Sprint 9 and 9.1 logs; AssetPackManager is a previously known environment exception. System exceptions are separate from Editor runtime-game zero errors. No game/system exception was hidden or worked around. Subjective touch/SFX/haptic feel remains user confirmation. Before/after install saves are verified; post-touch preferences could not be re-read after disconnection.
+
+## Files / delivery
+
+Modified: Assets/Scripts/Board/BoardView.cs, Assets/Scripts/Blocks/BlockPiece.cs, Assets/Scenes/Game.unity, README.md and docs/CURRENT_TASK/NEXT_TASK/DEVLOG. Added CellSpriteDensity.cs, Sprint911GameBuilder.cs, Sprint911GamePlayProbe.cs and their metas. No GameVisualPresentation/SquareBoardLayout/SlotVisual/BlockDragHandler/SlotDragHandler/core rule/save files or source art changed.
+
+Evidence: Validation/sprint911_game.txt, regression_summary, measurements.json, sprite_bounds.json, layout_preservation.txt, protected scene preservation and all before/after/shape/responsive/native screenshots. Native edges JSON records 12 successful matches; failed first-edge screenshot retained. Comparison: Validation/sprint911_visual_comparison.md.
+
+Commit title: fix: tighten board and piece spacing. Normal origin/main push only; no remote change, force push or history rewrite. Physical checks above remain pending due user-confirmed device unavailability.

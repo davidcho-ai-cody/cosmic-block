@@ -4,7 +4,7 @@ Android Portrait 8×8 블록 퍼즐. HOME → GAME 또는 행성 도감으로 �
 
 ## 현재 상태
 
-Sprint 0~8.2.1 기능을 유지하며 Sprint 9.1 GAME Layout Match & Polish를 완료했습니다. GAME은 9개의 개별 PNG와 동적 Unity UI로 구성합니다. HOME/Collection 이미지를 GAME 배경 하나로 합성하지 않습니다.
+Sprint 0~8.2.1 기능을 유지하며 Sprint 9.1 GAME Layout을 유지하며 Sprint 9.1.1 Board/Piece Density Polish를 적용했습니다. Cell/Block 표시를 20% 확대하고 Slot 내부 공통 Fit을 개선했습니다. GAME은 9개의 개별 PNG와 동적 Unity UI로 구성합니다. HOME/Collection 이미지를 GAME 배경 하나로 합성하지 않습니다.
 
 ## 실행
 
