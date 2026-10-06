@@ -14,6 +14,8 @@ namespace CosmicBlock.Blocks
         private Image[] visuals;
         private Outline[] cellOutlines;
         private float cellSize;
+        [SerializeField] private float restCellLimit = 64;
+        public void ConfigureRestCellLimit(float value) => restCellLimit = Mathf.Max(1, value);
         public static readonly Color DragOutlineColor = new Color(1f, .76f, .28f, .98f);
         private static readonly Color RestOutlineColor = new Color(1f, 1f, 1f, .20f);
         public BlockShape Shape { get; private set; }
@@ -103,7 +105,7 @@ namespace CosmicBlock.Blocks
         public void FitSlot()
         {
             if (Shape == null || !(transform.parent is RectTransform slot)) return;
-            float size = Mathf.Max(1, Mathf.Min(64, slot.rect.width * .24f, slot.rect.height * .24f));
+            float size = Mathf.Max(1, Mathf.Min(restCellLimit, slot.rect.width * .24f, slot.rect.height * .24f));
             SetGeometry(size, 6);
         }
         private void LateUpdate()

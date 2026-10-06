@@ -1,15 +1,25 @@
-# Sprint 9 — GAME Visual Rebuild
+# Sprint 9.1 — GAME Layout Match & Polish
 
-Implemented and verified. Nine original PNGs in Assets/Art/UI/Game are imported as Sprite/Single, FullRect, input alpha/transparency, Bilinear/Clamp, no mipmaps; Android ASTC 6×6 (1024 tiles/buttons/slots, 2048 frames). Source SHA-256 hashes are unchanged.
+Implemented against the attached GAME layout reference. Existing nine PNGs, all gameplay/save/transition/feedback rules, HOME/Collection and original slot input forwarding remain. No hint or new in-game Retry button was added.
 
-GAME: existing HOME confirmation + new icon; TMP Best/current score; Planet status decoration and PresentedEnergy percentage; decorative sibling BoardFrame; 64 empty cells; matching Blue/Purple/Gold Piece/placed sprites; three original whole-slot drag targets. Installed uGUI TMP essential resources and OFL license are included. Board/score/combo/energy/save/transition/feedback/input rules remain. GameSession only forwards appearance after successful model placement. Offset 110 and drag scale 1.05 remain.
+At 1080×1920 (top-left x/y, Canvas units):
 
-Validation: all 22 regression probe entry points PASS. Final Sprint 9: 1,794 assertions PASS. All catalog shapes, slot-edge drag, invalid return, consumed guard/refill, cell coordinates, values through 9,999,999, HOME/Collection/GameOver/Retry and save isolation. Responsive 1080×1920 / 1080×2400 Safe Area / 1080×1440 PASS; Board sides 691.2 / 684.288 / 518.4. Protected HOME/Collection/feedback/Planet transition/modals unchanged by normalized scene comparison.
+| Element | Sprint 9 | Sprint 9.1 |
+|---|---|---|
+| Board Rect | (194.4,777.6), 691.2² | (76,562), 928²; +34.26% |
+| Slot 0 Rect | (29.6,1612.8), 326.93×268.8 | (18.8,1560), 336.8×324; +3.02% width / +20.54% height |
+| Slot Sprite aspect-fit area | 281.3×268.8 | 336.8×321.84; +19.73% linear |
+| Planet Status Rect | (32.4,245.65), 1015.2×391.9 | (21.6,232), 1036.8×260; height −33.66% |
+| Planet Rect to real Board gap | 140.05 | 70 |
+| Real Board to Slot gap | 144 | 70 |
+| Current Score max font | 70 | 106; +51.43% |
 
-Final Compiler Warning/Error 0, Editor Shader Warning 0, Runtime Game Error 0, Missing Script 0. Final Android Build Warning/Error 0. First native build emitted 3 TMP large-method C++ splitting notices; intermediate D3D11 reimport emitted 414 existing URP precision warnings; final clean run and unchanged-code incremental APK build are both 0. No package modification or warning suppression.
+An initial 20% enlargement exposed overlap with the original frame's thick internal ornaments. GameFrameMesh splits the existing image into UI regions: corners/middle ornaments preserve isotropic scaling and straight strips expand. Planet Status uses the same approach to preserve its circular ornament while becoming wider/flatter. No pixels, alpha or import settings are modified. Board is still a separate 64-child Grid and the frame remains noninteractive decoration.
 
-SM-S942N / Android 16 API 36: install -r and cold launch PASS. 23 real ADB drag placements; first 22 screenshot boards match all predicted cells. One Row Clear, score 690, Energy 290→300, Stage 3→4 / new gauge 0/100. Remaining 2x2 has no legal placement; real Game Over displayed. Retry gives Score 0/empty Board/three Pieces; HOME Cancel/Confirm, Collection Next→locked Planet 02/Prev/Back, HOME→GAME clean run PASS. Current device is left in GAME with Score 0, Energy 300, Stage 4, Best 15930, migration version 2. No DEV preset/uninstall/reset was used. Install preserved 290/15930/2; natural Clear awarded +10, and subsequent flows preserved 300/15930/2.
+Planet Stage/Energy Text components are disabled for rendering but retained and updated internally. Current stage sprite/name, overall restoration %, and existing stage-local Bar remain. The existing stage-local Bar is retained within the requested preservation scope; energy thresholds/rewards/timing are unchanged. Slot root size is increased; rest cell cap 64→78 is presentation-only. Drag geometry/scale 1.05/offset 110, validation and consumed-slot guards remain.
 
-Logcat: crash/fatal 0, new game exception 0, Unity warning 0. One known AssetPackManager ClassNotFoundException during startup remains separate. Physical finger comfort, subjective readability/SFX/haptic/transition feel require user confirmation.
+All 23 regression entry points PASS, including Sprint 9 and Sprint 9.1; Sprint 9.1 has 2,099 assertions. Responsive 1080×1920 / Tall Safe / Short PASS; Board sides 928 / 891.648 / 696. Tall gaps remain 67.2, Short 52.5. Raw source SHA-256 unchanged for all nine PNGs; protected HOME/Collection/feedback/transitions/modals scene comparison shows 0 changes. Missing Script 0. Final Development build warnings/errors 0; compiler warnings/errors 0; clean Editor runtime warnings/errors 0. SM-S942N Android 16 install -r and launch succeeded. Native touch/preview/drop/clear/refill/HOME cancel-confirm/new run verified. No crash/new game error; existing AssetPackManager ClassNotFoundException logged once. Installation preserved Energy 335 / Best 15930 / version 2; one natural Clear changed Energy to 345. Final clean run: Score 0, empty Board, three Pieces; permanent values 345/15930/2. Commit title: fix: align game layout with visual reference.
 
-Latest APK: Builds/Android/Development/CosmicBlock-dev.apk, 151796683 bytes, SHA256 207638CB6E8D6C474E7ECC2192AF5078019605B3261A77ACEA76907A4C325F2A. Evidence: Validation/sprint9_* logs/text/PNG, regression summary, scene preservation and device validation. Git commit/push follows completed checks; no remote change or force push.
+The TMP probe now iterates actual characterCount instead of the capacity array; old unused entries can retain previous glyph geometry after shortening text. The same glyph-bound checks and truncation checks are retained. Production TMP drawing is unchanged by this harness correction.
+
+Evidence under Validation/sprint91_*: empty/placed/reference_1280, Tall/Short, score sizes, drag/clear/game-over captures, layout_measurements.json, regression summary and scene preservation. Original Sprint 9 renders were backed up as sprint91_before_* before regressions overwrote old capture names.

@@ -253,3 +253,38 @@ Evidence: Validation/sprint9_game.txt, sprint9_regression_summary.txt, sprint9_s
 - Evidence: sprint9_regression_summary.txt, sprint9_game.txt, sprint9_scene_preservation.txt, sprint9_device_validation.txt, sprint9_device_moves.json, sprint9_device_prefs_{before,after_install,after_gameplay,after_home,final}.txt, sprint9_device_logcat.txt. Build logs: sprint9_android_build.log (initial 3 notices), sprint9_android_incremental.log (0/0). Editor final: sprint9_confirm_clean.log (0/0).
 - Renders: sprint9_game_9x16.png, sprint9_game_tall_safe.png, sprint9_game_short.png, sprint9_game_placed.png, sprint9_game_over.png; best_999/15930/999999/9999999, drag_valid/drag_invalid/clear_feedback with sprint9_ prefix. Android: sprint9_device_game.png, first_placement.png, move_6.png (Stage 4), move_23.png (Game Over), retry/confirm/cancel/collection/locked/final with sprint9_device_ prefix.
 - Changed runtime files: BoardView.cs, BlockPiece.cs, GameSession.cs (appearance forwarding only), SquareBoardLayout.cs, new GameVisualPresentation.cs. Scene: Game.unity. Editor: new Sprint9GameBuilder.cs and Sprint9GamePlayProbe.cs. Art/import: nine Game PNGs/metas, essential TMP resources/fonts/license. Documentation: README and docs/CURRENT_TASK, NEXT_TASK, DEVLOG. Git uses the existing origin/main with ordinary commit/push after checks.
+# Sprint 9.1 — GAME Layout Match & Polish (2026-10-06)
+
+## Reason / scope
+
+The Sprint 9 art was installed, but large decorative insets, detailed Planet labels and vertical whitespace made the actual Board small. The supplied reference is the layout target. GAME presentation is adjusted; HOME/Collection, rules, save, restoration thresholds/overflow/cinematic, clear feedback/SFX/haptic/drag are preserved. No new PNGs, hint, advertisement, gameplay Retry or other content.
+
+## Layout and source preservation
+
+- Board at 1080×1920: (194.4,777.6), 691.2² → (76,562), 928², +34.26%. Initial 20% scale was insufficient against the reference and overlapped original frame insets; the final layout gives the real grid the main visual area.
+- Slot 0: (29.6,1612.8), 326.933×268.8 → (18.8,1560), 336.8×324 (+3.02% W / +20.54% H). Same-sized roots with full-slot input, 16 spacing / 8 padding. Aspect-fit sprite area 281.3×268.8 → 336.8×321.84, +19.73% linear. Rest piece size limit 64→78; actual standard cell 64→77.76, retaining shape/padding/drag rules.
+- Planet Status: (32.4,245.65), 1015.2×391.9 → (21.6,232), 1036.8×260, height −33.66%. Stage and Energy legacy Text rendering disabled; data and view callbacks remain. Name/current-stage planet/overall % and existing stage-local Bar remain.
+- Real Board gaps: Planet→Board 140.05→70, Board→Slots 144→70. Decorative frame gaps are 16. SCORE max font 70→106 (+51.43%), Bold, warm gold, centered; label 26→32. HOME/best remain the existing actions/assets. Large values are checked through 9,999,999.
+- GameFrameMesh uses source UV regions on existing Sprite images. Board: 5×5 patches keep corners/center ornaments isotropic; straight connecting strips stretch. Planet frame: horizontal patches preserve the circular left ornament and caps at the same scale. No source pixels/alpha/import settings/new bitmap are produced. Board frame stays a separate sibling behind the original Grid, noninteractive; all 64 cells and pointer conversion remain unchanged.
+- Layout fits the Safe Area and vertically packs header/status/frame/slots with bounded gaps. Tall does not separate the Board and Slot group with large gaps; spare height remains below it. Requested Short stays square and unclipped. No simulated Retry/hint footer from the reference was added.
+
+## Tests / known harness issue
+
+All 23 regression entry points pass (Sprint 0–9.1 plus earlier hotfix/UX probes). Sprint 9.1 has 2,099 assertions: actual whole-slot events, all catalog shapes, all palette placements, invalid return/consumption/refill, 64 coordinate roundtrips per capture, all text sizes, clean HOME/Collection/GAME/GameOver/Retry and save isolation. Missing Script 0. Responsive board sides: 928 / 891.648 / 696 at 9:16 / Tall Safe / Short; gaps 70 / 67.2 / 52.5. All required images directly inspected, including reference fixture and 9,999,999.
+
+After a shorter text replaced the display fixture, the old TMP fit helper checked unused capacity entries in characterInfo. They can retain old visible flags/geometry although TMP does not draw them. Both Sprint 9 and 9.1 helpers now check only characterCount; glyph bounds/truncation requirements are unchanged. This corrects test observation without relaxing text fit or changing production text parsing.
+
+All nine source PNG SHA-256 hashes match Sprint 9. Protected scene blocks (HOME/Collection/clear feedback/planet flight/central transition/confirmation/Game Over) have zero changes after preserving Unity-rounded Collection anchor literals. Android/final diagnostics/save/Git results follow below.
+## Final Android / diagnostics / delivery
+
+Development APK build succeeded. Initial native compile emitted three existing TMP C++ large-method splitting notices; incremental final build emitted 0 warnings / 0 errors. Post-build first Editor shader import emitted 414 existing URP precision warnings; the subsequent clean final probe emitted 0. No package, shader or warning suppression changes were made. Compiler warning/error 0; final clean Editor runtime warning/error 0; Missing Script 0.
+
+APK: Builds/Android/Development/CosmicBlock-dev.apk, 151807714 bytes, SHA-256 F45FF429C82CB0F469603DAA0FF673FCA41D70754CD4E1B64221FEB14D654645. Connected R3KL20DY0KF / SM-S942N / Android 16 API 36: install -r Success, cold launch Success. Native resolution 1080×2340. Source saves before/after install: Energy 335, Best 15930, migration 2. Six successful natural placements (Score 260), one Line Clear (+10 Energy), Piece refill, invalid return, single-cell drag preview and valid drop were visually confirmed. A sequential driver final drop did not place; a later identical swipe placed normally. The precise reason for the first rejected input was not established. The failed attempt is retained in Validation evidence; it is not counted as a successful placement. No game logic or timing was changed for the driver. Phone screen doze was resolved with the ordinary wake key, without changing device settings.
+
+Native HOME confirmation Cancel, confirm HOME, then PLAY verified: Score 0, empty Board, three Pieces, no stale Game Over. Permanent save remained Energy 345 / Best 15930 / migration 2. Device Game Over/Retry is covered by automated regression rather than claimed as a newly completed native flow. Subjective touch/sound/vibration quality remains user confirmation.
+
+PID-scoped startup/run log: existing AssetPackManager ClassNotFoundException once; FATAL EXCEPTION/AndroidJavaException/NullReferenceException/MissingReferenceException 0; new game error 0; Unity warning 0; crash 0. Validation/sprint91_device_logcat.txt retains the exception, so total device error log count is not claimed as zero.
+
+Changed files: GameVisualPresentation, SquareBoardLayout, BlockPiece (presentation cap only), GameFrameMesh, Sprint91GameBuilder/PlayProbe and their metas, Sprint9GameBuilder helper access, Sprint9GamePlayProbe TMP observation helper, Game scene, README and docs/CURRENT_TASK/NEXT_TASK/DEVLOG. Original nine PNG hashes unchanged; protected scene block diff 0. Final screenshots include sprint91_game_empty/placed/tall_safe/short, reference_1280 and native drag_preview/retry_drop/home/new_run; before/reference/after comparison is sprint91_visual_comparison.md.
+
+Delivery commit title: fix: align game layout with visual reference. Normal origin/main push; no remote changes, force push or history rewrite.
