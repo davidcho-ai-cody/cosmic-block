@@ -154,8 +154,8 @@ public static class Sprint2Builder
         Require(result.LineCount == 16 && result.UniqueClearedCells.Count == 64 && Count(board) == 0, "All lines");
 
         Require(ScoreRules.AddPlacement(0, 1, 0, 0) == 10 && ScoreRules.AddPlacement(0, 3, 0, 0) == 30 &&
-                ScoreRules.AddPlacement(0, 4, 0, 0) == 40 && ScoreRules.AddPlacement(0, 1, 2, 1) == 210 &&
-                ScoreRules.AddPlacement(0, 3, 2, 4) == 380, "Test 5 score formula");
+                ScoreRules.AddPlacement(0, 4, 0, 0) == 40 && ScoreRules.AddPlacement(0, 1, 2, 1) == 260 &&
+                ScoreRules.AddPlacement(0, 3, 2, 4) == 280, "Test 5 score formula");
         Require(ScoreRules.AddPlacement(int.MaxValue - 5, 1, 0, 0) == int.MaxValue, "Score integer cap");
         foreach (var shape in BlockCatalog.Shapes) Require(board.CanPlaceAnywhere(shape), "Empty board placeability");
         for (int y = 0; y < 8; y++) for (int x = 0; x < 8; x++) if (x != y) board.SetOccupied(x, y, true);

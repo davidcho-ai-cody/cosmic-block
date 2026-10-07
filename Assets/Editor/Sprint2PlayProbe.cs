@@ -106,10 +106,10 @@ public static class Sprint2PlayProbe
         session.DebugPrepareCross();
         Drop(0, new Vector2Int(3, 3), -1);
         Require(session.LastClear.LineCount == 2 && session.LastClear.UniqueClearedCells.Count == 15 &&
-                session.Score == 210 && session.Combo == 1 && Count() == 0, "Test 3 cross score");
-        Require(session.BestScore == 210 && PlayerPrefs.GetInt(TestKey) == 210, "Test 13 record save");
+                session.Score == 260 && session.Combo == 1 && Count() == 0, "Test 3 cross score");
+        Require(session.BestScore == 260 && PlayerPrefs.GetInt(TestKey) == 260, "Test 13 record save");
         AssertBoardVisuals();
-        results.Add("PASS tests 3/13: simultaneous row+column, unique 15 cells, score 210, Best 123 -> 210 saved to isolated test key.");
+        results.Add("PASS tests 3/13: frozen row+column, unique 15 cells, score 260, Best 123 -> 260 saved to isolated test key.");
 
         session.Model.SetOccupied(0, 0, true);
         string before = Snapshot(); int score = session.Score, combo = session.Combo;
@@ -125,8 +125,8 @@ public static class Sprint2PlayProbe
         for (int y = 2; y <= 3; y++) for (int x = 1; x < 8; x++) session.Model.SetOccupied(x, y, true);
         Drop(0, new Vector2Int(0, 2), -1);
         Require(session.LastClear.ClearedRows.Count == 2 && session.LastClear.UniqueClearedCells.Count == 16 &&
-                Count() == 0 && session.Score == 220, "Test 4 two rows");
-        results.Add("PASS test 4: Vertical 2 clears two rows, score 20 + 200 = 220.");
+                Count() == 0 && session.Score == 270, "Test 4 two rows");
+        results.Add("PASS test 4: Vertical 2 clears two rows, score 20 + 250 = 270.");
 
         Prepare(true, 5, 0, 0);
         for (int y = 0; y < 8; y++) for (int x = 0; x < 8; x++)
@@ -134,13 +134,13 @@ public static class Sprint2PlayProbe
                 session.Model.SetOccupied(x, y, true);
         Drop(0, new Vector2Int(2, 2), 42);
         Require(session.LastClear.LineCount == 4 && session.LastClear.UniqueClearedCells.Count == 28 &&
-                session.Score == 440 && Count() == 0, "Four-line core loop");
-        results.Add("PASS: Square clears two rows + two columns atomically, unique 28 cells, score 440.");
+                session.Score == 740 && Count() == 0, "Four-line core loop");
+        results.Add("PASS: Square clears two rows + two columns via frozen plan, unique 28 cells, score 740.");
 
         session.DebugPrepareCross(); Drop(0, new Vector2Int(3, 3), -1);
         session.DebugPrepareNextRow(); Drop(0, new Vector2Int(3, 3), -1);
-        Require(session.Combo == 2 && session.Score == 370 && session.Feedback.LastComboLabel == "COMBO 2!" && session.Feedback.ComboPopupVisible, "Test 7 Combo 2");
-        results.Add("PASS test 7: consecutive clear Combo 2, +50 bonus, cumulative 370.");
+        Require(session.Combo == 2 && session.Score == 370 && session.Feedback.LastComboLabel == "CLEAR!" && session.Feedback.ComboPopupVisible, "Test 7 Combo 2");
+        results.Add("PASS test 7: placement streak 2 retained, each single Line remains CLEAR/+100; cumulative 370.");
 
         // Temporary board state for placeholder UI review, removed by the next preparation.
         Prepare(false, 2, 6, 3);
@@ -154,12 +154,12 @@ public static class Sprint2PlayProbe
         board.ClearPreview();
 
         session.DebugPrepareNextRow(); Drop(0, new Vector2Int(3, 3), -1);
-        Require(session.Combo == 3 && session.Score == 580 && session.Feedback.LastComboLabel == "COMBO 3!" && session.Feedback.ComboPopupVisible, "Combo 3");
+        Require(session.Combo == 3 && session.Score == 480 && session.Feedback.LastComboLabel == "CLEAR!" && session.Feedback.ComboPopupVisible, "Combo 3");
         session.DebugPrepareNextRow(); Drop(0, new Vector2Int(3, 3), 42);
-        Require(session.Combo == 4 && session.Score == 840 && session.Feedback.LastComboLabel == "COMBO 4!" && session.Feedback.ComboPopupVisible, "Combo 4");
+        Require(session.Combo == 4 && session.Score == 590 && session.Feedback.LastComboLabel == "CLEAR!" && session.Feedback.ComboPopupVisible, "Combo 4");
         Drop(1, new Vector2Int(0, 0), -1);
-        Require(session.Combo == 0 && session.Score == 850, "Test 8 reset");
-        results.Add("PASS test 8: Combo 3/4 popup and bonus; valid non-clear resets to 0; cumulative score 850.");
+        Require(session.Combo == 0 && session.Score == 600, "Test 8 reset");
+        results.Add("PASS test 8: placement streak 3/4 has no extra score; single-Line CLEAR; non-clear resets to 0; score 600.");
 
         Prepare(true, 0, 2, 5);
         Drop(0, new Vector2Int(0, 0), -1);
@@ -282,6 +282,7 @@ public static class Sprint2PlayProbe
         Require(Snapshot() == before && session.Score == score && session.Combo == combo, "Preview is non-mutating");
         Require(Vector3.Distance(piece.OriginWorld, board.GetCellWorld(coordinate)) < .1f, "Preview/visual same anchor");
         ExecuteEvents.Execute(piece.gameObject, data, ExecuteEvents.endDragHandler);
+        session.DebugCompleteTurnForProbe();
     }
     private static void AssertBoardVisuals()
     {

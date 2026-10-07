@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using CosmicBlock.Blocks;
 using CosmicBlock.Board;
@@ -24,6 +25,15 @@ namespace CosmicBlock.Core
         private BlockDragHandler activeDrag;
         private BlockGenerator generator;
         private PlanetRestoration restoration;
+        public const float ClearLineInterval = .16f;
+        private SequentialClearPlan pendingPlan;
+        private Coroutine clearRoutine;
+        private int nextLine, turnToken;
+        private bool energyCommitted;
+        public int LineComboIndex { get; private set; }
+        public bool ClearSequenceActive => pendingPlan != null;
+        public int PlacementCombo => Combo;
+
 
         public float DragFingerOffset => dragFingerOffset;
         public GameState State { get; private set; } = GameState.Playing;
@@ -62,44 +72,79 @@ namespace CosmicBlock.Core
         {
             if (State != GameState.Playing || activeDrag != null || piece == null || piece.IsConsumed ||
                 slots == null || Array.IndexOf(slots, piece) < 0 || !Model.CanPlace(piece.Shape, x, y)) return false;
+            ++turnToken;
             State = GameState.Resolving;
             board.ClearPreview();
             if (!Model.TryPlace(piece.Shape, x, y)) { State = GameState.Playing; return false; }
             board.PaintPlacement(piece.Shape, x, y, piece.AppearanceSprite);
-            LastClear = Model.ClearCompletedLines();
+            LastClear = Model.SnapshotCompletedLines();
             Combo = LastClear.LineCount > 0 ? (int)Math.Min(int.MaxValue, (long)Combo + 1) : 0;
-            int previousScore = Score;
-            Score = ScoreRules.AddPlacement(Score, piece.Shape.Cells.Count, LastClear.LineCount, Combo);
-            int previousPlanetEnergy = restoration.CurrentEnergy;
-            int energyAward = restoration.AddEnergy(PlanetRestoration.AwardForLines(LastClear.LineCount));
-            if (Score > BestScore)
-            {
-                BestScore = Score;
-                PlayerPrefs.SetInt(bestScoreKey, BestScore);
-                PlayerPrefs.Save();
-            }
-            piece.Consume();
-            bool allConsumed = true;
-            foreach (var slot in slots) if (!slot.IsConsumed) { allConsumed = false; break; }
-            if (allConsumed) GenerateBlockSet();
-            // Keep Resolving until the clear-to-planet presentation finishes.
-            bool gameOverAfterResolution = !HasPlaceableRemainingBlock();
-            bool lockForPlanetTransition = energyAward > 0 && PlanetRestoration.StageForEnergy(previousPlanetEnergy) != restoration.Stage;
-            if (feedback != null && LastClear.LineCount > 0) feedback.PlayClear(LastClear, Score - previousScore, Combo);
-            Action finishResolution = () =>
-            {
-                State = gameOverAfterResolution ? GameState.GameOver : GameState.Playing;
-                if (hud != null) hud.Render(this);
-            };
-            if (!lockForPlanetTransition && !gameOverAfterResolution) State = GameState.Playing;
-            if (hud != null)
-            {
-                hud.Render(this); hud.NotifyJourneyCrossings(previousScore, Score);
-                if (energyAward > 0 && hud.PresentPlanetEnergy(LastClear, board, previousPlanetEnergy, restoration.CurrentEnergy, finishResolution)) return true;
-            }
-            finishResolution();
+            AddScore(piece.Shape.Cells.Count * ScoreRules.PointsPerPlacedCell);
+            piece.Consume(); LineComboIndex=0;
+            if (LastClear.LineCount==0) { FinishTurn(); return true; }
+            pendingPlan=new SequentialClearPlan(LastClear);nextLine=0;energyCommitted=false;
+            clearRoutine=StartCoroutine(ResolveClear(turnToken));
             return true;
         }
+        private IEnumerator ResolveClear(int token)
+        {
+            while (pendingPlan!=null && nextLine<pendingPlan.Steps.Count)
+            {
+                ResolveLine(true);
+                if(nextLine<pendingPlan.Steps.Count)yield return new WaitForSecondsRealtime(ClearLineInterval);
+            }
+            yield return new WaitForSecondsRealtime(.68f);
+            clearRoutine=null;
+            if(token==turnToken)CompleteClearPresentation(token);
+        }
+        private void ResolveLine(bool present)
+        {
+            var step=pendingPlan.Steps[nextLine++];LineComboIndex=nextLine;
+            // Copy source sprites while their original occupied view still exists.
+            if(present && feedback!=null)feedback.PlayClear(step.Result,ScoreRules.LinePoints(LineComboIndex),LineComboIndex);
+            Model.ClearCells(step.Cells);AddScore(ScoreRules.LinePoints(LineComboIndex));
+        }
+        private void AddScore(int points)
+        {
+            int before=Score;Score=(int)Math.Min(int.MaxValue,(long)Score+points);
+            if(Score>BestScore){BestScore=Score;PlayerPrefs.SetInt(bestScoreKey,BestScore);}
+            if(hud!=null){hud.Render(this);hud.NotifyJourneyCrossings(before,Score);}
+        }
+        private void CompleteClearPresentation(int token)
+        {
+            if(pendingPlan==null)return;
+            int before=restoration.CurrentEnergy;CommitEnergy();int after=restoration.CurrentEnergy;
+            pendingPlan=null;PlayerPrefs.Save();
+            bool allConsumed=true;foreach(var slot in slots)if(!slot.IsConsumed){allConsumed=false;break;}
+            if(allConsumed)GenerateBlockSet();
+            bool gameOver=!HasPlaceableRemainingBlock();
+            bool stageChanges=PlanetRestoration.StageForEnergy(before)!=restoration.Stage;
+            // The frozen clear is finished. Preserve free play during a non-boundary fragment flight.
+            State=gameOver||stageChanges?GameState.Resolving:GameState.Playing;
+            Action finish=()=>{if(token!=turnToken)return;State=gameOver?GameState.GameOver:GameState.Playing;if(hud!=null)hud.Render(this);};
+            // Present before HUD refresh so the old stage/fill remains until fragment arrival.
+            if(hud!=null && after>before){hud.PresentPlanetEnergy(LastClear,board,before,after,finish);hud.Render(this);return;}
+            finish();
+        }
+        private void CommitEnergy(){if(energyCommitted)return;energyCommitted=true;restoration.AddEnergy(PlanetRestoration.AwardForLines(LastClear.LineCount));}
+        private void FinishTurn()
+        {
+            bool allConsumed=true;foreach(var slot in slots)if(!slot.IsConsumed){allConsumed=false;break;}
+            if(allConsumed)GenerateBlockSet();
+            State=HasPlaceableRemainingBlock()?GameState.Playing:GameState.GameOver;
+            PlayerPrefs.Save();if(hud!=null)hud.Render(this);
+        }
+        private void CancelResolution()
+        {
+            ++turnToken;if(clearRoutine!=null)StopCoroutine(clearRoutine);clearRoutine=null;
+            if(pendingPlan!=null){while(nextLine<pendingPlan.Steps.Count)ResolveLine(false);CommitEnergy();pendingPlan=null;PlayerPrefs.Save();}
+            if(State==GameState.Resolving)State=GameState.Playing;
+        }
+#if UNITY_EDITOR
+        public void DebugCompleteTurnForProbe(){DebugCompleteLineSequence();if(hud!=null)hud.ResetPlanetFeedback();if(State==GameState.Resolving)FinishTurn();}
+        // Legacy synchronous probes advance only the line timeline; real timing is tested separately.
+        public void DebugCompleteLineSequence(){if(pendingPlan==null)return;if(clearRoutine!=null)StopCoroutine(clearRoutine);clearRoutine=null;while(nextLine<pendingPlan.Steps.Count)ResolveLine(true);CompleteClearPresentation(turnToken);}
+#endif
         private void GenerateBlockSet()
         {
             if (slots == null || slots.Length == 0) return;
@@ -131,7 +176,7 @@ namespace CosmicBlock.Core
             if (activeDrag != null) activeDrag.CancelDrag();
             State = GameState.Resolving;
             board.ClearPreview(); Model.Clear();
-            Score = Combo = BlockSetNumber = 0;
+            Score = Combo = BlockSetNumber = LineComboIndex = 0;
             LastClear = LineClearResult.Empty;
             generator = new BlockGenerator(useFixedSeed ? (int?)fixedSeed : null);
             GenerateBlockSet();
@@ -142,6 +187,7 @@ namespace CosmicBlock.Core
 
         public void ResetTransientFeedback()
         {
+            CancelResolution();
             if (hud != null) hud.ResetJourneyFeedback();
             if (feedback != null) feedback.ResetFeedback();
             if (hud != null) hud.ResetPlanetFeedback();
@@ -181,7 +227,8 @@ namespace CosmicBlock.Core
         [ContextMenu("Debug/Prepare Next Row Clear")]
         public void DebugPrepareNextRow()
         {
-            if (!Application.isPlaying || State != GameState.Playing) return;
+            if (!Application.isPlaying) return;
+            ResetTransientFeedback();
             if (activeDrag != null) activeDrag.CancelDrag();
             board.ClearPreview(); Model.Clear(); DebugSetShapes(BlockCatalog.Shapes[0]);
             for (int x = 0; x < 8; x++) if (x != 3) Model.SetOccupied(x, 3, true);
@@ -189,7 +236,8 @@ namespace CosmicBlock.Core
         [ContextMenu("Debug/Force Game Over")]
         public void DebugForceGameOver()
         {
-            if (!Application.isPlaying || State == GameState.Resolving) return;
+            if (!Application.isPlaying) return;
+            ResetTransientFeedback();
             if (activeDrag != null) activeDrag.CancelDrag();
             board.ClearPreview(); Model.Clear(); DebugSetShapes(BlockCatalog.Shapes[2]);
             for (int y = 0; y < 8; y++) for (int x = 0; x < 8; x++)

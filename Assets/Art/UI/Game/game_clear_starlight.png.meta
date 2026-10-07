@@ -1,25 +1,28 @@
 fileFormatVersion: 2
-guid: 6cc86ad98f539b74d8ce7548035e8a61
+guid: 2bc754b1592fccb46a24bdf089943c2c
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -1163369994608170887
-    second: game_block_gold_0
+      213: 4990573795557967424
+    second: game_clear_starlight_0
   - first:
-      213: 3449453012822016022
-    second: game_block_gold_1
+      213: 8868459519449956622
+    second: game_clear_starlight_1
   - first:
-      213: 1373396303485514381
-    second: game_block_gold_2
+      213: -2408351731124376707
+    second: game_clear_starlight_2
   - first:
-      213: -5114503223548704438
-    second: game_block_gold_3
+      213: -4837376858200442741
+    second: game_clear_starlight_3
   - first:
-      213: 8962910424212969365
-    second: game_block_gold_4
+      213: -1101008905869882909
+    second: game_clear_starlight_4
   - first:
-      213: 3806056226690768663
-    second: game_block_gold_5
+      213: -8242672402770354254
+    second: game_clear_starlight_5
+  - first:
+      213: -5833997879146329241
+    second: game_clear_starlight_6
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -113,14 +116,14 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 4
     buildTarget: Android
-    maxTextureSize: 1024
+    maxTextureSize: 2048
     resizeAlgorithm: 0
-    textureFormat: 50
+    textureFormat: -1
     textureCompression: 1
-    compressionQuality: 100
+    compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
-    overridden: 1
+    overridden: 0
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
@@ -141,100 +144,34 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: game_block_gold_0
+      name: game_clear_starlight_0
       rect:
         serializedVersion: 2
-        x: 526
-        y: 1245
+        x: 24
+        y: 0
+        width: 1228
+        height: 1202
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0460b950d64124540800000000000000
+      internalID: 4990573795557967424
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: game_clear_starlight_1
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 743
         width: 12
-        height: 9
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData:
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 97828095721eadfe0800000000000000
-      internalID: -1163369994608170887
-      vertices: []
-      indices:
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: game_block_gold_1
-      rect:
-        serializedVersion: 2
-        x: 553
-        y: 1249
-        width: 8
-        height: 5
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData:
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 61048aa3d3beedf20800000000000000
-      internalID: 3449453012822016022
-      vertices: []
-      indices:
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: game_block_gold_2
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 23
-        width: 1209
-        height: 1193
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData:
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: d82b61559a84f0310800000000000000
-      internalID: 1373396303485514381
-      vertices: []
-      indices:
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: game_block_gold_3
-      rect:
-        serializedVersion: 2
-        x: 193
-        y: 47
-        width: 13
-        height: 21
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData:
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: a490acd7a62a509b0800000000000000
-      internalID: -5114503223548704438
-      vertices: []
-      indices:
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: game_block_gold_4
-      rect:
-        serializedVersion: 2
-        x: 327
-        y: 21
-        width: 27
         height: 13
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -244,19 +181,85 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 5971cd41b87a26c70800000000000000
-      internalID: 8962910424212969365
+      spriteID: e010fb122f8131b70800000000000000
+      internalID: 8868459519449956622
       vertices: []
       indices:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: game_block_gold_5
+      name: game_clear_starlight_2
       rect:
         serializedVersion: 2
-        x: 378
-        y: 39
-        width: 19
+        x: 179
+        y: 562
+        width: 13
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d7b622c4cd0d39ed0800000000000000
+      internalID: -2408351731124376707
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: game_clear_starlight_3
+      rect:
+        serializedVersion: 2
+        x: 432
+        y: 103
+        width: 12
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b887442806f2edcb0800000000000000
+      internalID: -4837376858200442741
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: game_clear_starlight_4
+      rect:
+        serializedVersion: 2
+        x: 481
+        y: 114
+        width: 21
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3e98517cb3e68b0f0800000000000000
+      internalID: -1101008905869882909
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: game_clear_starlight_5
+      rect:
+        serializedVersion: 2
+        x: 836
+        y: 103
+        width: 10
         height: 11
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -266,8 +269,30 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 71f111b09f3d1d430800000000000000
-      internalID: 3806056226690768663
+      spriteID: 2bf15f80f152c9d80800000000000000
+      internalID: -8242672402770354254
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: game_clear_starlight_6
+      rect:
+        serializedVersion: 2
+        x: 690
+        y: 39
+        width: 9
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 76bc919b6d9790fa0800000000000000
+      internalID: -5833997879146329241
       vertices: []
       indices:
       edges: []
@@ -286,12 +311,13 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      game_block_gold_0: -1163369994608170887
-      game_block_gold_1: 3449453012822016022
-      game_block_gold_2: 1373396303485514381
-      game_block_gold_3: -5114503223548704438
-      game_block_gold_4: 8962910424212969365
-      game_block_gold_5: 3806056226690768663
+      game_clear_starlight_0: 4990573795557967424
+      game_clear_starlight_1: 8868459519449956622
+      game_clear_starlight_2: -2408351731124376707
+      game_clear_starlight_3: -4837376858200442741
+      game_clear_starlight_4: -1101008905869882909
+      game_clear_starlight_5: -8242672402770354254
+      game_clear_starlight_6: -5833997879146329241
   mipmapLimitGroupName:
   pSDRemoveMatte: 0
   userData:

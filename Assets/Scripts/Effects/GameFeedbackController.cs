@@ -1,82 +1,51 @@
-using System.Collections;
+using System;
 using CosmicBlock.Board;
 using UnityEngine;
 using UnityEngine.UI;
-
-namespace CosmicBlock.Effects
-{
-    public sealed class GameFeedbackController : MonoBehaviour
-    {
-        static readonly Color Gold = new Color(1f, .76f, .28f, .96f);
-        static readonly Color SoftWhite = new Color(1f, .96f, .82f, .94f);
-        static readonly Color CosmicBlue = new Color(.38f, .72f, 1f, .92f);
-        [SerializeField] BoardView board;
-        [SerializeField] RectTransform effectRoot;
-        [SerializeField] Image[] clearCells;
-        [SerializeField] Text[] stars;
-        [SerializeField] Text scorePop;
-        [SerializeField] Text comboPop;
-        [SerializeField] AudioSource audioSource;
-        [SerializeField] AudioClip clearClip;
-        Coroutine routine;
-        readonly Vector2[] starOrigins = new Vector2[24];
-        readonly Vector2[] starDirections = new Vector2[24];
-        public int PlayCount { get; private set; }
-        public int LastCellCount { get; private set; }
-        public int LastParticleCount { get; private set; }
-        public int LastScoreDelta { get; private set; }
-        public int LastCombo { get; private set; }
-        public string LastComboLabel { get; private set; } = "";
-        public float LastPitch { get; private set; }
-        public int HapticRequestCount { get; private set; }
-        public bool IsPlaying => routine != null;
-        public int ActiveCellCount => CountActive(clearCells);
-        public int ActiveStarCount => CountActive(stars);
-        public int CellPoolCapacity => clearCells == null ? 0 : clearCells.Length;
-        public int StarPoolCapacity => stars == null ? 0 : stars.Length;
-        public bool HasAudioClip => clearClip != null;
-        public bool ComboPopupVisible => comboPop != null && comboPop.gameObject.activeSelf;
-        public string ComboPopupText => comboPop == null ? string.Empty : comboPop.text;
-        public void Configure(BoardView boardView, RectTransform root, Image[] cells, Text[] starPool, Text scoreText, Text comboText, AudioSource source, AudioClip clip)
-        {
-            board=boardView;effectRoot=root;clearCells=cells;stars=starPool;scorePop=scoreText;comboPop=comboText;audioSource=source;clearClip=clip;ResetFeedback();
-        }
-        public void PlayClear(LineClearResult result,int scoreDelta,int combo)
-        {
-            if(result==null||result.LineCount==0||result.UniqueClearedCells.Count==0)return;
-            if(routine!=null){StopCoroutine(routine);routine=null;}ResetVisuals();PlayCount++;LastCellCount=Mathf.Min(result.UniqueClearedCells.Count,clearCells.Length);
-            LastParticleCount=Mathf.Min(stars.Length,Mathf.Clamp(8+(result.LineCount-1)*4,8,24));
-            LastScoreDelta=scoreDelta;LastCombo=combo;LastComboLabel=combo>=2?"COMBO "+combo+"!":string.Empty;
-            LastPitch=combo<=1?1f:combo==2?1.05f:1.1f;Vector2 center=Vector2.zero;
-            for(int i=0;i<LastCellCount;i++){var cell=clearCells[i];var rect=(RectTransform)cell.transform;rect.anchoredPosition=effectRoot.InverseTransformPoint(board.GetCellWorld(result.UniqueClearedCells[i]));rect.sizeDelta=Vector2.one*board.CellSize;rect.localScale=Vector3.one;cell.color=Gold;cell.gameObject.SetActive(true);center+=rect.anchoredPosition;}
-            center/=LastCellCount;
-            for(int i=0;i<LastParticleCount;i++){float angle=i*2.39996323f;float radius=8f+(i%4)*9f;starOrigins[i]=center+new Vector2(Mathf.Cos(angle),Mathf.Sin(angle))*radius;starDirections[i]=new Vector2(Mathf.Cos(angle),Mathf.Sin(angle))*(55f+(i%5)*13f);var star=stars[i];star.rectTransform.anchoredPosition=starOrigins[i];star.rectTransform.localScale=Vector3.one*(result.LineCount>1?1.12f:1f);star.color=i%3==0?CosmicBlue:i%3==1?SoftWhite:Gold;star.gameObject.SetActive(true);}
-            scorePop.text="+"+scoreDelta;comboPop.text=LastComboLabel;scorePop.rectTransform.anchoredPosition=center+new Vector2(0,65);comboPop.rectTransform.anchoredPosition=BoardCenter()+new Vector2(0,105);scorePop.gameObject.SetActive(true);comboPop.gameObject.SetActive(combo>=2);
-            if(audioSource!=null&&clearClip!=null){audioSource.Stop();audioSource.clip=clearClip;audioSource.pitch=LastPitch;audioSource.volume=.58f;audioSource.Play();}
-            RequestHaptic();routine=StartCoroutine(Animate(result.LineCount));
-        }
-        IEnumerator Animate(int lineCount)
-        {
-            const float flash=.10f,pop=.18f,total=.68f;float elapsed=0f;
-            while(elapsed<total){elapsed+=Time.unscaledDeltaTime;if(elapsed<=flash){float pulse=1f+Mathf.Sin(elapsed/flash*Mathf.PI)*.12f;SetCellScale(pulse);}else if(elapsed<=flash+pop){float p=(elapsed-flash)/pop;float scale=p<.35f?Mathf.Lerp(1f,1.16f,p/.35f):Mathf.Lerp(1.16f,0f,(p-.35f)/.65f);SetCellScale(scale);SetCellAlpha(1f-Mathf.Clamp01((p-.3f)/.7f));}else DeactivateCells();
-                float starP=Mathf.Clamp01(elapsed/.42f);for(int i=0;i<LastParticleCount;i++){stars[i].rectTransform.anchoredPosition=starOrigins[i]+starDirections[i]*starP;SetAlpha(stars[i],1f-starP);}
-                float textP=Mathf.Clamp01(elapsed/total);scorePop.rectTransform.anchoredPosition+=Vector2.up*Time.unscaledDeltaTime*38f;float comboScale=textP<.24f?Mathf.Lerp(.7f,1.15f,textP/.24f):textP<.42f?Mathf.Lerp(1.15f,1f,(textP-.24f)/.18f):1f;comboPop.rectTransform.localScale=Vector3.one*comboScale;SetAlpha(scorePop,textP<.18f?textP/.18f:1f-Mathf.Clamp01((textP-.56f)/.44f));if(comboPop.gameObject.activeSelf)SetAlpha(comboPop,textP<.12f?textP/.12f:1f-Mathf.Clamp01((textP-.62f)/.38f));yield return null;}
-            ResetVisuals();routine=null;
-        }
-        public void ResetFeedback(){if(routine!=null)StopCoroutine(routine);routine=null;ResetVisuals();if(audioSource!=null)audioSource.Stop();}
-        void ResetVisuals(){DeactivateCells();if(stars!=null)foreach(var star in stars)if(star!=null)star.gameObject.SetActive(false);if(scorePop!=null)scorePop.gameObject.SetActive(false);if(comboPop!=null){comboPop.text=string.Empty;comboPop.rectTransform.localScale=Vector3.one;comboPop.gameObject.SetActive(false);}}
-        Vector2 BoardCenter(){var rect=board.transform as RectTransform;return rect==null?Vector2.zero:effectRoot.InverseTransformPoint(rect.TransformPoint(rect.rect.center));}
-        void SetCellScale(float value){for(int i=0;i<LastCellCount;i++)clearCells[i].rectTransform.localScale=Vector3.one*value;}
-        void SetCellAlpha(float alpha){for(int i=0;i<LastCellCount;i++)SetAlpha(clearCells[i],alpha);}
-        void DeactivateCells(){if(clearCells==null)return;foreach(var cell in clearCells)if(cell!=null)cell.gameObject.SetActive(false);}
-        static void SetAlpha(Graphic graphic,float alpha){var color=graphic.color;color.a=Mathf.Clamp01(alpha);graphic.color=color;}
-        static int CountActive<T>(T[] graphics)where T:Graphic{int count=0;if(graphics==null)return 0;foreach(var graphic in graphics)if(graphic!=null&&graphic.gameObject.activeSelf)count++;return count;}
-        void RequestHaptic(){HapticRequestCount++;
+namespace CosmicBlock.Effects {
+ public sealed class GameFeedbackController:MonoBehaviour {
+  static readonly Color Gold=new Color(1,.76f,.28f,.96f),SoftWhite=new Color(1,.96f,.82f,.94f),CosmicBlue=new Color(.55f,.88f,1,.92f);
+  [SerializeField] BoardView board;[SerializeField] RectTransform effectRoot;[SerializeField] Image[] clearCells;[SerializeField] Text[] stars;[SerializeField] Image[] starlights;
+  [SerializeField] Text scorePop,comboPop;[SerializeField] AudioSource audioSource;[SerializeField] AudioClip clearClip;
+  Vector2Int[] cellCoordinates,starCoordinates;
+  public double LastLineStartTime {get;private set;}
+  readonly System.Random random=new System.Random();float[] cellAges,starAges,starLives;Color[] cellColors,starColors;Vector2[] starOrigins,starDirections;float[] starRotations;int cellCursor,starCursor;float textAge=.68f;
+  public bool SoundEnabled {get;set;}=true;public bool HapticsEnabled {get;set;}=true;
+  public int PlayCount{get;private set;}public int LastCellCount{get;private set;}public int LastParticleCount{get;private set;}public int LastScoreDelta{get;private set;}public int LastCombo{get;private set;}public string LastComboLabel{get;private set;}="";public float LastPitch{get;private set;}public int HapticRequestCount{get;private set;}public int AudioRequestCount{get;private set;}public int TotalCellSpawns{get;private set;}public int PeakActiveStars{get;private set;}
+  public bool IsPlaying=>ActiveCellCount>0||ActiveStarCount>0||textAge<.68f;public int ActiveCellCount=>CountActive(clearCells);public int ActiveStarCount=>starlights!=null&&starlights.Length>0?CountActive(starlights):CountActive(stars);public int CellPoolCapacity=>clearCells==null?0:clearCells.Length;public int StarPoolCapacity=>starlights!=null&&starlights.Length>0?starlights.Length:stars==null?0:stars.Length;public bool HasAudioClip=>clearClip!=null;public bool ComboPopupVisible=>comboPop!=null&&comboPop.gameObject.activeSelf;public string ComboPopupText=>comboPop==null?"":comboPop.text;
+  public void Configure(BoardView view,RectTransform root,Image[] cells,Text[] oldStars,Text score,Text combo,AudioSource source,AudioClip clip){board=view;effectRoot=root;clearCells=cells;stars=oldStars;scorePop=score;comboPop=combo;audioSource=source;clearClip=clip;ResetFeedback();}
+  public void ConfigureStarlights(Image[] images){starlights=images;EnsureArrays();ResetFeedback();}
+  void Awake(){EnsureArrays();ResetFeedback();}
+  void EnsureArrays(){if(cellAges==null||cellAges.Length!=CellPoolCapacity){cellAges=new float[CellPoolCapacity];cellColors=new Color[CellPoolCapacity];cellCoordinates=new Vector2Int[CellPoolCapacity];}int n=StarPoolCapacity;if(starAges==null||starAges.Length!=n){starAges=new float[n];starLives=new float[n];starColors=new Color[n];starOrigins=new Vector2[n];starDirections=new Vector2[n];starRotations=new float[n];starCoordinates=new Vector2Int[n];}}
+  public void PlayClear(LineClearResult result,int scoreDelta,int combo){if(result==null||result.LineCount==0)return;EnsureArrays();LastLineStartTime=Time.realtimeSinceStartupAsDouble;PlayCount++;LastCellCount=result.UniqueClearedCells.Count;LastParticleCount=LastCellCount>0?12:0;LastScoreDelta=scoreDelta;LastCombo=combo;LastComboLabel=combo==1?"CLEAR!":combo+" COMBO";LastPitch=Mathf.Min(1.15f,1+(combo-1)*.05f);Vector2 center=BoardCenter();
+   for(int i=0;i<LastCellCount;i++){var c=result.UniqueClearedCells[i];var source=board.transform.GetChild(c.y*8+c.x).GetComponent<Image>();int index=cellCursor++%clearCells.Length;var cell=clearCells[index];var rect=cell.rectTransform;cell.sprite=source.sprite;cell.preserveAspect=true;cell.color=source.color;cellColors[index]=source.color;cellCoordinates[index]=c;cellAges[index]=0;rect.anchoredPosition=effectRoot.InverseTransformPoint(board.GetCellWorld(c));rect.sizeDelta=Vector2.one*board.CellSize;rect.localScale=Vector3.one;cell.gameObject.SetActive(true);TotalCellSpawns++;}
+   for(int i=0;i<LastParticleCount;i++){int index=starCursor++%StarPoolCapacity;Graphic star=Star(index);var c=result.UniqueClearedCells[i*LastCellCount/LastParticleCount];Vector2 origin=effectRoot.InverseTransformPoint(board.GetCellWorld(c));float angle=RandomRange(0,Mathf.PI*2);starOrigins[index]=origin;starCoordinates[index]=c;starDirections[index]=new Vector2(Mathf.Cos(angle),Mathf.Sin(angle))*RandomRange(35,85)+Vector2.up*35;starLives[index]=RandomRange(.35f,.65f);starAges[index]=0;starColors[index]=i%3==0?CosmicBlue:i%3==1?SoftWhite:Gold;starRotations[index]=RandomRange(-120,120);star.rectTransform.sizeDelta=Vector2.one*RandomRange(22,38);star.rectTransform.localScale=Vector3.one;star.rectTransform.localRotation=Quaternion.Euler(0,0,RandomRange(-40,40));star.rectTransform.anchoredPosition=origin;star.color=new Color(1,1,1,0);star.gameObject.SetActive(true);}
+   PeakActiveStars=Mathf.Max(PeakActiveStars,ActiveStarCount);textAge=0;scorePop.text="+"+scoreDelta;comboPop.text=LastComboLabel;scorePop.rectTransform.anchoredPosition=ClampText(center+new Vector2(0,55),scorePop.rectTransform);comboPop.rectTransform.anchoredPosition=ClampText(center+new Vector2(0,125),comboPop.rectTransform);scorePop.gameObject.SetActive(true);comboPop.gameObject.SetActive(true);SetAlpha(scorePop,1);SetAlpha(comboPop,1);
+   if(SoundEnabled&&audioSource!=null&&!audioSource.mute&&clearClip!=null){audioSource.pitch=LastPitch;audioSource.volume=.58f;audioSource.PlayOneShot(clearClip);AudioRequestCount++;}
+   if(HapticsEnabled){HapticRequestCount++;ShortHaptic();}
+  }
+  public void RefreshLayout(){if(cellAges==null||board==null)return;for(int i=0;i<clearCells.Length;i++)if(clearCells[i].gameObject.activeSelf){clearCells[i].rectTransform.anchoredPosition=effectRoot.InverseTransformPoint(board.GetCellWorld(cellCoordinates[i]));clearCells[i].rectTransform.sizeDelta=Vector2.one*board.CellSize;}for(int i=0;i<StarPoolCapacity;i++)if(Star(i).gameObject.activeSelf){starOrigins[i]=effectRoot.InverseTransformPoint(board.GetCellWorld(starCoordinates[i]));float p=Mathf.Clamp01((starAges[i]-.10f)/Mathf.Max(.01f,starLives[i]));Star(i).rectTransform.anchoredPosition=ClampParticle(starOrigins[i]+starDirections[i]*p);}if(textAge<.68f){var center=BoardCenter();scorePop.rectTransform.anchoredPosition=ClampText(center+Vector2.up*(55+textAge*38),scorePop.rectTransform);comboPop.rectTransform.anchoredPosition=ClampText(center+Vector2.up*125,comboPop.rectTransform);}}
+  void Update(){if(cellAges==null)return;RefreshLayout();float dt=Time.unscaledDeltaTime;for(int i=0;i<clearCells.Length;i++){var image=clearCells[i];if(!image.gameObject.activeSelf)continue;float t=cellAges[i]+=dt;if(t>=.28f){image.gameObject.SetActive(false);continue;}float p=Mathf.Clamp01((t-.10f)/.18f);float scale=t<.10f?1+Mathf.Sin(t/.10f*Mathf.PI)*.12f:p<.35f?Mathf.Lerp(1,1.16f,p/.35f):Mathf.Lerp(1.16f,0,(p-.35f)/.65f);image.rectTransform.localScale=Vector3.one*scale;var color=Color.Lerp(cellColors[i],Gold,t<.10f?.18f*Mathf.Sin(t/.10f*Mathf.PI):0);color.a=cellColors[i].a*(1-Mathf.Clamp01((p-.3f)/.7f));image.color=color;}
+   for(int i=0;i<StarPoolCapacity;i++){var star=Star(i);if(!star.gameObject.activeSelf)continue;float t=starAges[i]+=dt;if(t<.10f)continue;float p=(t-.10f)/starLives[i];if(p>=1){star.gameObject.SetActive(false);continue;}star.rectTransform.anchoredPosition=ClampParticle(starOrigins[i]+starDirections[i]*p);star.rectTransform.Rotate(0,0,starRotations[i]*dt);star.rectTransform.localScale=Vector3.one*Mathf.Lerp(.7f,1.1f,Mathf.Min(1,p*4));var color=starColors[i];color.a*=1-p;star.color=color;}
+   if(textAge<.68f){textAge+=dt;float p=Mathf.Clamp01(textAge/.68f);scorePop.rectTransform.anchoredPosition=ClampText(scorePop.rectTransform.anchoredPosition+Vector2.up*dt*38,scorePop.rectTransform);comboPop.rectTransform.localScale=Vector3.one*(p<.24f?Mathf.Lerp(.7f,1.15f,p/.24f):p<.42f?Mathf.Lerp(1.15f,1,(p-.24f)/.18f):1);SetAlpha(scorePop,1-Mathf.Clamp01((p-.56f)/.44f));SetAlpha(comboPop,1-Mathf.Clamp01((p-.62f)/.38f));if(p>=1){scorePop.gameObject.SetActive(false);comboPop.gameObject.SetActive(false);comboPop.text="";}}
+  }
+  Graphic Star(int i)=>starlights!=null&&starlights.Length>0?(Graphic)starlights[i]:stars[i];
+  float RandomRange(float min,float max)=>(float)(min+random.NextDouble()*(max-min));
+  Vector2 BoardCenter(){var rect=(RectTransform)board.transform;return effectRoot.InverseTransformPoint(rect.TransformPoint(rect.rect.center));}
+  Vector2 ClampParticle(Vector2 p){var r=effectRoot.rect;return new Vector2(Mathf.Clamp(p.x,r.xMin+30,r.xMax-30),Mathf.Clamp(p.y,r.yMin+30,r.yMax-30));}
+  Vector2 ClampText(Vector2 p,RectTransform rect){var r=effectRoot.rect;return new Vector2(Mathf.Clamp(p.x,r.xMin+rect.rect.width*.58f,r.xMax-rect.rect.width*.58f),Mathf.Clamp(p.y,r.yMin+rect.rect.height*.6f,r.yMax-rect.rect.height*.6f));}
+  public void ResetFeedback(){textAge=.68f;Hide(clearCells);Hide(stars);Hide(starlights);if(scorePop!=null)scorePop.gameObject.SetActive(false);if(comboPop!=null){comboPop.gameObject.SetActive(false);comboPop.text="";comboPop.rectTransform.localScale=Vector3.one;}if(audioSource!=null)audioSource.Stop();}
+  static void Hide<T>(T[] pool)where T:Graphic{if(pool!=null)foreach(var g in pool)if(g!=null)g.gameObject.SetActive(false);}
+  static int CountActive<T>(T[] pool)where T:Graphic{int n=0;if(pool!=null)foreach(var g in pool)if(g!=null&&g.gameObject.activeSelf)n++;return n;}
+  static void SetAlpha(Graphic g,float a){var c=g.color;c.a=Mathf.Clamp01(a);g.color=c;}
+  static void ShortHaptic(){
 #if UNITY_ANDROID && !UNITY_EDITOR
-            Handheld.Vibrate();
+   try { using(var player=new AndroidJavaClass("com.unity3d.player.UnityPlayer"))using(var activity=player.GetStatic<AndroidJavaObject>("currentActivity"))using(var vibrator=activity.Call<AndroidJavaObject>("getSystemService","vibrator")){
+    if(vibrator==null||!vibrator.Call<bool>("hasVibrator"))return;
+    using(var version=new AndroidJavaClass("android.os.Build$VERSION")){if(version.GetStatic<int>("SDK_INT")>=26){using(var effects=new AndroidJavaClass("android.os.VibrationEffect"))using(var effect=effects.CallStatic<AndroidJavaObject>("createOneShot",20L,-1)){vibrator.Call("vibrate",effect);}}else vibrator.Call("vibrate",20L);}
+   } } catch(AndroidJavaException e){Debug.LogWarning("Short haptic unavailable: "+e.Message);Handheld.Vibrate();}
 #endif
-        }
-        void OnDisable()=>ResetFeedback();
-    }
+  }
+  void OnDisable()=>ResetFeedback();
+ }
 }
-

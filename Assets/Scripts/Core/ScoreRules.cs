@@ -6,10 +6,14 @@ namespace CosmicBlock.Core
         public const int PointsPerPlacedCell = 10;
         public const int PointsPerLine = 100;
         public const int ComboBonusStep = 50;
+        public static int LinePoints(int index) => (int)Math.Min(int.MaxValue, PointsPerLine + Math.Max(0L,(long)index-1)*ComboBonusStep);
+        public static int AddLine(int current,int index) => (int)Math.Min(int.MaxValue,(long)current+LinePoints(index));
         public static int AddPlacement(int current, int placedCells, int clearedLines, int combo)
         {
-            long bonus = clearedLines > 0 ? Math.Max(0L, (long)combo - 1) * ComboBonusStep : 0;
-            long total = current + (long)placedCells * PointsPerPlacedCell + (long)clearedLines * PointsPerLine + bonus;
+            // combo is retained for source compatibility; placement streak no longer adds points.
+            long lines = Math.Max(0L, clearedLines);
+            long lineTotal = lines >= 10000 ? int.MaxValue : lines * PointsPerLine + lines * (lines - 1) / 2 * ComboBonusStep;
+            long total = current + (long)placedCells * PointsPerPlacedCell + lineTotal;
             return (int)Math.Min(int.MaxValue, total);
         }
     }

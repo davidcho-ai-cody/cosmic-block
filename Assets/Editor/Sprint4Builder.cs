@@ -78,7 +78,7 @@ public static class Sprint4Builder
         var session = UnityEngine.Object.FindAnyObjectByType<GameSession>();
         var feedback = UnityEngine.Object.FindAnyObjectByType<GameFeedbackController>();
         Require(session != null && feedback != null && session.Feedback == feedback, "Session feedback binding");
-        Require(feedback.CellPoolCapacity == 64 && feedback.StarPoolCapacity == 24, "Reusable pools");
+        Require(feedback.CellPoolCapacity == 64 && feedback.StarPoolCapacity >= 24, "Reusable pools");
         Require(GameObject.Find("GameCanvas").transform.Find("SafeArea/FeedbackLayer/ScorePop") != null, "Score Pop");
         Require(AssetDatabase.LoadAssetAtPath<AudioClip>(AudioPath) != null, "Clear SFX");
         Directory.CreateDirectory("Validation");

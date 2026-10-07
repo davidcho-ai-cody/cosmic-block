@@ -30,7 +30,7 @@ namespace CosmicBlock.Board {
    for(int y=0;y<Size;y++) for(int x=0;x<Size;x++) if(CanPlace(shape,x,y))return true;
    return false;
   }
-  public LineClearResult ClearCompletedLines() {
+  public LineClearResult SnapshotCompletedLines() {
    var rows=new System.Collections.Generic.List<int>();
    var columns=new System.Collections.Generic.List<int>();
    var unique=new System.Collections.Generic.List<UnityEngine.Vector2Int>();
@@ -44,11 +44,13 @@ namespace CosmicBlock.Board {
    }
    for(int y=0;y<Size;y++) for(int x=0;x<Size;x++) {
     if(!fullRows[y] && !fullColumns[x])continue;
-    cells[x,y]=false; unique.Add(new UnityEngine.Vector2Int(x,y));
+    unique.Add(new UnityEngine.Vector2Int(x,y));
    }
-   foreach(var cell in unique) CellChanged?.Invoke(cell.x,cell.y,false);
+
    return new LineClearResult(rows,columns,unique);
   }
+  public void ClearCells(System.Collections.Generic.IReadOnlyList<UnityEngine.Vector2Int> targets) { foreach(var cell in targets)SetOccupied(cell.x,cell.y,false); }
+  public LineClearResult ClearCompletedLines() { var result=SnapshotCompletedLines();ClearCells(result.UniqueClearedCells);return result; }
   public void Clear() { for(int y=0;y<8;y++)for(int x=0;x<8;x++)SetOccupied(x,y,false); }
   private static void Check(int x,int y) { if(x<0||y<0||x>=8||y>=8)throw new ArgumentOutOfRangeException(nameof(x)); }
  }
