@@ -409,3 +409,39 @@ Modified/added files:
 Android haptic API: https://developer.android.com/reference/android/os/VibrationEffect.html — createOneShot(20ms, DEFAULT_AMPLITUDE), API26+.
 
 Delivery commit: feat: improve sequential line clear and combo feedback. Normal origin/main push; no force push or remote change. Device QA remains pending because USB is unavailable.
+
+
+## 2026-10-07 — Sprint9.2.1 Starlight Impact Polish
+
+# Sprint 9.2.1 — Starlight Impact Polish
+
+Baseline:3e5d498. Runtime changes are limited to GameFeedbackController star size/pop/movement/bounds. Scene, sprites/imports, Block size, all layouts, source PNGs, core gameplay/Score/Combo/Energy/save code, ClearCell animation, SFX/Haptic and CLEAR/Combo/Score text animations remain unchanged.
+
+Before: Rect22–38 UI units (uniform random; sample mean30.02676), Scale0.7→1.1 without shrinking, overall lifetime0.45–0.75s (0.10 onset+0.35–0.65 visible), radial35–85+up35, twelve per line, pool48.
+
+After: Base59 UI units × random0.75–1.35. Three small0.75–0.90 (44.25–53.10), five medium0.90–1.15 (53.10–67.85), four large1.15–1.35 (67.85–79.65), spread across the source Line. Seeded sample mean62.26365. Scale0.65→1.15 over0.10s, then1.15→0 until unchanged lifetime ends, with original alpha fade. Sample peak mean33.02944→71.60319,2.168x. Isolated star rendered at this representative peak size on black at1080×1920 gives RGB>=20 bounds20×24→46×53 pixels: width2.30x/height2.208x. This threshold measures displayed pixels, not raw source alpha.
+
+Movement vector is exactly1.35x (same seeded directions verified), colors/random rotation/source-cell origins unchanged. Expanded stars remain in Board neighborhood (+0.35 CellSize allowance), Safe Area and below Planet HUD, using the full rotated Rect extent. This avoids clipping from the old fixed30-unit margin. No RectTransform/layout changes, new assets, particle count increase or runtime object creation.
+
+Before/After fixture uses identical Row/Column and seeded particles, fixed Slot shapes/colors, and identical elapsed0.20s on the latest Line (previous Lines offset0.16). Pixel measurement uses unrotated representative peak size with all other graphics hidden. Full/cropped comparison images are validation output; source art is never processed.
+
+Editor visual probe:409 assertions PASS. Single Row/Column, Double Row and Three Column, top/right/bottom edges and all requested resolutions captured. Large4/Medium5/Small3 verified per burst; Scale0.65 start/1.15 peak, unchanged lifetime, exact movement multiplier, pool return under1s and hierarchy stability pass. 36 active pooled stars are warmed and held while invoking the animation Update500 times:calibrated Mono heap delta0/no GC collections; sample0.1588826ms/update on this PC (Before0.12666ms). This measures the effect animation loop, not entire-frame/native GPU performance; real mobile FPS/feel is verified/reported separately.
+
+Minimum gameplay regression:9 existing entrypoints all PASS (Sprint92/2/3/5/NewRunGameOver/65/66/911/8). Covers start/supply/Drag/Preview/drop/sequential clear/score/Combo/Best/Energy/Stage/refill/GameOver/Retry/HOME/Collection/save and all8 shapes. Missing Script0. All source Art PNG hashes unchanged; Scene/import changes0; protected ClearCell/SFX/Haptic/text blocks byte-identical.
+
+Responsive1080×1920,1080×2400 with Safe Area,1080×1440: geometry/capture checks PASS, including star corner containment and existing Board/Slot/HUD constraints. Combo and Score text remain readable in the direct Before/After renders.
+
+Android SM-S942N / Android16: existing latest Development APK rebuilt, install -r/launch successful. Before/after install Energy290/Best15930/Migration2 identical. Native8 shapes/34 placements and7 cleared Lines (five Singles, one Double Row) match independent Board/Score/Energy simulation. Final SCORE1530, Energy365; Stage3->4 transition/overflow completed naturally. Best15930/Migration2 unchanged. HOME confirmation cancel/confirm and clean PLAY leave Score0, empty Board, three Pieces and no stale feedback; app remains open for user testing.
+
+SurfaceFlinger app-layer timestamps: idle median29.945FPS; six Clear samples (20 intervals each, including Double Row) median29.960–29.966FPS; maximum sampled Clear interval33.744ms versus idle34.184ms. No measured pacing degradation in these windows. These are presentation timestamps, not a full CPU/GPU trace. Native three-line/cross and subjective brightness/rhythm/haptic comfort remain pending; they are not labeled PASS. Editor three-line/36-particle pool and rendering checks pass.
+
+GC measurement caveat: GC.GetAllocatedBytesForCurrentThread returned0 even for a1MB calibration allocation on this Unity Mono runtime, so that counter is unsupported and not treated as proof of allocation-free execution. Profiler.GetMonoUsedSizeLong correctly detected1,052,672 bytes from the control; warmed36-star loop500 calls had heap delta0 and collection count delta0. This supports no observed GC spike in the measured animation loop, not a blanket claim about all Unity/native frames.
+
+Final Development build Warning0/Error0. Initial native build has3 existing TMP large-method splitting notices. First postbuild import has414 known URP shader precision warnings; final clean probe C# Warning0/Compiler Error0/Shader Warning0/Runtime Game Error0, Missing Script0. No warning suppression/package changes. PID-scoped native Logcat has no FATAL/AndroidJavaException/NullReferenceException/MissingReferenceException/new Unity game error/short-haptic warning. Existing AssetPackManager ClassNotFoundException and DexFile finalizer logs are separated from game exceptions; total Logcat is not claimed zero-error.
+
+Modified: Assets/Scripts/Effects/GameFeedbackController.cs; added Assets/Editor/Sprint921PlayProbe.cs and meta; docs/CURRENT_TASK/DEVLOG/NEXT_TASK. No Scene/Art/import/other runtime changes.
+
+Evidence: Validation/sprint921_before_after params/tests and isolated render, starlight_before_after.png, three_before_after.png, row/column/edge/responsive captures, regression_summary, missing.log, android_build[_final].log, postbuild/clean_probe.log, protection.txt, source_hashes.json, device install prefs/moves/burst/newrun screenshots, final_result.json, native_fps.json, device_logcat_final.txt and package-filtered vibrator log. Comparison renders are generated QA artifacts; original PNGs are unchanged.
+
+
+Commit: fix: enlarge line clear starlight effect. Normal origin/main push only; no force push/remote change.
