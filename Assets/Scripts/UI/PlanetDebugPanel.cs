@@ -4,7 +4,7 @@ using UnityEngine.UI;
 namespace CosmicBlock.UI {
  public sealed class PlanetDebugPanel:MonoBehaviour {
   [SerializeField] GameSession session;[SerializeField] GameFlowController flow;[SerializeField] Button launcher,closeButton;[SerializeField] GameObject panel;[SerializeField] Button[] presetButtons;
-  static readonly int[] Presets={0,90,190,290,390};
+  static readonly int[] Presets={0,140,390,740,1490};
   public static bool ShouldShow(bool debugBuild)=>debugBuild;public bool IsAvailable=>ShouldShow(Debug.isDebugBuild);public bool IsPanelVisible=>panel!=null&&panel.activeSelf;
   public void Configure(GameSession owner,GameFlowController controller,Button devButton,GameObject panelRoot,Button close,Button[] buttons){RemoveListeners();session=owner;flow=controller;launcher=devButton;panel=panelRoot;closeButton=close;presetButtons=buttons;AddListeners();ApplyAvailability();}
   void Awake(){AddListeners();ApplyAvailability();}
@@ -15,7 +15,7 @@ namespace CosmicBlock.UI {
   public void Close(){if(panel!=null)panel.SetActive(false);}
   public void ApplyPreset(int energy){
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
-   if(!ShouldShow(Debug.isDebugBuild)||session==null)return;session.ResetTransientFeedback();session.DebugSetPlanetEnergy(Mathf.Clamp(energy,0,390));if(flow!=null)flow.RefreshHome();Close();
+   if(!ShouldShow(Debug.isDebugBuild)||session==null)return;session.ResetTransientFeedback();session.DebugSetPlanetEnergy(Mathf.Clamp(energy,0,PlanetRestoration.RequiredEnergy));if(flow!=null)flow.RefreshHome();Close();
 #endif
   }
   void OnDestroy()=>RemoveListeners();

@@ -17,7 +17,8 @@ namespace CosmicBlock.UI {
   // All measurements are Canvas units within the existing Safe Area.
   void LayoutMatched(){
    var area=(RectTransform)board.parent;float w=area.rect.width,h=area.rect.height,q=Mathf.Min(w/1080f,h/1920f);q=Mathf.Max(.1f,q);
-   score.fontSizeMin=best.fontSizeMin=Mathf.Min(15,15*q);score.margin=new Vector4(6,6,6,6)*q;best.margin=new Vector4(1,1,1,1)*q;
+   // Keep the SCORE rect, font size and total vertical inset; move its baseline 8 units below the enlarged crown.
+   score.fontSizeMin=best.fontSizeMin=Mathf.Min(15,15*q);score.margin=new Vector4(6,14,6,-2)*q;best.margin=new Vector4(1,1,1,1)*q;
    float statusW=w*.96f,statusH=260*q;
    float slotH=324*q,headerH=220*q,gapHud=12*q,gapBoard=16*q,gapSlot=16*q,bottomMargin=36*q;
    float budget=h-headerH-statusH-slotH-bottomMargin-gapHud-gapBoard-gapSlot;
@@ -27,7 +28,7 @@ namespace CosmicBlock.UI {
    Place(board,w/2,frameTop-frameH/2,side,side);Place(boardFrame,w/2,frameTop-frameH/2,frameH,frameH);boardFrame.GetComponent<GameFrameMesh>()?.SetDecorationScale(.22f*q);
    Place((RectTransform)area.Find("BlockArea"),w/2,frameTop-frameH-gapSlot-slotH/2,w*.98f,slotH);
    Place((RectTransform)area.Find("PlayingHomeButton"),100*q,h-90*q,160*q,160*q);
-   Place((RectTransform)transform.Find("BestFrameArea"),w-190*q,h-65*q,330*q,110*q);
+   Place((RectTransform)transform.Find("BestFrameArea"),w-206.25f*q,h-68.75f*q,412.5f*q,137.5f*q);
    Place((RectTransform)transform.Find("ScoreLabel"),w/2,h-55*q,w*.30f,40*q);
    Place(score.rectTransform,w/2,h-145*q,w*.46f,132*q);
    var grid=board.GetComponent<GridLayoutGroup>();float cell=Mathf.Max(0,(side-grid.padding.horizontal-grid.spacing.x*7)/8);grid.cellSize=new Vector2(cell,cell);

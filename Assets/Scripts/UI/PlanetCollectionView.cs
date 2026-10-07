@@ -49,13 +49,13 @@ namespace CosmicBlock.UI
         public void GoBack()=>flow.ReturnFromCollection();
         void Refresh()
         {
-            bool known=PlanetIndex==0;
+            bool known=PlanetIndex==0;bool discovered=PlanetIndex==1&&restoration.IsPlanet02Unlocked;
             planetNumber.text="행성 "+(PlanetIndex+1).ToString("00");planetName.text=PlanetCollectionData.PlanetNames[PlanetIndex];
-            hero.gameObject.SetActive(known);heroLock.SetActive(!known);if(known)hero.sprite=sprites[PreviewStage-1];
-            message.text=known?PlanetCollectionData.StageMessages[PreviewStage-1]:PlanetCollectionData.LockedMessage;
-            status.text=known?"":"아직 잠겨 있습니다.";status.gameObject.SetActive(!known);
+            hero.gameObject.SetActive(known);heroLock.SetActive(!known&&!discovered);if(known)hero.sprite=sprites[PreviewStage-1];
+            message.text=known?(PreviewStage==5&&!restoration.IsRestored?PlanetCollectionData.FinalProgressMessage:PlanetCollectionData.StageMessages[PreviewStage-1]):discovered?PlanetCollectionData.DiscoveredMessage:PlanetCollectionData.LockedMessage;
+            status.text=known?"":PlanetIndex==1&&restoration.IsPlanet02Unlocked?"발견 완료 · 탐험 준비 중":"아직 잠겨 있습니다.";status.gameObject.SetActive(!known);
             percentage.text=restoration.Percent+"%";progressFrame.SetActive(known);
-            progress.transform.parent.gameObject.SetActive(known);progress.rectTransform.anchorMax=new Vector2(known?restoration.Percent/100f:0,1);
+            progress.transform.parent.gameObject.SetActive(known);progress.rectTransform.anchorMax=new Vector2(known?restoration.OverallProgress:0,1);
             for(int i=0;i<5;i++)
             {
                 bool unlocked=!IsStageLocked(i+1);slots[i].interactable=unlocked;

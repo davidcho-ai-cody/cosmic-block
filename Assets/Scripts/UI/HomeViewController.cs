@@ -67,15 +67,15 @@ namespace CosmicBlock.UI
             if(bestScoreText!=null)bestScoreText.text=session.BestScore.ToString("N0",CultureInfo.InvariantCulture);
             if(planetNameText!=null)planetNameText.text="행성 01";
             if(stageText!=null)stageText.text=stage+"단계 · "+KoreanStageName(stage);
-            if(energyText!=null)energyText.text="별빛 에너지     "+stageEnergy+" / "+PlanetRestoration.StageEnergyRequired;
-            if(energyPercentText!=null)energyPercentText.text=stageEnergy+"%";
+            if(energyText!=null)energyText.text="별빛 에너지     "+stageEnergy+" / "+session.Restoration.StageRequired;
+            if(energyPercentText!=null)energyPercentText.text=session.Restoration.Percent+"%";
             if(planetImage!=null&&planetStages!=null&&planetStages.Length>=stage)planetImage.sprite=planetStages[stage-1];
-            SetProgress(stageEnergy/(float)PlanetRestoration.StageEnergyRequired);
+            SetProgress(session.Restoration.OverallProgress);
         }
 
         static string KoreanStageName(int stage)
         {
-            switch(Mathf.Clamp(stage,1,5)){case 1:return "황폐함";case 2:return "깨어남";case 3:return "회복 중";case 4:return "번성";default:return "복원 완료";}
+            return PlanetRestoration.NameForStage(stage);
         }
 
         public void ShowCollectionNotice()

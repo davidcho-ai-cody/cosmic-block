@@ -25,11 +25,12 @@ namespace CosmicBlock.Core
         private BlockDragHandler activeDrag;
         private BlockGenerator generator;
         private PlanetRestoration restoration;
-        public const float ClearLineInterval = .16f;
+        public const float ClearLineInterval = .32f;
         private SequentialClearPlan pendingPlan;
         private Coroutine clearRoutine;
         private int nextLine, turnToken;
         private bool energyCommitted;
+        private int clearEnergyBefore,clearEnergyAfter;
         public int LineComboIndex { get; private set; }
         public bool ClearSequenceActive => pendingPlan != null;
         public int PlacementCombo => Combo;
@@ -83,6 +84,9 @@ namespace CosmicBlock.Core
             piece.Consume(); LineComboIndex=0;
             if (LastClear.LineCount==0) { FinishTurn(); return true; }
             pendingPlan=new SequentialClearPlan(LastClear);nextLine=0;energyCommitted=false;
+            clearEnergyBefore=restoration.CurrentEnergy;CommitEnergy();clearEnergyAfter=restoration.CurrentEnergy;
+            // Freeze visible progress while durable data is already saved.
+            if(hud!=null&&hud.PlanetView!=null){hud.PlanetView.ResetTransient();if(clearEnergyAfter>clearEnergyBefore)hud.PlanetView.HoldEnergy(clearEnergyBefore);}
             clearRoutine=StartCoroutine(ResolveClear(turnToken));
             return true;
         }
@@ -113,12 +117,12 @@ namespace CosmicBlock.Core
         private void CompleteClearPresentation(int token)
         {
             if(pendingPlan==null)return;
-            int before=restoration.CurrentEnergy;CommitEnergy();int after=restoration.CurrentEnergy;
+            int before=clearEnergyBefore,after=clearEnergyAfter;
             pendingPlan=null;PlayerPrefs.Save();
             bool allConsumed=true;foreach(var slot in slots)if(!slot.IsConsumed){allConsumed=false;break;}
             if(allConsumed)GenerateBlockSet();
             bool gameOver=!HasPlaceableRemainingBlock();
-            bool stageChanges=PlanetRestoration.StageForEnergy(before)!=restoration.Stage;
+            bool stageChanges=PlanetRestoration.StageForEnergy(before)!=PlanetRestoration.StageForEnergy(after)||before<PlanetRestoration.RequiredEnergy&&after>=PlanetRestoration.RequiredEnergy;
             // The frozen clear is finished. Preserve free play during a non-boundary fragment flight.
             State=gameOver||stageChanges?GameState.Resolving:GameState.Playing;
             Action finish=()=>{if(token!=turnToken)return;State=gameOver?GameState.GameOver:GameState.Playing;if(hud!=null)hud.Render(this);};
@@ -202,14 +206,14 @@ namespace CosmicBlock.Core
         }
         public void DebugSetPlanetEnergy(int value){if(!Application.isPlaying)return;ResetTransientFeedback();restoration.SetEnergy(value);if(hud!=null)hud.Render(this);}
         [ContextMenu("Debug/Planet/Set 0%")] private void DebugPlanet0()=>DebugSetPlanetEnergy(0);
-        [ContextMenu("Debug/Planet/Set 24%")] private void DebugPlanet24()=>DebugSetPlanetEnergy(99);
-        [ContextMenu("Debug/Planet/Set 25%")] private void DebugPlanet25()=>DebugSetPlanetEnergy(100);
-        [ContextMenu("Debug/Planet/Set 49%")] private void DebugPlanet49()=>DebugSetPlanetEnergy(199);
-        [ContextMenu("Debug/Planet/Set 50%")] private void DebugPlanet50()=>DebugSetPlanetEnergy(200);
-        [ContextMenu("Debug/Planet/Set 74%")] private void DebugPlanet74()=>DebugSetPlanetEnergy(299);
-        [ContextMenu("Debug/Planet/Set 75%")] private void DebugPlanet75()=>DebugSetPlanetEnergy(300);
-        [ContextMenu("Debug/Planet/Set 99%")] private void DebugPlanet99()=>DebugSetPlanetEnergy(399);
-        [ContextMenu("Debug/Planet/Set 100%")] private void DebugPlanet100()=>DebugSetPlanetEnergy(400);
+        [ContextMenu("Debug/Planet/Set 24%")] private void DebugPlanet24()=>DebugSetPlanetEnergy(360);
+        [ContextMenu("Debug/Planet/Set 25%")] private void DebugPlanet25()=>DebugSetPlanetEnergy(375);
+        [ContextMenu("Debug/Planet/Set 49%")] private void DebugPlanet49()=>DebugSetPlanetEnergy(735);
+        [ContextMenu("Debug/Planet/Set 50%")] private void DebugPlanet50()=>DebugSetPlanetEnergy(750);
+        [ContextMenu("Debug/Planet/Set 74%")] private void DebugPlanet74()=>DebugSetPlanetEnergy(1110);
+        [ContextMenu("Debug/Planet/Set 75%")] private void DebugPlanet75()=>DebugSetPlanetEnergy(1125);
+        [ContextMenu("Debug/Planet/Set 99%")] private void DebugPlanet99()=>DebugSetPlanetEnergy(1485);
+        [ContextMenu("Debug/Planet/Set 100%")] private void DebugPlanet100()=>DebugSetPlanetEnergy(1500);
         [ContextMenu("Debug/Planet/Add 10 Energy")] private void DebugPlanetAdd10(){restoration.AddEnergy(10);if(hud!=null)hud.Render(this);}
         [ContextMenu("Debug/Planet/Reset Planet 01")] private void DebugPlanetReset()=>DebugSetPlanetEnergy(0);
         [ContextMenu("Debug/Journey/Set Score 950")] private void DebugScore950() => DebugSetScore(950);

@@ -11,12 +11,12 @@ public static class Sprint8CollectionPlayProbe
 {
     static double started;static int frames;static string errors="";
     static readonly List<string> results=new List<string>();
-    static readonly string[] keys={PlanetRestoration.DefaultKey,PlanetRestoration.VersionKey,GameSession.DefaultBestScoreKey};
-    static readonly int[] saved=new int[3];static readonly bool[] had=new bool[3];
+    static readonly string[] keys={PlanetRestoration.DefaultKey,PlanetRestoration.VersionKey,GameSession.DefaultBestScoreKey,PlanetRestoration.Planet02UnlockKey};
+    static readonly int[] saved=new int[4];static readonly bool[] had=new bool[4];
     static GameSession session;static GameFlowController flow;static PlanetCollectionView view;static Transform safe;
     public static void Run()
     {
-        for(int i=0;i<3;i++){had[i]=PlayerPrefs.HasKey(keys[i]);saved[i]=PlayerPrefs.GetInt(keys[i]);}
+        for(int i=0;i<keys.Length;i++){had[i]=PlayerPrefs.HasKey(keys[i]);saved[i]=PlayerPrefs.GetInt(keys[i]);}
         PlayerPrefs.SetInt(keys[0],0);PlayerPrefs.SetInt(keys[1],PlanetRestoration.CurrentVersion);PlayerPrefs.Save();
         EditorSceneManager.OpenScene("Assets/Scenes/Game.unity");started=EditorApplication.timeSinceStartup;
         Application.logMessageReceived+=Log;EditorApplication.update+=Check;EditorApplication.EnterPlaymode();
@@ -32,11 +32,11 @@ public static class Sprint8CollectionPlayProbe
             int score=session.Score,best=session.BestScore;var board=session.Model;
             for(int stage=1;stage<=5;stage++)
             {
-                int energy=(stage-1)*100;session.DebugSetPlanetEnergy(energy);
+                int energy=stage==5?1500:PlanetRestoration.StartForStage(stage);session.DebugSetPlanetEnergy(energy);
                 flow.HomeRoot.transform.Find("MainActions/PlanetCollectionButton").GetComponent<Button>().onClick.Invoke();
                 Req(flow.Screen==FlowScreen.Collection&&!flow.HomeRoot.activeSelf&&view.gameObject.activeSelf,"entry");
                 Req(view.CurrentStage==stage&&view.PreviewStage==stage&&view.HeroSprite.name.Contains("Stage0"+stage),"current stage "+stage);
-                Req(view.Percentage==session.Restoration.Percent+"%"&&Mathf.Abs(view.Progress-session.Restoration.Percent/100f)<.001f,"percentage and actual fill");
+                Req(view.Percentage==session.Restoration.Percent+"%"&&Mathf.Abs(view.Progress-session.Restoration.OverallProgress)<.001f,"percentage and actual fill");
                 Req(view.transform.Find("ProgressFrameArea/ProgressFrame").gameObject.activeSelf,"progress frame");
                 Req(!view.transform.Find("Status").gameObject.activeSelf,"plain progress status removed");
                 Req(view.Slots.Length==5,"five slots");view.SendMessage("Update");Req(view.Slots[stage-1].transform.localScale.x>=1&&view.Slots[stage-1].transform.localScale.x<=1.041f,"current pulse");
@@ -56,13 +56,13 @@ public static class Sprint8CollectionPlayProbe
                 Req(session.Restoration.CurrentEnergy==energy&&PlayerPrefs.GetInt(keys[0])==energy&&PlayerPrefs.GetInt(keys[1])==PlanetRestoration.CurrentVersion&&view.CurrentStage==stage&&PlayerPrefs.GetInt(keys[2])==best&&session.Score==score&&session.BestScore==best&&session.Model==board,"save and run isolation");
                 view.GoBack();Req(flow.Screen==FlowScreen.Home&&session.Score==score,"back HOME");flow.ShowCollection();Req(view.PreviewStage==stage,"reentry current");
                 if(stage==5)Req(view.Progress==1&&view.Percentage=="100%","completed");
-                for(int p=1;p<5;p++){view.transform.Find("Next").GetComponent<Button>().onClick.Invoke();Req(view.PlanetIndex==p&&view.Message==PlanetCollectionData.LockedMessage,"locked planet "+p);for(int j=1;j<=5;j++)Req(view.IsStageLocked(j)&&!view.Slots[j-1].interactable,"all locked");Req(!view.transform.Find("Hero").gameObject.activeSelf&&view.transform.Find("HeroLock").gameObject.activeSelf,"lock hero");Req(!view.transform.Find("ProgressFrameArea/ProgressFrame/Progress").gameObject.activeSelf,"locked progress hidden");}
+                for(int p=1;p<5;p++){view.transform.Find("Next").GetComponent<Button>().onClick.Invoke();Req(view.PlanetIndex==p&&view.Message==(p==1&&session.Restoration.IsPlanet02Unlocked?PlanetCollectionData.DiscoveredMessage:PlanetCollectionData.LockedMessage),"locked planet "+p);for(int j=1;j<=5;j++)Req(view.IsStageLocked(j)&&!view.Slots[j-1].interactable,"all locked");Req(!view.transform.Find("Hero").gameObject.activeSelf&&view.transform.Find("HeroLock").gameObject.activeSelf==!(p==1&&session.Restoration.IsPlanet02Unlocked),"lock hero");Req(!view.transform.Find("ProgressFrameArea/ProgressFrame/Progress").gameObject.activeSelf,"locked progress hidden");}
                 view.transform.Find("Next").GetComponent<Button>().onClick.Invoke();Req(view.PlanetIndex==4&&!view.transform.Find("Next").GetComponent<Button>().interactable,"next boundary");for(int p=3;p>=0;p--){view.transform.Find("Previous").GetComponent<Button>().onClick.Invoke();Req(view.PlanetIndex==p,"previous");}view.transform.Find("Previous").GetComponent<Button>().onClick.Invoke();Req(view.PlanetIndex==0&&!view.transform.Find("Previous").GetComponent<Button>().interactable,"prev boundary");
                 flow.HandleBack();Req(flow.Screen==FlowScreen.Home,"Android back");for(int q=0;q<3;q++)Req(session.Slots[q].Shape==slotShapes[q],"no piece resupply on collection navigation");results.Add("PASS stage "+stage+": sprites, locks, lore, preview isolation, reentry, navigation.");
             }
             session.DebugSetPlanetEnergy(0);flow.ShowCollection();Capture(1080,1920,"stage1",false);
-            session.DebugSetPlanetEnergy(400);view.Open(session.Restoration);Capture(1080,1920,"complete",false);
-            session.DebugSetPlanetEnergy(205);view.Open(session.Restoration);Capture(1080,1920,"stage3",false);
+            session.DebugSetPlanetEnergy(1500);view.Open(session.Restoration);Capture(1080,1920,"complete",false);
+            session.DebugSetPlanetEnergy(630);view.Open(session.Restoration);Capture(1080,1920,"stage3",false);
             Capture(1080,1920,"9x16",false);Capture(1080,2400,"tall_safe",true);Capture(1080,1440,"short",false);
             view.transform.Find("Next").GetComponent<Button>().onClick.Invoke();Capture(1080,1920,"locked_9x16",false);Capture(1080,2400,"locked_tall_safe",true);Capture(1080,1440,"locked_short",false);
             flow.ReturnFromCollection();flow.Play();Req(flow.Screen==FlowScreen.Game&&session.State==GameState.Playing,"HOME GAME");flow.RequestHome();flow.ConfirmHome();Req(flow.Screen==FlowScreen.Home,"GAME HOME");
@@ -111,7 +111,7 @@ public static class Sprint8CollectionPlayProbe
             Rect pr=World(pf);
             Rect actualTrack=World((RectTransform)pf.Find("Progress")),actualFill=World((RectTransform)pf.Find("Progress/Fill"));
             float visibleFill=actualFill.width/actualTrack.width;
-            Req(Mathf.Abs(visibleFill-view.Progress)<.0001f&&Mathf.Abs(visibleFill-session.Restoration.Percent/100f)<.0001f,"actual rendered fill and percentage agree");
+            Req(Mathf.Abs(visibleFill-view.Progress)<.0001f&&Mathf.Abs(visibleFill-session.Restoration.OverallProgress)<.0001f,"actual rendered fill and percentage agree");
             foreach(string item in new[]{"RestorationLabel","Percentage","Progress"}){
                 Rect child=World((RectTransform)pf.Find(item));Req(child.xMin>=pr.xMin&&child.xMax<=pr.xMax&&child.yMin>=pr.yMin&&child.yMax<=pr.yMax,"progress content inside frame");
             }
@@ -157,7 +157,7 @@ public static class Sprint8CollectionPlayProbe
     static void Finish(bool pass,string fail)
     {
         EditorApplication.update-=Check;Application.logMessageReceived-=Log;
-        for(int i=0;i<3;i++){if(had[i])PlayerPrefs.SetInt(keys[i],saved[i]);else PlayerPrefs.DeleteKey(keys[i]);}PlayerPrefs.Save();
+        for(int i=0;i<keys.Length;i++){if(had[i])PlayerPrefs.SetInt(keys[i],saved[i]);else PlayerPrefs.DeleteKey(keys[i]);}PlayerPrefs.Save();
         Directory.CreateDirectory("Validation");File.WriteAllText("Validation/sprint8_2_1_collection.txt",string.Join("\n",results)+"\n"+(pass?"SPRINT8_COLLECTION_PASS":fail));if(pass)Debug.Log("SPRINT8_COLLECTION_PASS");else Debug.LogError(fail);EditorApplication.Exit(pass?0:1);
     }
 }

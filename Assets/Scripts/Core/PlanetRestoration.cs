@@ -1,22 +1,40 @@
 using UnityEngine;
 namespace CosmicBlock.Core {
  public sealed class PlanetRestoration {
-  public const int StageEnergyRequired=100,RequiredEnergy=400,CurrentVersion=2;
-  public const string DefaultKey="CosmicBlock.Planet01Energy",VersionKey="CosmicBlock.PlanetRestorationVersion",Planet01DisplayName="푸른 별";
-  static readonly string[] Names={"DESOLATE","AWAKENING","RECOVERING","THRIVING","RESTORED"};
-  readonly string key,versionKey; public int CurrentEnergy{get;private set;}
-  public int Stage=>StageForEnergy(CurrentEnergy); public string StageName=>Names[Stage-1];
-  public int StageEnergy=>IsRestored?100:CurrentEnergy%100; public int Percent=>Mathf.RoundToInt(CurrentEnergy*100f/RequiredEnergy); public bool IsRestored=>CurrentEnergy>=RequiredEnergy;
-  public PlanetRestoration(string persistenceKey=DefaultKey,string migrationVersionKey=VersionKey){key=persistenceKey;versionKey=migrationVersionKey;Load();}
-  public void Load(){int stored=PlayerPrefs.GetInt(key,0);if(PlayerPrefs.GetInt(versionKey,0)<CurrentVersion){stored=Mathf.RoundToInt(Mathf.Clamp(stored,0,500)/500f*RequiredEnergy);PlayerPrefs.SetInt(versionKey,CurrentVersion);PlayerPrefs.SetInt(key,stored);PlayerPrefs.Save();}CurrentEnergy=Mathf.Clamp(stored,0,RequiredEnergy);}
-  public void Save(){PlayerPrefs.SetInt(key,CurrentEnergy);PlayerPrefs.SetInt(versionKey,CurrentVersion);PlayerPrefs.Save();}
-  public int AddEnergy(int amount){int before=CurrentEnergy;CurrentEnergy=Mathf.Clamp(CurrentEnergy+Mathf.Max(0,amount),0,RequiredEnergy);if(CurrentEnergy!=before)Save();return CurrentEnergy-before;}
-  public void SetEnergy(int value){CurrentEnergy=Mathf.Clamp(value,0,RequiredEnergy);Save();}
+  public const int RequiredEnergy=1500,Planet02RequiredEnergy=2000,CurrentVersion=2;
+  public const string DefaultKey="CosmicBlock.Planet01Energy",Planet02Key="CosmicBlock.Planet02Energy",Planet02UnlockKey="CosmicBlock.Planet02Unlocked",VersionKey="CosmicBlock.PlanetRestorationVersion",Planet01DisplayName="푸른 별";
+  static readonly int[] Planet01Amounts={150,250,350,450,300},Planet02Amounts={200,300,450,600,450};
+  static readonly string[] Names={"황폐","싹틈","깨어남","회복","완성"};
+  readonly string key,versionKey;readonly int planetNumber;
+  public int CurrentEnergy{get;private set;}
+  public int Stage=>StageForEnergy(CurrentEnergy,planetNumber);
+  public string StageName=>NameForStage(Stage);
+  public int StageRequired=>RequiredForStage(Stage,planetNumber);
+  public int StageEnergy=>StageEnergyForTotal(CurrentEnergy,planetNumber);
+  public int Percent=>PercentForTotal(CurrentEnergy,planetNumber);
+  public float OverallProgress=>OverallProgressForTotal(CurrentEnergy,planetNumber);
+  public bool IsRestored=>CurrentEnergy>=TotalRequired(planetNumber);
+  public bool IsPlanet02Unlocked=>PlayerPrefs.GetInt(Planet02UnlockKey,0)==1||PlayerPrefs.GetInt(DefaultKey,0)>=RequiredEnergy;
+  public PlanetRestoration(string persistenceKey=DefaultKey,string migrationVersionKey=VersionKey,int planet=1){key=persistenceKey;versionKey=migrationVersionKey;planetNumber=planet==2?2:1;Load();}
+  public void Load(){
+   int stored=PlayerPrefs.GetInt(key,0);
+   // Legacy migration remains 500 -> 400, never rescaled to the new 1500 target.
+   if(planetNumber==1&&PlayerPrefs.GetInt(versionKey,0)<CurrentVersion){stored=stored>500?Mathf.Clamp(stored,0,RequiredEnergy):Mathf.RoundToInt(Mathf.Clamp(stored,0,500)/500f*400);PlayerPrefs.SetInt(versionKey,CurrentVersion);PlayerPrefs.SetInt(key,stored);PlayerPrefs.Save();}
+   CurrentEnergy=Mathf.Clamp(stored,0,TotalRequired(planetNumber));
+   if(CurrentEnergy!=stored)Save();else if(key==DefaultKey&&IsRestored)Save();
+  }
+  public void Save(){PlayerPrefs.SetInt(key,CurrentEnergy);if(planetNumber==1)PlayerPrefs.SetInt(versionKey,CurrentVersion);if(key==DefaultKey&&IsRestored)PlayerPrefs.SetInt(Planet02UnlockKey,1);PlayerPrefs.Save();}
+  public int AddEnergy(int amount){int before=CurrentEnergy;CurrentEnergy=(int)System.Math.Min(TotalRequired(planetNumber),(long)CurrentEnergy+Mathf.Max(0,amount));if(CurrentEnergy!=before)Save();return CurrentEnergy-before;}
+  public void SetEnergy(int value){CurrentEnergy=Mathf.Clamp(value,0,TotalRequired(planetNumber));Save();}
   public static int AwardForLines(int lines)=>lines<=0?0:lines==1?10:lines==2?25:lines==3?45:70;
-  public static int StageForEnergy(int energy){energy=Mathf.Clamp(energy,0,RequiredEnergy);return energy>=400?5:energy/100+1;}
+  public static int TotalRequired(int planet=1)=>planet==2?Planet02RequiredEnergy:RequiredEnergy;
+  public static int RequiredForStage(int stage,int planet=1)=>(planet==2?Planet02Amounts:Planet01Amounts)[Mathf.Clamp(stage,1,5)-1];
+  public static int StartForStage(int stage,int planet=1){int start=0;for(int i=1;i<Mathf.Clamp(stage,1,5);i++)start+=RequiredForStage(i,planet);return start;}
+  public static int StageForEnergy(int energy,int planet=1){energy=Mathf.Clamp(energy,0,TotalRequired(planet));for(int stage=1;stage<5;stage++)if(energy<StartForStage(stage+1,planet))return stage;return 5;}
   public static string NameForStage(int stage)=>Names[Mathf.Clamp(stage,1,5)-1];
-  public static int StageEnergyForTotal(int energy){energy=Mathf.Clamp(energy,0,RequiredEnergy);return energy>=400?100:energy%100;}
-  public static float StageFillForTotal(int energy)=>StageEnergyForTotal(energy)/100f;
-  public static int PercentForTotal(int energy)=>Mathf.RoundToInt(Mathf.Clamp(energy,0,RequiredEnergy)*100f/RequiredEnergy);
+  public static int StageEnergyForTotal(int energy,int planet=1){energy=Mathf.Clamp(energy,0,TotalRequired(planet));return energy-StartForStage(StageForEnergy(energy,planet),planet);}
+  public static float StageFillForTotal(int energy,int planet=1)=>StageEnergyForTotal(energy,planet)/(float)RequiredForStage(StageForEnergy(energy,planet),planet);
+  public static float OverallProgressForTotal(int energy,int planet=1)=>Mathf.Clamp01(energy/(float)TotalRequired(planet));
+  public static int PercentForTotal(int energy,int planet=1)=>Mathf.FloorToInt(OverallProgressForTotal(energy,planet)*100f);
  }
 }

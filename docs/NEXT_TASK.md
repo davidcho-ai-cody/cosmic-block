@@ -1,9 +1,9 @@
 # Next Task
 
-Sprint9.2.1 star visual polish is complete: pixel bounds20×24→46×53, twelve per line/pool48/lifetime/interval unchanged. Nine minimum regression entrypoints and409 visual assertions PASS; three responsive resolutions PASS. Final compiler/build/shader/runtime-game diagnostics0, Missing Script0.
+Sprint 9.3 implementation and automated regression are complete; final build/device/Git evidence is recorded in CURRENT_TASK and DEVLOG.
 
-SM-S942N Android16 latest APK installed/launch succeeded; eight shapes/34 placements/seven Lines and natural Stage3->4 match independent rules. SurfaceFlinger samples keep the existing ~30FPS cadence through Single/Double Row. App is open on clean Score0/empty Board/three Pieces. Progress naturally increased290→365; Best15930/Migration2 maintained. Do not reset saves without a QA request.
+Human QA remains: Clear brightness/impact, 0.32-second multi-line rhythm, Planet-bound fragment readability, arrival pulse, handheld HUD/BEST readability, Touch/SFX/Haptic comfort. Do not mark these subjective items PASS from automation.
 
-Human confirmation: star impact/brightness, small-large balance, Combo readability, two-line rhythm/haptic synchrony and handheld frame smoothness. Native cross/three-line and GameOver/Retry were not exercised this pass; Editor regression covers them. Settings UI integration remains deferred. Existing AssetPackManager/Dex environment logs remain separately recorded.
+Planet 02 is discovered at Planet01 Energy1500, with independent progression data only. Planet02 artwork and playable content require a new scope; do not generate placeholder art. Preserve existing saves and MigrationVersion2. Phone last verified Energy220/Best15930/Version2; never reset without an explicit QA request.
 
-Preserve all Sprint9.2 logic, 0.16 interval, score/energy, ClearCell/SFX/Haptic/text animations, source PNGs, layouts and Scene. Start new work only on new instructions.
+Native cross/three-line clear and full1500 completion were covered by Editor tests, not exercised naturally on the phone this pass. Final header-adjusted APK is installed and running on SM-S942N; clean New Run is ready for human QA. Preserve preferences for future updates.

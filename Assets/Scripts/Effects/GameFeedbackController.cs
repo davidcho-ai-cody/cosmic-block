@@ -9,7 +9,7 @@ namespace CosmicBlock.Effects {
   [SerializeField] Text scorePop,comboPop;[SerializeField] AudioSource audioSource;[SerializeField] AudioClip clearClip;
   Vector2Int[] cellCoordinates,starCoordinates;
   Rect particleBounds;RectTransform planetHud;
-  const float StarBaseSize=59,StarMovementScale=1.35f,StarPopDuration=.10f;
+  const float StarBaseSize=80,StarMovementScale=1.35f,StarPopDuration=.10f;
   public double LastLineStartTime {get;private set;}
   readonly System.Random random=new System.Random();float[] cellAges,starAges,starLives;Color[] cellColors,starColors;Vector2[] starOrigins,starDirections;float[] starRotations;int cellCursor,starCursor;float textAge=.68f;
   public bool SoundEnabled {get;set;}=true;public bool HapticsEnabled {get;set;}=true;
