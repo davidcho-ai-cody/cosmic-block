@@ -7,6 +7,7 @@ namespace CosmicBlock.UI
         [SerializeField] RectTransform title;
         Vector3 planetBase,titleBase;
         public void Configure(RectTransform planetTarget,RectTransform titleTarget){planet=planetTarget;title=titleTarget;Cache();}
+        public void SetPlanetBaseScale(Vector3 scale){planetBase=scale;}
         void Awake()=>Cache();
         void OnEnable()=>Cache();
         void Cache(){if(planet!=null)planetBase=planet.localScale;if(title!=null)titleBase=title.localScale;}

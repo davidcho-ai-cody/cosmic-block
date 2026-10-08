@@ -1,5 +1,6 @@
-# NEXT TASK
+# Next Task
 
-Finish user device review of Sprint 8 Collection (finger hit areas, readability and Android Back/relaunch after phone unlock). See docs/NEXT_TASK.md.
+Sprint9.4의 행성02 목표는3000입니다. 푸른 별1500 / 크리스탈리아3000 / 이그니스6000 / 글라시아12000 / 루미나24000 정의를 유지합니다.
+03~05는 현재 ContentReady=false로 선택 불가입니다. 후속 구현에는 해당 정의 승인, 실제 PNG alpha 검사, Sprite 연결/본체 중심·지름 보정, 경계·저장·회귀 검증이 필요합니다. 아트 파일이 존재해도 자동으로 콘텐츠를 활성화하지 않습니다.
 
-Do not implement Planet 02–05 unlock rules, new planet sprites or another sprint without a new instruction. Preserve existing HOME design and gameplay/energy/save/transition contracts.
+실기기 Touch/SFX/Haptic/화면 가독성의 주관적 평가는 사용자 확인 대기입니다. 설치는 update install로 진행하며 기존 사용자 진행도와 설정을 보존합니다.

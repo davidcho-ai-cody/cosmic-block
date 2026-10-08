@@ -33,7 +33,8 @@ namespace CosmicBlock.UI {
    journeyText.text=j.Next.HasValue?j.Current.Name+"  >  "+j.Next.Value.Name+"\n"+score+" / "+j.Next.Value.Score.ToString("N0",CultureInfo.InvariantCulture):j.Current.Name+"  -  JOURNEY COMPLETE\n"+score;
    journeyFill.fillAmount=j.Progress;
    string route=j.Next.HasValue?j.Current.Name+"  >  "+j.Next.Value.Name:j.Current.Name;
-   finalScoreText.text="점수  "+score+"\n\n"+(owner.Restoration.IsRestored?"행성 01 · "+PlanetRestoration.Planet01DisplayName+" · 복원 완료 ✓":"행성 01 · "+PlanetRestoration.Planet01DisplayName+"\n복원 단계 "+owner.Restoration.Stage+" / 5 · 전체 "+owner.Restoration.Percent+"%")+"\n\n최고  "+best;
+   string planet="행성 "+owner.Restoration.PlanetId.ToString("00")+" · "+owner.Restoration.Definition.Name;
+   finalScoreText.text="점수  "+score+"\n\n"+(owner.Restoration.IsRestored?planet+" · 복원 완료 ✓":planet+"\n복원 단계 "+owner.Restoration.Stage+" / 5 · 전체 "+owner.Restoration.Percent+"%")+"\n\n최고  "+best;
    gameOverPanel.SetActive(owner.State==GameState.GameOver);
    if(planetView!=null)planetView.Render(owner.Restoration,true);
   }

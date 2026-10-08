@@ -10,6 +10,8 @@ namespace CosmicBlock.UI
     {
         [SerializeField] GameFlowController flow;
         [SerializeField] Text bestScoreText;
+        [SerializeField] Text selectedPlanetInfo;
+        GameSession displayedSession;Vector2 layoutSize;
         [SerializeField] Image planetImage;
         [SerializeField] Text planetNameText;
         [SerializeField] Text stageText;
@@ -61,18 +63,20 @@ namespace CosmicBlock.UI
 
         public void Refresh(GameSession session)
         {
-            if(session==null)return;
+            if(session==null)return;displayedSession=session;layoutSize=((RectTransform)transform).rect.size;
             int stage=Mathf.Clamp(session.Restoration.Stage,1,5);
             int stageEnergy=session.Restoration.StageEnergy;
             if(bestScoreText!=null)bestScoreText.text=session.BestScore.ToString("N0",CultureInfo.InvariantCulture);
-            if(planetNameText!=null)planetNameText.text="행성 01";
-            if(stageText!=null)stageText.text=stage+"단계 · "+KoreanStageName(stage);
+            if(planetNameText!=null)planetNameText.text="행성 "+session.Restoration.PlanetId.ToString("00")+" · "+session.Restoration.Definition.Name;
+            if(stageText!=null)stageText.text=stage+"단계 · "+session.Restoration.StageName;
             if(energyText!=null)energyText.text="별빛 에너지     "+stageEnergy+" / "+session.Restoration.StageRequired;
             if(energyPercentText!=null)energyPercentText.text=session.Restoration.Percent+"%";
-            if(planetImage!=null&&planetStages!=null&&planetStages.Length>=stage)planetImage.sprite=planetStages[stage-1];
+            var homeHero=planetImage!=null?planetImage:transform.Find("HeroArea/HeroPlanet")?.GetComponent<Image>();if(homeHero!=null&&PlanetArtCatalog.Current!=null){if(session.Restoration.PlanetId==1){homeHero.sprite=PlanetArtCatalog.Current.homeBrand;homeHero.transform.localScale=Vector3.one;}else {PlanetArtCatalog.Current.Apply(homeHero,session.Restoration.PlanetId,session.Restoration.SpriteStage);float bound=PlanetArtCatalog.Current.Bound(session.Restoration.PlanetId)/.75f;homeHero.transform.localScale/=bound;homeHero.rectTransform.anchoredPosition/=bound;}transform.GetComponent<HomeAmbientMotion>()?.SetPlanetBaseScale(homeHero.transform.localScale);}else if(planetImage!=null&&planetStages!=null&&planetStages.Length>=stage)planetImage.sprite=planetStages[stage-1];
+            if(selectedPlanetInfo!=null){selectedPlanetInfo.gameObject.SetActive(session.Restoration.PlanetId!=1);selectedPlanetInfo.text="행성 "+session.Restoration.PlanetId.ToString("00")+" · "+session.Restoration.Definition.Name+"\n별빛 "+session.Restoration.CurrentEnergy+" / "+session.Restoration.Total+" · 복원도 "+session.Restoration.Percent+"%";}
             SetProgress(session.Restoration.OverallProgress);
         }
 
+        void LateUpdate(){if(displayedSession!=null&&((RectTransform)transform).rect.size!=layoutSize)Refresh(displayedSession);}
         static string KoreanStageName(int stage)
         {
             return PlanetRestoration.NameForStage(stage);

@@ -4,7 +4,7 @@ Android Portrait 8×8 블록 퍼즐. HOME → GAME 또는 행성 도감으로 �
 
 ## 현재 상태
 
-Sprint 9.3: 기존 GAME Layout/Density와 원 Sprite Pop을 유지하면서 별빛 Burst/Planet Flight, 0.32초 순차 Clear, 단계별 별빛과 전체 복원도 HUD 및 확대된 BEST 표시를 적용했습니다. SCORE는 현재 Run, BEST는 모든 행성 공통 최고 기록, STARLIGHT는 영구 행성 진행도입니다. Board/Slot/Drag와 점수·별빛 보상 규칙은 유지합니다.
+Sprint 9.4: 푸른 별 완성 후 크리스탈리아를 도감에서 선택하여 실제 퍼즐로 복원합니다. 선택은 HOME으로 돌아가며 PLAY에서 새 Run을 시작합니다. 기존 Board/Drag/Score/Combo/별빛 보상과 Sprint 9.3 피드백 수치는 유지합니다.
 
 ## 실행
 
@@ -26,13 +26,15 @@ Unity Hub에서 프로젝트를 열고 Unity 6000.5.8f1의 Assets/Scenes/Game.un
 
 Planet 01 총 필요 별빛은 1500입니다. 황폐/싹틈/깨어남/회복/완성의 필요량은 150/250/350/450/300이며 시작점은 0/150/400/750/1200입니다. Stage 5 진입은 완료가 아니며 1500에서만 100%·Complete입니다. 전체 Bar=Clamp(total/1500), %는 floor입니다. 보상 10/25/45/70과 overflow는 유지하며 별빛은 즉시 저장하고 화면만 Fragment 도착까지 지연합니다. 완료 후에도 현재 Run은 계속됩니다. Retry/HOME은 영구 복원도와 Best를 삭제하지 않습니다.
 
-Planet 02는 2000 목표와 200/300/450/600/450 단계 데이터·독립 저장만 준비했습니다. Planet 01이 1500에 도달하면 영구 해금됩니다. 실제 Planet 02 아트/플레이는 아직 추가하지 않았으며 Collection은 발견 완료·탐험 준비 중 상태를 표시합니다.
+Planet 02 크리스탈리아는 총 3000, 구간 필요량 300/500/700/900/600, 시작점 0/300/800/1500/2400입니다. 2400~2999는 최종 복원 구간이며 Sprite4를 유지하고 3000에서만 최종 Sprite5를 표시합니다. 행성 01의 기존 Stage5 이미지 규칙은 유지합니다. 완료 이후 Run/Score 도전은 계속되며 초과 별빛은 다른 행성에 이월되지 않습니다.
+
+행성 정의: 푸른 별1500 / 크리스탈리아3000 / 이그니스6000 / 글라시아12000 / 루미나24000. 03~05는 데이터 정의만 있으며 ContentReady=false로 선택 불가입니다. PlanetDefinition의 정의와 PlanetArtCatalog의 Sprite/본체 크기·중심 데이터를 통해 확장합니다.
 
 ## 입력과 저장
 
 좌상단 Cell은 (0,0), X 오른쪽/Y 아래쪽입니다. 실제 Grid Cell 중심을 기준으로 Drag/Preview/Drop을 일치시킵니다. Finger Offset 110 Canvas 단위와 Drag Scale 1.05를 유지합니다. Mouse/Android Touch는 동일한 uGUI 경로를 사용합니다.
 
-PlayerPrefs: CosmicBlock.BestScore, CosmicBlock.Planet01Energy, CosmicBlock.PlanetRestorationVersion, CosmicBlock.Planet02Energy, CosmicBlock.Planet02Unlocked. Migration Version 2와 기존 저장값은 유지하며 1500 초과값만 clamp합니다. 기존 500→400 legacy migration도 유지합니다. Collection Preview는 저장값을 변경하지 않습니다. DEV Planet QA는 Development Build 전용이며 Release에서는 숨깁니다.
+PlayerPrefs: CosmicBlock.BestScore, CosmicBlock.Planet01Energy, CosmicBlock.PlanetRestorationVersion, CosmicBlock.Planet02Energy, CosmicBlock.Planet02Unlocked, CosmicBlock.SelectedPlanet, 행성별 CosmicBlock.PlanetNNEnergy/PlanetNNUnlocked. Migration Version 2와 기존 저장값은 유지하며 각 행성 상한 초과값만 clamp합니다. 기존 500→400 legacy migration도 유지합니다. 이전 Planet02 별빛2000은 절대량2000을 보존하고 새 목표3000으로 재계산합니다. Sprint9.3에 별도 Planet02 완료 저장 플래그는 없었으며 기존 영구 해금 플래그를 보존합니다. Collection Preview는 저장값을 변경하지 않습니다. DEV Planet QA는 Development Build 전용이며 Release에서는 숨깁니다.
 
 ## 검증과 빌드
 

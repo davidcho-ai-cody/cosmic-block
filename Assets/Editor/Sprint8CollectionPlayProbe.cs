@@ -38,7 +38,7 @@ public static class Sprint8CollectionPlayProbe
                 Req(view.CurrentStage==stage&&view.PreviewStage==stage&&view.HeroSprite.name.Contains("Stage0"+stage),"current stage "+stage);
                 Req(view.Percentage==session.Restoration.Percent+"%"&&Mathf.Abs(view.Progress-session.Restoration.OverallProgress)<.001f,"percentage and actual fill");
                 Req(view.transform.Find("ProgressFrameArea/ProgressFrame").gameObject.activeSelf,"progress frame");
-                Req(!view.transform.Find("Status").gameObject.activeSelf,"plain progress status removed");
+                Req(view.transform.Find("Status").gameObject.activeSelf&&view.Status.Contains(stage==5?"복원 완료":"별빛"),"planet accumulated starlight status");
                 Req(view.Slots.Length==5,"five slots");view.SendMessage("Update");Req(view.Slots[stage-1].transform.localScale.x>=1&&view.Slots[stage-1].transform.localScale.x<=1.041f,"current pulse");
                 for(int j=1;j<=5;j++)
                 {
@@ -56,7 +56,7 @@ public static class Sprint8CollectionPlayProbe
                 Req(session.Restoration.CurrentEnergy==energy&&PlayerPrefs.GetInt(keys[0])==energy&&PlayerPrefs.GetInt(keys[1])==PlanetRestoration.CurrentVersion&&view.CurrentStage==stage&&PlayerPrefs.GetInt(keys[2])==best&&session.Score==score&&session.BestScore==best&&session.Model==board,"save and run isolation");
                 view.GoBack();Req(flow.Screen==FlowScreen.Home&&session.Score==score,"back HOME");flow.ShowCollection();Req(view.PreviewStage==stage,"reentry current");
                 if(stage==5)Req(view.Progress==1&&view.Percentage=="100%","completed");
-                for(int p=1;p<5;p++){view.transform.Find("Next").GetComponent<Button>().onClick.Invoke();Req(view.PlanetIndex==p&&view.Message==(p==1&&session.Restoration.IsPlanet02Unlocked?PlanetCollectionData.DiscoveredMessage:PlanetCollectionData.LockedMessage),"locked planet "+p);for(int j=1;j<=5;j++)Req(view.IsStageLocked(j)&&!view.Slots[j-1].interactable,"all locked");Req(!view.transform.Find("Hero").gameObject.activeSelf&&view.transform.Find("HeroLock").gameObject.activeSelf==!(p==1&&session.Restoration.IsPlanet02Unlocked),"lock hero");Req(!view.transform.Find("ProgressFrameArea/ProgressFrame/Progress").gameObject.activeSelf,"locked progress hidden");}
+                for(int p=1;p<5;p++){view.transform.Find("Next").GetComponent<Button>().onClick.Invoke();bool playable=p==1&&session.Restoration.IsPlanet02Unlocked;Req(view.PlanetIndex==p&&view.CanSelect==playable,"planet content readiness "+p);for(int j=1;j<=5;j++)Req(view.Slots[j-1].interactable==!view.IsStageLocked(j),"stage availability");Req(view.transform.Find("Hero").gameObject.activeSelf&&view.transform.Find("Hero/HeroLock").gameObject.activeSelf==!PlanetDefinitions.IsUnlocked(p+1),"common lock hero");Req(view.transform.Find("ProgressFrameArea/ProgressFrame/Progress").gameObject.activeSelf==playable,"known progress visibility");}
                 view.transform.Find("Next").GetComponent<Button>().onClick.Invoke();Req(view.PlanetIndex==4&&!view.transform.Find("Next").GetComponent<Button>().interactable,"next boundary");for(int p=3;p>=0;p--){view.transform.Find("Previous").GetComponent<Button>().onClick.Invoke();Req(view.PlanetIndex==p,"previous");}view.transform.Find("Previous").GetComponent<Button>().onClick.Invoke();Req(view.PlanetIndex==0&&!view.transform.Find("Previous").GetComponent<Button>().interactable,"prev boundary");
                 flow.HandleBack();Req(flow.Screen==FlowScreen.Home,"Android back");for(int q=0;q<3;q++)Req(session.Slots[q].Shape==slotShapes[q],"no piece resupply on collection navigation");results.Add("PASS stage "+stage+": sprites, locks, lore, preview isolation, reentry, navigation.");
             }
@@ -111,7 +111,7 @@ public static class Sprint8CollectionPlayProbe
             Rect pr=World(pf);
             Rect actualTrack=World((RectTransform)pf.Find("Progress")),actualFill=World((RectTransform)pf.Find("Progress/Fill"));
             float visibleFill=actualFill.width/actualTrack.width;
-            Req(Mathf.Abs(visibleFill-view.Progress)<.0001f&&Mathf.Abs(visibleFill-session.Restoration.OverallProgress)<.0001f,"actual rendered fill and percentage agree");
+            Req(Mathf.Abs(visibleFill-view.Progress)<.0001f&&Mathf.Abs(visibleFill-PlanetRestoration.OverallProgressForTotal(PlayerPrefs.GetInt(PlanetDefinitions.Get(view.PlanetIndex+1).EnergyKey),view.PlanetIndex+1))<.0001f,"actual rendered fill and percentage agree");
             foreach(string item in new[]{"RestorationLabel","Percentage","Progress"}){
                 Rect child=World((RectTransform)pf.Find(item));Req(child.xMin>=pr.xMin&&child.xMax<=pr.xMax&&child.yMin>=pr.yMin&&child.yMax<=pr.yMax,"progress content inside frame");
             }
@@ -129,7 +129,7 @@ public static class Sprint8CollectionPlayProbe
             Req(label.yMin>=frame.yMin+frame.height*.22f&&label.yMax<=frame.yMax,"label inside visible frame padding");
             Rect number=World((RectTransform)view.Slots[i].transform.parent.Find("StageNumber"+(i+1)));
             Req(label.yMax<=number.yMin+.1f&&number.yMax<=thumb.yMin+2,"labels separated from thumbnail");
-            Req(view.Slots[i].transform.Find("CurrentRing").gameObject.activeSelf==(view.PlanetIndex==0&&i+1==view.CurrentStage),"current ring");
+            Req(view.Slots[i].transform.Find("CurrentRing").gameObject.activeSelf==(view.CanSelect&&i+1==view.CurrentStage),"current ring");
             if(i>0){
                 Rect prior=World((RectTransform)view.Slots[i-1].transform);
                 Rect current=World((RectTransform)view.Slots[i].transform);
@@ -137,7 +137,7 @@ public static class Sprint8CollectionPlayProbe
                 Req(Mathf.Abs((current.center.x-prior.center.x)/frame.width-.18f)<.005f,"equal spacing");
             }
         }
-        foreach(string path in new[]{"Title","Back","Previous","Next","Hero","HeroLock","NameFrameArea","ProgressFrameArea","StageArea","MessageFrameArea"})
+        foreach(string path in new[]{"Title","Back","Previous","Next","Hero","Hero/HeroLock","NameFrameArea","ProgressFrameArea","StageArea","MessageFrameArea"})
         {
             var t=view.transform.Find(path);if(!t.gameObject.activeSelf)continue;Rect r=World((RectTransform)t);Req(r.xMin>=area.xMin-.1f&&r.xMax<=area.xMax+.1f&&r.yMin>=area.yMin-.1f&&r.yMax<=area.yMax+.1f,"safe bounds "+name+" "+path);
         }

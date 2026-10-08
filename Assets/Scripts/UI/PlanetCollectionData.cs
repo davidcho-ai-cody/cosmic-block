@@ -1,10 +1,11 @@
+using CosmicBlock.Core;
 namespace CosmicBlock.UI
 {
     // Presentation metadata, deliberately independent from progression and save rules.
     public static class PlanetCollectionData
     {
-        public static readonly string[] PlanetNames={"푸른 별","???","???","???","???"};
-        public static readonly string[] StageNames={"황폐","싹틈","깨어남","회복","완성"};
+        public static readonly string[] PlanetNames=System.Array.ConvertAll(PlanetDefinitions.All,p=>p.Name);
+        public static readonly string[] StageNames={PlanetRestoration.NameForStage(1),PlanetRestoration.NameForStage(2),PlanetRestoration.NameForStage(3),PlanetRestoration.NameForStage(4),PlanetRestoration.NameForStage(5)};
         public static readonly string[] StageMessages={
             "빛을 잃은 행성이\n깊은 잠에 빠져 있습니다.",
             "작은 생명이 돌아와\n행성이 깨어납니다.",

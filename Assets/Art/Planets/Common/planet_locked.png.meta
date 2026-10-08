@@ -1,0 +1,1365 @@
+fileFormatVersion: 2
+guid: b184e561c904fe94eb9289fad87f0902
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 3383590958567702629
+    second: planet_locked_0
+  - first:
+      213: -7715814900744931790
+    second: planet_locked_1
+  - first:
+      213: -8642717028233636328
+    second: planet_locked_2
+  - first:
+      213: 8903117754712341890
+    second: planet_locked_3
+  - first:
+      213: -251320243037438785
+    second: planet_locked_4
+  - first:
+      213: -1340438171282599664
+    second: planet_locked_5
+  - first:
+      213: 2567672683552212876
+    second: planet_locked_6
+  - first:
+      213: 5245188491022695169
+    second: planet_locked_7
+  - first:
+      213: 4512465601039386037
+    second: planet_locked_8
+  - first:
+      213: -6044579174641573423
+    second: planet_locked_9
+  - first:
+      213: 1514337764181159420
+    second: planet_locked_10
+  - first:
+      213: -3149280582676648898
+    second: planet_locked_11
+  - first:
+      213: 1474700628483979604
+    second: planet_locked_12
+  - first:
+      213: 7903088602931281716
+    second: planet_locked_13
+  - first:
+      213: 899950972969384143
+    second: planet_locked_14
+  - first:
+      213: -6924031110891860934
+    second: planet_locked_15
+  - first:
+      213: 1794670878058703249
+    second: planet_locked_16
+  - first:
+      213: -5556679604757650360
+    second: planet_locked_17
+  - first:
+      213: -799537792969540801
+    second: planet_locked_18
+  - first:
+      213: 3320426364780586758
+    second: planet_locked_19
+  - first:
+      213: 5146026291700911382
+    second: planet_locked_20
+  - first:
+      213: -7773411847582896025
+    second: planet_locked_21
+  - first:
+      213: 8053755602223488909
+    second: planet_locked_22
+  - first:
+      213: 2440122154174642385
+    second: planet_locked_23
+  - first:
+      213: -8981034831307763516
+    second: planet_locked_24
+  - first:
+      213: -8322972226446988471
+    second: planet_locked_25
+  - first:
+      213: -4273755774761702109
+    second: planet_locked_26
+  - first:
+      213: -8028282992695408131
+    second: planet_locked_27
+  - first:
+      213: 1212423053187286340
+    second: planet_locked_28
+  - first:
+      213: -4427341345496591407
+    second: planet_locked_29
+  - first:
+      213: 2234172210619694884
+    second: planet_locked_30
+  - first:
+      213: 1465520742980859604
+    second: planet_locked_31
+  - first:
+      213: 2501155441173821803
+    second: planet_locked_32
+  - first:
+      213: 7493137319983669140
+    second: planet_locked_33
+  - first:
+      213: -8469021201532394457
+    second: planet_locked_34
+  - first:
+      213: -6959610118964351320
+    second: planet_locked_35
+  - first:
+      213: -8587011365144377011
+    second: planet_locked_36
+  - first:
+      213: -3527282357055573254
+    second: planet_locked_37
+  - first:
+      213: 3346806222447278457
+    second: planet_locked_38
+  - first:
+      213: 4847966410761968437
+    second: planet_locked_39
+  - first:
+      213: -276668554042503736
+    second: planet_locked_40
+  - first:
+      213: 8576915866507810957
+    second: planet_locked_41
+  - first:
+      213: -498191803552670252
+    second: planet_locked_42
+  - first:
+      213: 5028856739702605816
+    second: planet_locked_43
+  - first:
+      213: 3220705712488100133
+    second: planet_locked_44
+  - first:
+      213: -6572864047723176226
+    second: planet_locked_45
+  - first:
+      213: -6005540620966628489
+    second: planet_locked_46
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 1
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: 50
+    textureCompression: 1
+    compressionQuality: 100
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 1
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: planet_locked_0
+      rect:
+        serializedVersion: 2
+        x: 204
+        y: 1237
+        width: 19
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 560c6aebc0ee4fe20800000000000000
+      internalID: 3383590958567702629
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: planet_locked_1
+      rect:
+        serializedVersion: 2
+        x: 852
+        y: 1245
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 236be685a3bebe490800000000000000
+      internalID: -7715814900744931790
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: planet_locked_2
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 1254
+        height: 1236
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8161ae567a6ee0880800000000000000
+      internalID: -8642717028233636328
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: planet_locked_3
+      rect:
+        serializedVersion: 2
+        x: 151
+        y: 1181
+        width: 85
+        height: 61
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 28d3a1b5d6a3e8b70800000000000000
+      internalID: 8903117754712341890
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: planet_locked_4
+      rect:
+        serializedVersion: 2
+        x: 894
+        y: 1217
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fbc73ec0291238cf0800000000000000
+      internalID: -251320243037438785
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: planet_locked_5
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 1181
+        width: 28
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 011935dc59ec56de0800000000000000
+      internalID: -1340438171282599664
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: planet_locked_6
+      rect:
+        serializedVersion: 2
+        x: 127
+        y: 1156
+        width: 35
+        height: 52
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c878a9a93b432a320800000000000000
+      internalID: 2567672683552212876
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: planet_locked_7
+      rect:
+        serializedVersion: 2
+        x: 922
+        y: 1194
+        width: 14
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 10bff537427aac840800000000000000
+      internalID: 5245188491022695169
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: planet_locked_8
+      rect:
+        serializedVersion: 2
+        x: 1220
+        y: 1181
+        width: 11
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5b54f1b5e8f7f9e30800000000000000
+      internalID: 4512465601039386037
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: planet_locked_9
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1004
+        width: 25
+        height: 92
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1d1e3c624475d1ca0800000000000000
+      internalID: -6044579174641573423
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: planet_locked_10
+      rect:
+        serializedVersion: 2
+        x: 38
+        y: 1088
+        width: 81
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cfd2af75c22040510800000000000000
+      internalID: 1514337764181159420
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: planet_locked_11
+      rect:
+        serializedVersion: 2
+        x: 1172
+        y: 1094
+        width: 25
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e3ce583eef18b44d0800000000000000
+      internalID: -3149280582676648898
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: planet_locked_12
+      rect:
+        serializedVersion: 2
+        x: 4
+        y: 1016
+        width: 29
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 45935d68860377410800000000000000
+      internalID: 1474700628483979604
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: planet_locked_13
+      rect:
+        serializedVersion: 2
+        x: 14
+        y: 1034
+        width: 14
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 43f382646396dad60800000000000000
+      internalID: 7903088602931281716
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: planet_locked_14
+      rect:
+        serializedVersion: 2
+        x: 37
+        y: 1024
+        width: 28
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fc87b1b44a44d7c00800000000000000
+      internalID: 899950972969384143
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: planet_locked_15
+      rect:
+        serializedVersion: 2
+        x: 27
+        y: 1000
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a3c8985c366e8ef90800000000000000
+      internalID: -6924031110891860934
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: planet_locked_16
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 986
+        width: 17
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1996d6fa7a3f7e810800000000000000
+      internalID: 1794670878058703249
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: planet_locked_17
+      rect:
+        serializedVersion: 2
+        x: 24
+        y: 982
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 84423cb0755b2e2b0800000000000000
+      internalID: -5556679604757650360
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: planet_locked_18
+      rect:
+        serializedVersion: 2
+        x: 1172
+        y: 871
+        width: 11
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f3bfc890d9877e4f0800000000000000
+      internalID: -799537792969540801
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: planet_locked_19
+      rect:
+        serializedVersion: 2
+        x: 1176
+        y: 853
+        width: 7
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 607a697bf26841e20800000000000000
+      internalID: 3320426364780586758
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: planet_locked_20
+      rect:
+        serializedVersion: 2
+        x: 1206
+        y: 803
+        width: 12
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 61d47a1c5ab5a6740800000000000000
+      internalID: 5146026291700911382
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: planet_locked_21
+      rect:
+        serializedVersion: 2
+        x: 1182
+        y: 763
+        width: 7
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 76032042c1b4f1490800000000000000
+      internalID: -7773411847582896025
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: planet_locked_22
+      rect:
+        serializedVersion: 2
+        x: 1206
+        y: 712
+        width: 15
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d8fd752bc00b4cf60800000000000000
+      internalID: 8053755602223488909
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: planet_locked_23
+      rect:
+        serializedVersion: 2
+        x: 38
+        y: 664
+        width: 12
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1d8f320cb2e0dd120800000000000000
+      internalID: 2440122154174642385
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: planet_locked_24
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 270
+        width: 7
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4c09d7c8764fc5380800000000000000
+      internalID: -8981034831307763516
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: planet_locked_25
+      rect:
+        serializedVersion: 2
+        x: 1228
+        y: 276
+        width: 11
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 94b6f276bdcde7c80800000000000000
+      internalID: -8322972226446988471
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: planet_locked_26
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 224
+        width: 5
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 32ded8424c190b4c0800000000000000
+      internalID: -4273755774761702109
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: planet_locked_27
+      rect:
+        serializedVersion: 2
+        x: 12
+        y: 227
+        width: 17
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: df98410672fc59090800000000000000
+      internalID: -8028282992695408131
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: planet_locked_28
+      rect:
+        serializedVersion: 2
+        x: 46
+        y: 229
+        width: 9
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 44509bad75463d010800000000000000
+      internalID: 1212423053187286340
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: planet_locked_29
+      rect:
+        serializedVersion: 2
+        x: 30
+        y: 176
+        width: 19
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1d3964ad08cee82c0800000000000000
+      internalID: -4427341345496591407
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: planet_locked_30
+      rect:
+        serializedVersion: 2
+        x: 110
+        y: 71
+        width: 18
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 42f3905d9cf510f10800000000000000
+      internalID: 2234172210619694884
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: planet_locked_31
+      rect:
+        serializedVersion: 2
+        x: 147
+        y: 63
+        width: 13
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4d63750e953965410800000000000000
+      internalID: 1465520742980859604
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: planet_locked_32
+      rect:
+        serializedVersion: 2
+        x: 239
+        y: 60
+        width: 19
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b69733f3f93e5b220800000000000000
+      internalID: 2501155441173821803
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: planet_locked_33
+      rect:
+        serializedVersion: 2
+        x: 538
+        y: 68
+        width: 6
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 49f59d231b8fcf760800000000000000
+      internalID: 7493137319983669140
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: planet_locked_34
+      rect:
+        serializedVersion: 2
+        x: 1059
+        y: 63
+        width: 20
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 724e867861ef77a80800000000000000
+      internalID: -8469021201532394457
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: planet_locked_35
+      rect:
+        serializedVersion: 2
+        x: 245
+        y: 53
+        width: 7
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8ae6aeb687f7a6f90800000000000000
+      internalID: -6959610118964351320
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: planet_locked_36
+      rect:
+        serializedVersion: 2
+        x: 271
+        y: 51
+        width: 11
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d49c35ac8aec4d880800000000000000
+      internalID: -8587011365144377011
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: planet_locked_37
+      rect:
+        serializedVersion: 2
+        x: 579
+        y: 37
+        width: 31
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: af2333572639c0fc0800000000000000
+      internalID: -3527282357055573254
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: planet_locked_38
+      rect:
+        serializedVersion: 2
+        x: 633
+        y: 47
+        width: 9
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9797905f68e327e20800000000000000
+      internalID: 3346806222447278457
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: planet_locked_39
+      rect:
+        serializedVersion: 2
+        x: 1003
+        y: 39
+        width: 25
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 53b1e74d3cf674340800000000000000
+      internalID: 4847966410761968437
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: planet_locked_40
+      rect:
+        serializedVersion: 2
+        x: 1029
+        y: 39
+        width: 19
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8cd86cb7a63192cf0800000000000000
+      internalID: -276668554042503736
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: planet_locked_41
+      rect:
+        serializedVersion: 2
+        x: 575
+        y: 43
+        width: 9
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d881c93c983570770800000000000000
+      internalID: 8576915866507810957
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: planet_locked_42
+      rect:
+        serializedVersion: 2
+        x: 924
+        y: 32
+        width: 8
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4dd5b37b1311619f0800000000000000
+      internalID: -498191803552670252
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: planet_locked_43
+      rect:
+        serializedVersion: 2
+        x: 948
+        y: 31
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8f78d4c8f861ac540800000000000000
+      internalID: 5028856739702605816
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: planet_locked_44
+      rect:
+        serializedVersion: 2
+        x: 953
+        y: 35
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 521bcee08ce32bc20800000000000000
+      internalID: 3220705712488100133
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: planet_locked_45
+      rect:
+        serializedVersion: 2
+        x: 956
+        y: 25
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ede168e19fe78c4a0800000000000000
+      internalID: -6572864047723176226
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: planet_locked_46
+      rect:
+        serializedVersion: 2
+        x: 954
+        y: 7
+        width: 12
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 773fa1bbf9808aca0800000000000000
+      internalID: -6005540620966628489
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      planet_locked_0: 3383590958567702629
+      planet_locked_1: -7715814900744931790
+      planet_locked_10: 1514337764181159420
+      planet_locked_11: -3149280582676648898
+      planet_locked_12: 1474700628483979604
+      planet_locked_13: 7903088602931281716
+      planet_locked_14: 899950972969384143
+      planet_locked_15: -6924031110891860934
+      planet_locked_16: 1794670878058703249
+      planet_locked_17: -5556679604757650360
+      planet_locked_18: -799537792969540801
+      planet_locked_19: 3320426364780586758
+      planet_locked_2: -8642717028233636328
+      planet_locked_20: 5146026291700911382
+      planet_locked_21: -7773411847582896025
+      planet_locked_22: 8053755602223488909
+      planet_locked_23: 2440122154174642385
+      planet_locked_24: -8981034831307763516
+      planet_locked_25: -8322972226446988471
+      planet_locked_26: -4273755774761702109
+      planet_locked_27: -8028282992695408131
+      planet_locked_28: 1212423053187286340
+      planet_locked_29: -4427341345496591407
+      planet_locked_3: 8903117754712341890
+      planet_locked_30: 2234172210619694884
+      planet_locked_31: 1465520742980859604
+      planet_locked_32: 2501155441173821803
+      planet_locked_33: 7493137319983669140
+      planet_locked_34: -8469021201532394457
+      planet_locked_35: -6959610118964351320
+      planet_locked_36: -8587011365144377011
+      planet_locked_37: -3527282357055573254
+      planet_locked_38: 3346806222447278457
+      planet_locked_39: 4847966410761968437
+      planet_locked_4: -251320243037438785
+      planet_locked_40: -276668554042503736
+      planet_locked_41: 8576915866507810957
+      planet_locked_42: -498191803552670252
+      planet_locked_43: 5028856739702605816
+      planet_locked_44: 3220705712488100133
+      planet_locked_45: -6572864047723176226
+      planet_locked_46: -6005540620966628489
+      planet_locked_5: -1340438171282599664
+      planet_locked_6: 2567672683552212876
+      planet_locked_7: 5245188491022695169
+      planet_locked_8: 4512465601039386037
+      planet_locked_9: -6044579174641573423
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

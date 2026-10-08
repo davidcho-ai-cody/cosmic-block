@@ -58,7 +58,7 @@ namespace CosmicBlock.Core
         {
             Model = new BoardModel(); board.Bind(Model);
             BestScore = Mathf.Max(0, PlayerPrefs.GetInt(bestScoreKey, 0));
-            restoration = new PlanetRestoration();
+            LoadSelectedPlanet();
         }
         private void Start() { if (hud != null) hud.Connect(this); Retry(); }
         public bool TryBeginDrag(BlockDragHandler handler)
@@ -122,7 +122,7 @@ namespace CosmicBlock.Core
             bool allConsumed=true;foreach(var slot in slots)if(!slot.IsConsumed){allConsumed=false;break;}
             if(allConsumed)GenerateBlockSet();
             bool gameOver=!HasPlaceableRemainingBlock();
-            bool stageChanges=PlanetRestoration.StageForEnergy(before)!=PlanetRestoration.StageForEnergy(after)||before<PlanetRestoration.RequiredEnergy&&after>=PlanetRestoration.RequiredEnergy;
+            bool stageChanges=PlanetRestoration.StageForEnergy(before,restoration.PlanetId)!=PlanetRestoration.StageForEnergy(after,restoration.PlanetId)||before<restoration.Total&&after>=restoration.Total;
             // The frozen clear is finished. Preserve free play during a non-boundary fragment flight.
             State=gameOver||stageChanges?GameState.Resolving:GameState.Playing;
             Action finish=()=>{if(token!=turnToken)return;State=gameOver?GameState.GameOver:GameState.Playing;if(hud!=null)hud.Render(this);};
@@ -173,6 +173,7 @@ namespace CosmicBlock.Core
             }
             if (hud != null) hud.Render(this);
         }
+        public void LoadSelectedPlanet(){int id=PlanetSelection.Current;restoration=new PlanetRestoration(PlanetDefinitions.Get(id).EnergyKey,PlanetRestoration.VersionKey,id);}
         public void Retry()
         {
             ResetTransientFeedback();

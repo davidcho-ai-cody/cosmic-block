@@ -57,6 +57,7 @@ namespace CosmicBlock.UI
             collectionView.gameObject.SetActive(true); collectionView.Open(session.Restoration);
             Screen = FlowScreen.Collection;
         }
+        public bool SelectCollectionPlanet(int id){if(Screen!=FlowScreen.Collection||!PlanetSelection.Select(id))return false;if(session.Restoration.PlanetId!=id||session.Restoration.CurrentEnergy!=Mathf.Clamp(PlayerPrefs.GetInt(PlanetDefinitions.Get(id).EnergyKey,0),0,PlanetDefinitions.Get(id).Total)){session.ResetTransientFeedback();session.LoadSelectedPlanet();}ReturnFromCollection();return true;}
         public void ReturnFromCollection()
         {
             if (Screen != FlowScreen.Collection) return;
@@ -72,7 +73,7 @@ namespace CosmicBlock.UI
             if (collectionView != null) collectionView.gameObject.SetActive(false);
             HideHomeConfirmation();
             session.ResetTransientFeedback();
-            homeRoot.SetActive(false); SetGameVisible(true); session.Retry(); Screen=FlowScreen.Game; QuitRequested=false;
+            session.LoadSelectedPlanet(); homeRoot.SetActive(false); SetGameVisible(true); session.Retry(); Screen=FlowScreen.Game; QuitRequested=false;
         }
 
         public void ShowHome()
@@ -121,7 +122,7 @@ namespace CosmicBlock.UI
             if(session==null)return; int best=session.BestScore;
             if(homeView!=null){homeView.Refresh(session);return;}
             if(homeBest!=null)homeBest.text="최고 점수  "+best.ToString("N0",CultureInfo.InvariantCulture);
-            if(homeJourney!=null)homeJourney.text=session.Restoration.IsRestored?"푸른 별 · 복원 완료 ✓":"푸른 별 · 복원 단계 "+session.Restoration.Stage+" / 5";
+            if(homeJourney!=null)homeJourney.text=session.Restoration.IsRestored?session.Restoration.Definition.Name+" · 복원 완료 ✓":session.Restoration.Definition.Name+" · 복원 단계 "+session.Restoration.Stage+" / 5";
         }
 
         void SetGameVisible(bool value)

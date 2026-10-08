@@ -1,9 +1,6 @@
 # Next Task
 
-Sprint 9.3 implementation and automated regression are complete; final build/device/Git evidence is recorded in CURRENT_TASK and DEVLOG.
+Sprint9.4의 행성02 목표는3000입니다. 푸른 별1500 / 크리스탈리아3000 / 이그니스6000 / 글라시아12000 / 루미나24000 정의를 유지합니다.
+03~05는 현재 ContentReady=false로 선택 불가입니다. 후속 구현에는 해당 정의 승인, 실제 PNG alpha 검사, Sprite 연결/본체 중심·지름 보정, 경계·저장·회귀 검증이 필요합니다. 아트 파일이 존재해도 자동으로 콘텐츠를 활성화하지 않습니다.
 
-Human QA remains: Clear brightness/impact, 0.32-second multi-line rhythm, Planet-bound fragment readability, arrival pulse, handheld HUD/BEST readability, Touch/SFX/Haptic comfort. Do not mark these subjective items PASS from automation.
-
-Planet 02 is discovered at Planet01 Energy1500, with independent progression data only. Planet02 artwork and playable content require a new scope; do not generate placeholder art. Preserve existing saves and MigrationVersion2. Phone last verified Energy220/Best15930/Version2; never reset without an explicit QA request.
-
-Native cross/three-line clear and full1500 completion were covered by Editor tests, not exercised naturally on the phone this pass. Final header-adjusted APK is installed and running on SM-S942N; clean New Run is ready for human QA. Preserve preferences for future updates.
+실기기 Touch/SFX/Haptic/화면 가독성의 주관적 평가는 사용자 확인 대기입니다. 설치는 update install로 진행하며 기존 사용자 진행도와 설정을 보존합니다.
