@@ -1,50 +1,65 @@
-# Sprint 9.4 — 크리스탈리아 연동
+# 게임 자동 저장 및 이어하기
 
-기준 main 7c3b77d, Unity6000.5.8f1. Planet02 실제 플레이/도감 선택/영구 진행도를 통합했습니다. 기존 게임 규칙과 Sprint9.3 Burst/Flight/0.32초 순차 Clear/중앙 Stage Transition 타이밍은 유지합니다.
+## 구현
+진행 중인 Run을 전체 행성에 대해 하나만 `Application.persistentDataPath/current-run.json`에 저장합니다. HOME 이동은 Run을 종료하지 않습니다. HOME의 기존 메인 버튼은 저장 유무에 따라 `home_play_button.png` / `home_continue_button.png`로 전환하며 위치·크기·비율과 PNG 원본은 유지합니다. 이미지 위에 중복 문구를 추가하지 않습니다.
 
-## 정의와 이미지
-푸른 별1500 / 크리스탈리아3000 / 이그니스6000 / 글라시아12000 / 루미나24000. PlanetDefinition이 총량, 구간, 이름, 선행 해금, 준비 상태, Sprite 경로를 관리합니다. PlanetArtCatalog(Resources asset)이 실제 Sprite 참조와 본체 크기·중심 보정을 관리합니다. 03~05는 ContentReady=false로 선택 불가입니다.
-Planet02 PNG5개와 공통 silhouette/silver lock2개 모두1254×1254 RGBA, alpha0~255, 외부 투명 픽셀 확인. 체크무늬/흰회색 배경 픽셀 미발견. 원본 PNG 수정/생성 없음. SpriteSingle/AlphaFromInput/AlphaTransparency/Bilinear/Clamp/NoMip/AndroidASTC6x6.
-구간 필요량300/500/700/900/600, 시작0/300/800/1500/2400. 논리 Stage5의2400~2999는 ‘최종 복원’과 Sprite4; Sprite5는3000에서만 표시합니다. 기존 Planet01의1200 Stage5 아트 관례는 유지하며 완료는1500입니다.
+저장 Run이 있으면 하단 설정/종료 버튼 사이 빈 영역에 작은 `새 게임 시작` 보조 버튼을 표시합니다. 확인창의 취소는 파일을 유지하며 확인만 기존 Run을 폐기하고 현재 선택 행성으로 SCORE 0/빈 보드/새 블록 3개의 Run을 시작합니다. BEST와 행성별 별빛/해금/선택 PlayerPrefs 키는 삭제하지 않습니다.
 
-## 선택·저장
-01완료→02영구 해금. 도감 선택→HOME→PLAY, 플레이 중 전환 불가. 잠금/미준비 선택 거부, 잘못된 ID 기본01. HOME02에는 이름/총 별빛/복원도와 동적 Hero 표시, 기존 HOME01 디자인 유지. 현재 Run은 완료 후에도 계속합니다.
-CosmicBlock.SelectedPlanet 신규 키. PlanetNNEnergy/PlanetNNUnlocked, BestScore/PlanetRestorationVersion2 기존 키 유지.02의 예전2000 저장값은 절대량2000으로 보존하고3000 기준 재계산.9.3에는 별도02완료 플래그가 없었으며 영구 해금 플래그는 보존합니다.500→400 legacy migration 유지, 비정상값 상한/음수 clamp. 전체 삭제 없음.
-보상10/25/45/70, 현재 플레이 행성만 적립. 즉시 저장 후 표시만 Fragment 도착까지 지연. 최대량 이후0, 마지막5만 지급 가능하면 실제 표시도5. 초과 다음 행성 이월 없음. 전환/완료/해금 피드백 중복 없음.
+## 데이터 및 확정 상태
+Save Version 1, active, planetId, score, combo, blockSetNumber, planetEnergy, cells[64], shapes[3], appearances[3], consumed[3]. cells=-1은 빈칸, 0/1/2는 기존 Blue/Purple/Gold 팔레트입니다. UI 문구나 Sprite 이름은 저장하지 않습니다.
+
+새 Run 공급 완료, 배치/라인 제거 완료, HOME 직전, 앱 Pause/정상 Quit에서 저장합니다. 드래그는 취소해 원위치로 정리합니다. Clear 중 Pause/HOME은 남은 Line을 연출 없이 기존 점수 규칙대로 확정한 뒤 공급/판정/저장을 마칩니다.
+
+강제 종료 중간 상태를 막기 위해 Line Clear가 결정될 때 최종 제거 셀/점수/별빛 절대량을 계산한 확정 체크포인트를 먼저 저장합니다. 마지막 Piece라면 다음 3개 Shape/색상을 미리 예약하고 실제 턴 완료에서도 그 동일한 공급을 사용합니다. 화면의 기존 Clear/Fragment/Stage 연출과 시간은 유지합니다. 저장 파일 복원은 이미 반영된 별빛 AddEnergy나 점수 지급 이벤트를 재실행하지 않습니다. 파일 저장과 PlayerPrefs flush 사이 종료된 경우에만 별빛 절대량을 max(기존값, 체크포인트 값)으로 회복합니다. DEV reset은 같은 Run의 절대량도 동기화합니다.
+
+임시 파일을 UTF-8로 기록하고 디스크 Flush 후 기존 파일 Replace/최초 Move로 교체합니다. 버전, ready/unlocked 행성, 배열 길이, 값 범위, 실제 배치 가능 여부와 미제거 Full Line을 검사하며 손상/없음/미지원 파일은 안전하게 새 게임 UI로 처리합니다. 저장 I/O 실패는 기존 파일을 보존하고 Warning으로 알립니다.
+
+## 흐름
+이어하기는 저장된 행성으로 복원하며 현재 HOME 선택값을 덮어쓰지 않습니다. 새 게임만 현재 HOME 선택 행성을 사용합니다. GAME OVER는 Run 파일을 제거하며 HOME 메인 버튼은 게임 시작으로 복귀합니다. Retry는 기존 Run 행성으로 새 게임을 시작합니다. HOME에서는 결과 패널과 transient feedback을 정리하되 모델의 Game Over 판정은 바꾸지 않습니다.
+
+03~05는 현재 ContentReady=false여서 선택 불가 상태를 그대로 유지합니다. 문서의 행성02→03 선택 시나리오는 현재 ready 행성02 Run→HOME에서01 선택→이어하기02로 동일한 정책을 검증합니다.
 
 ## 변경 파일
-Core: PlanetDefinition(new), PlanetRestoration, GameSession. UI: PlanetArtCatalog(new), PlanetCollectionView/Data, GameFlowController, HomeViewController/Atmosphere base scale(HomeAmbientMotion), PlanetRestorationView, GameVisualPresentation, PlanetDebugPanel. Scene Game.unity 및 Resources/PlanetArtCatalog.asset. Editor Sprint94Builder/PlayProbe/VisualProbe(new), 기존 Sprint8CollectionPlayProbe/Sprint93PlayProbe 기대값을 새 정의로 갱신.
-Board/Blocks/ScoreRules/SequentialClearPlan/GameFeedbackController 변경 없음. DEV presets는 선택 행성 경계−10으로 공통 계산하며 Release 비노출 유지.
+- Core/RunSaveStore.cs: 파일 저장/유효성/데이터 구조.
+- Core/GameSession.cs: 확정 체크포인트, 예약 공급, 복원, Pause/Quit/HOME 저장.
+- Board/BoardView.cs: 셀 팔레트 캡처/복원.
+- Blocks/BlockPiece.cs: 기존 팔레트 인덱스 복원.
+- UI/GameFlowController.cs: 이어하기/명시적 새 게임/HOME 저장.
+- UI/HomeRunControls.cs: 버튼 에셋 교체/보조 버튼/확인창.
+- UI/GameHud.cs: HOME에서 Game Over 표시 정리.
+- Scenes/Game.unity 및 home_continue_button.png.meta: 기존 Sprite/UI 구조 연결.
+- Editor/RunSaveBuilder.cs, RunSavePlayProbe.cs, RunSaveProbeIsolation.cs, RunSaveColdProbe.cs: 빌더/검증/프로세스 재시작/사용자 Run 파일 격리.
+- 이전 Sprint5/6.5/6.6/9.3/9.4 Probe: HOME에서 자동 폐기하던 이전 가정을 명시적 새 게임/이어하기 정책으로 갱신.
 
-## 자동 검증
-전체29 Probe entrypoint 최종 PASS(Sprint0~9.3 +94), 실패 후 수정한 초기 실행 기록은 로그에 보존. 최종94Play172개 assertion PASS. P1기존 경계/P2열두 경계, 실제 Sprite/fill/표시,1490+10해금/Run유지,02독립 적립/전환5개,3000완료1회,부분5지급,교차+25/3줄+45,빠른HOME callback,GameOver/Retry,globalBest/reload/선택fallback 검증.
-마지막 관련8 Probe 전부 PASS. 후속 HOME 보정 후94Visual/761HOME 재검증 PASS.39 렌더(각3해상도×13상태):1080×1920 /1080×2400 SafeArea /1080×1440. 잠금02/미준비03,02각단계/2999/3000,HOME02/GAME02 완료·최종구간. 본체 크기/중심 보정, Hero Frame 간격,Text 잘림,선택버튼SafeArea,실제Bar폭,Nav비율 검증. SCORE/BEST24 RGB-mask 조합 overlap0. MissingScript0, 신규 컴파일 Warning/Error0.
-근거: Validation/sprint94_tests.txt, sprint94_visual_tests.txt, sprint94_final_regression_summary.txt, sprint94_release_summary.txt, sprint94_missing.log, sprint94_final_*.log 및 렌더PNG. QA 산출물/APK는git제외.
+## 검증
+RunSavePlayProbe: 563 assertions PASS. A-L 모델 저장·복원, 두 Piece 소비/보드 색상 일치, Combo, 취소/확인, Game Over/Retry, 절대량 복원/중복 지급 없음, Clear 중 HOME 정리, 손상/미지원 버전/불가능 Shape, 마지막 Piece 이후 예약 공급 일치.
+1080×1920 /1080×2400 Safe Area /1080×1440에서 새로운 보조 버튼이 기존 UI Hit Area와 겹치지 않는 자동 검사를 통과했습니다. 게임 시작/이어하기/새 게임 확인창 3상태×3해상도=9개 최종 렌더 확인. 기존 버튼 Hit Rect/Safe Area와 겹침 없음. 렌더 비교: Validation/run_save_render_comparison.jpg.
 
-Android/Git 최종 결과는 아래 완료 기록에 추가합니다. 주관적 Touch/SFX/Haptic/화면가독성은 사용자 확인 대기입니다.
+## 최종 검증 — 2026-10-09
+- Editor RunSavePlayProbe: 563 assertions PASS. 드래그 중 Pause 원위치 복귀/확정 데이터 동일, PlayerPrefs flush 손실을 모사한 절대량 125 회복도 PASS.
+- 별도 Unity 프로세스 2회: SCORE 1,000 체크포인트 생성→프로세스 종료→콜드 HOME→이어하기에서 점수/보드 색상/소비된 Piece/행성/별빛 정확히 복원 PASS.
+- 기존 회귀 14개 PASS: Sprint0,1,2,92,93,94,5,5JourneyFeedback,5NewRunGameOver,65,66,72Ui,761Home,8Collection. 과거 HOME=새 게임 가정만 명시적 새 게임/이어하기로 갱신했습니다. 전체 역사적 29개 Probe를 이번에 모두 재실행했다고 주장하지 않습니다.
+- MissingScriptDiagnostics: MISSING_SCRIPT_COUNT=0.
+- Compiler Warning/Error 0; 최종 PlayMode Console Warning/Error 0.
+- 최종 Android Development Build: Succeeded, Build Warning 0, Build Error 0. 첫 IL2CPP 전체 컴파일에는 기존 TMP의 큰 메서드 C++ 파일 분할 알림 3개가 있었으며 로그를 보존했고 설정/경고 억제 없이 캐시를 사용하는 최종 패키지 빌드는 0입니다.
+- APK: Builds/Android/Development/CosmicBlock-dev.apk (151,988,795 bytes).
+- SHA256: 10BEC91E786EA8F4248E274C5B3F5D30CA8DECD26CD7A794B59794529653D76B.
 
-## 최종 완료 검증
-실기기 GameOver QA에서 발견한 행성01 고정 문구를 GameHud의 선택 행성 정의로 교체했습니다. 기존 검사는 GameOver 상태/패널만 확인했으므로 표시명 assertion을 추가했습니다. HOME fallback/legacy stage 표기도 같은 정의를 사용합니다. DEV preset의 오래된90/190/290/390 표시도 선택 행성의 실제 경계−10으로 동기화: P1 0/140/390/740/1490, P2 0/290/790/1490/2990. 판정/점수/연출/입력 규칙 변경 없음.
-최종94Play172 assertion PASS; 관련65/66/5NewRunGameOver/761Home 모두 PASS. GameOver를 추가한39개 반응형 렌더 PASS(각3해상도×13상태), 긴 크리스탈리아 결과 Text 잘림 없음. MissingScript0. 최종 cached Development build Warning0/Error0. 첫 IL2CPP 빌드의 기존 TMP3 notice와 첫 Editor shader import의 URP414 warning은 원 로그에 보존; 변경 없는 재검증에서 Compiler/Shader Warning/Error0. SDK/패키지 경고를 숨기거나 수정하지 않았습니다.
+## Android 실기기 결과
+초기에는 ADB 기기가 없었으나 최종 확인에서 Samsung SM-S942N / R3KL20DY0KF / Android 16이 device 상태로 연결됐습니다. 기존 앱에 adb install -r 성공; Package Name 유지; 앱 설치 전 모든 PlayerPrefs와 기존 Run 파일 유무를 새 백업으로 기록했습니다.
 
-Android: SM-S942N / Android16 /1080×2340, adb device 정상. 기존 앱 위 install-r 성공/실행 성공. 업데이트 직전/직후 사용자 진행도240/Best15930/Version2 유지.
-임시 QA fixture를 사용하여 잠금02→P1 1490+실제1줄=1500→02해금→도감 선택→HOME→PLAY를 확인했습니다. P2 0→10,290→300,790→800,1490→1500,2390→2400,2990→3000을 실제 Touch/Line Clear로 확인.2400에서4번 이미지/최종복원,3000에서5번 최종고리 이미지. 01 진행도와 글로벌BEST 불변, 완료 이후 Run 유지. 단계 핵심 QA 이후 패널 문구만 보정한 최종 APK에서41회배치/6줄/Score1710,3000 clamp/완료연출 반복없음/자연GameOver/수정된02표기/Retry/Home→PLAY/재실행을 재검증했습니다. Retry/Home→PLAY의 실제64셀 empty 및Piece3개는 화면 픽셀과 별도 Board 모델로 확인했습니다. 재실행 후 선택2/진행3000/Best15930 유지. 최종 DEV UI에서도290/790/1490/2990 확인.
-QA 전에 PlayerPrefs XML 전체를 백업했고, 종료 후 모든 원본 preference를 비교·복원했습니다. 현재 기기는 원래 사용자 상태240/15930/Version2, 기본 선택01의 HOME에서 실행 중입니다. 임시 해금/행성02·03/선택 키는 원복했습니다.
-Logcat: FATAL EXCEPTION0, AndroidJavaException0, NullReferenceException0, MissingReferenceException0, 신규 게임 코드 오류0. 기존 AssetPackManager ClassNotFound E Unity와 DexFile finalizer AssertionError 환경 로그는 남아 있음(각4회 시작 로그); 전체 Android Logcat Error0으로 주장하지 않습니다. Crash 없음/프로세스 실행 확인.
-실행하지 않은 항목: Release APK 자체 설치, 주관적 Touch/SFX/Haptic/휴대폰 가독성 평가. 기존 Release DEV guard의 false 조건은 자동 회귀 검사로 확인했습니다. 역사적인921 before/after 측정 도구는59px 과거 baseline용이며 현재93의80px Burst 회귀는93/92 검증을 사용합니다.
+- 실제 드래그로 V3 Blue / V2 Purple 두 Piece 배치: SCORE 50, 소비 상태 [true,true,false], 보드 JSON과 실제 64 Cell 렌더 일치 PASS.
+- HOME 확인→이어하기, Android HOME key 백그라운드→복귀, am force-stop 후 콜드 실행→이어하기: SCORE 50/색상/남은 Piece/Combo/별빛 동일 PASS.
+- 첫 콜드 캡처는 로딩 완료 전이라 화면 비교가 실패했으나, 로딩 완료를 기다린 별도 재실행에서 동일 데이터를 실제 렌더와 대조해 PASS. 게임 저장 실패로 처리하지 않았습니다.
+- 새 게임 시작 확인창: 취소 시 Run 불변, 확인 시 SCORE 0/빈 Board/새 3 Piece/별빛 535 유지 PASS.
+- 유효한 QA 저장 fixture SCORE 1,000→HOME→이어하기: 1,000 유지 PASS. 이 값은 QA fixture이며 실제 플레이로 1,000점을 얻었다고 주장하지 않습니다.
+- 같은 fixture의 마지막 Single 배치로 1 Line Clear: 체크포인트 SCORE 1,110 / Combo 2 / 별빛 545 / 새 BlockSet 2가 저장됨. Swipe 시작 후 약 1.0초(0.85초 Drag 종료 직후)에 force-stop하여 연출 진행 중 종료. 재실행 후 점수/빈 Board/예약된 새 3 Piece 정확히 복원, 별빛 545 1회만 지급 PASS.
+- Android에서 FileStream Flush/기존 파일 Replace를 포함한 실제 자동 저장 I/O 성공; 저장 실패 Warning/IOException/UnauthorizedAccessException 없음.
+- QA 종료 후 전체 원래 PlayerPrefs를 XML 노드 단위로 검증하여 복원: Planet01 Energy 535, BEST 15,930, Migration Version 2. QA 전 Run 파일은 없었으므로 테스트 Run을 제거했습니다. 마지막 앱은 사용자 원래 상태의 HOME에서 실행 중입니다. 현재 메인 버튼이 게임 시작인 것은 QA 파일을 제거했기 때문이며 정상입니다.
+- FATAL EXCEPTION / AndroidJavaException / NullReferenceException / MissingReferenceException: 0. Unity Warning 0, 새 게임/저장 관련 Unity Error 0.
+- 기존 환경의 AssetPackManager ClassNotFoundException은 UID Logcat의 E Unity에 콜드 실행마다 남아 있습니다(6회). 따라서 전체 Android Logcat Error 0으로 보고하지 않습니다. 기존 DexFile finalizer AssertionError 6회와 Swappy libgame.so lookup 13회도 로그에 있습니다. 전체 로그: Validation/run_save_device_logcat.txt.
 
-추가된 Planet03 PNG5장은 사용자 원본 자산으로만 보관하며 아직 alpha/art/content 검증·Sprite 연결·플레이 활성화하지 않았습니다.03~05 ContentReady=false. 후속 구현 때 별도 자산 검사와 단계 검증을 수행해야 합니다.
-APK SHA256: ECD0A7417B4E8126F2515A40263B3C25D378AF0A9B71617CC22316397E8B9556.
-Evidence: Validation/sprint94_context_* 및 context_visual_clean.log, sprint94_tests.txt/visual_tests.txt, device_stage2/stage3/stage4/complete 결과JSON·PNG, final_gameover_context/retry/home_play/relaunch2/original_home PNG, device_final_logcat.txt, device_final_result.json. QA 로그/이미지/APK는Git 제외.
-Git commit message: feat: integrate crystal planet and collection progression. 기존main/origin으로 일반 push하며 force push/remote 변경 없음. 실제 hash와 동기화 결과는 완료 보고 및 Validation의 Git 기록에 남깁니다.
+## 남은 수동 확인
+실제 손가락 Touch Feel, SFX/Haptic Feel, 새 보조 버튼의 가독성/터치 편의는 사용자 확인 대기입니다. 저장 중 OS/전원 종료 및 디스크 용량 부족 같은 장치 스트레스 상황 전체를 보장하는 테스트는 하지 않았습니다. 일반 HOME/백그라운드/force-stop/라인 연출 중 종료는 실제 검증했습니다. 행성03~05는 아직 ContentReady=false여서 선택할 수 없습니다.
 
-## 사용한 행성02 파일
-- planet02_stage01_barren.png: 0~299
-- planet02_stage02_sprout.png: 300~799
-- planet02_stage03_awakening.png: 800~1499
-- planet02_stage04_restoration.png: 1500~2999(2400부터 최종 복원 구간)
-- planet02_stage05_complete.png: 3000 완료에서만
-공통: Assets/Art/Planets/Common/planet_locked.png, Assets/Art/UI/Common/planet_lock_simple.png. 모든 원본 PNG 변경 없음.
-
-작업 후반 추가된 Assets/Art/Planets/Planet04/ PNG5장은 사용자 원본을 그대로 보존하며 이번 Sprint9.4 커밋에서 제외합니다. 이 untracked 폴더 때문에 전체 working tree는 clean이 아니지만 본 Sprint의 구현 변경은 모두 커밋합니다.
-
+Git Commit/Push는 이번 지시문에 요청되지 않아 수행하지 않습니다. 기존 사용자 Planet04 자산은 이번 작업 범위 밖이며 그대로 보존합니다.

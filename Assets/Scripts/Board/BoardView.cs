@@ -21,6 +21,9 @@ namespace CosmicBlock.Board {
   readonly Sprite[] placedSprites=new Sprite[64];
   public bool HasVisualSkin=>emptySprite!=null;
   public Sprite BlockSprite(int index)=>blockSprites==null||blockSprites.Length==0?null:blockSprites[index%blockSprites.Length];
+  public int PaletteOf(Sprite sprite){if(blockSprites!=null)for(int i=0;i<blockSprites.Length;i++)if(blockSprites[i]==sprite)return i;return 0;}
+  public int[] CaptureCells(){var result=new int[64];for(int i=0;i<64;i++)result[i]=Model.IsOccupied(i%8,i/8)?PaletteOf(placedSprites[i]??BlockSprite(0)):-1;return result;}
+  public void RestoreCells(int[] values){ClearPreview();Model.Clear();for(int i=0;i<64;i++)if(values[i]>=0){Model.SetOccupied(i%8,i/8,true);placedSprites[i]=BlockSprite(values[i]);Refresh(i%8,i/8,true);}}
   public void ConfigureSkin(Sprite empty,Sprite[] blocks){emptySprite=empty;blockSprites=blocks;}
   public void PaintPlacement(BlockShape shape,int x,int y,Sprite sprite){if(sprite==null)return;foreach(var o in shape.Cells){int index=(y+o.y)*8+x+o.x;if(index<0||index>=64||!Model.IsOccupied(x+o.x,y+o.y))continue;placedSprites[index]=sprite;Refresh(x+o.x,y+o.y,true);}}
   readonly HashSet<int> preview=new HashSet<int>();bool previewValid;

@@ -39,9 +39,9 @@ public static class Sprint5NewRunGameOverPlayProbe
             flow.ShowHome();flow.Play();AssertFresh("E active Home Play");results.Add("PASS E: active-run HOME/PLAY path has no state leakage.");
             session.DebugForceGameOver();AssertGameOver("F actual condition");results.Add("PASS F: all remaining pieces unplaceable activates real Game Over.");
 
-            flow.ShowHome();flow.Play();AssertFresh("H setup");session.DebugSetScore(1000);flow.ShowHome();flow.Play();AssertFresh("H Journey cleanup");
+            flow.ShowHome();flow.Play();AssertFresh("H setup");session.DebugSetScore(1000);flow.ShowHome();flow.Play();Require(session.Score==1000&&session.State==GameState.Playing,"H resume score");
             Require(!hud.IsJourneyFeedbackVisible&&string.IsNullOrEmpty(hud.JourneyFeedbackText),"H stale Journey feedback");
-            results.Add("PASS H: Journey feedback remains clean across new run.");
+            results.Add("PASS H: Journey feedback remains clean across resumed run.");
             Require(errors.Length==0,"runtime errors: "+errors);Finish(true,"");
         }catch(Exception ex){Finish(false,ex.ToString());}
     }

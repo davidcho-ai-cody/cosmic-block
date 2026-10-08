@@ -180,3 +180,9 @@ Logcat: FATAL EXCEPTION0, AndroidJavaException0, NullReferenceException0, Missin
 APK SHA256: ECD0A7417B4E8126F2515A40263B3C25D378AF0A9B71617CC22316397E8B9556.
 Evidence: Validation/sprint94_context_* 및 context_visual_clean.log, sprint94_tests.txt/visual_tests.txt, device_stage2/stage3/stage4/complete 결과JSON·PNG, final_gameover_context/retry/home_play/relaunch2/original_home PNG, device_final_logcat.txt, device_final_result.json. QA 로그/이미지/APK는Git 제외.
 Git commit message: feat: integrate crystal planet and collection progression. 기존main/origin으로 일반 push하며 force push/remote 변경 없음. 실제 hash와 동기화 결과는 완료 보고 및 Validation의 Git 기록에 남깁니다.
+
+## 2026-10-08 — 자동 저장 및 이어하기
+HOME 이동 시 Run을 자동 폐기하던 정책을 단일 Run 디스크 저장/이어하기로 변경. 명시적 새 게임 확인창, 기존 PNG 메인 버튼 전환, 확정 Clear 체크포인트/예약 공급, 별빛 절대량 복원과 Game Over 종료를 추가. RunSavePlayProbe 491 assertions PASS; Android 실기기 QA는 ADB 연결 대기. 기존 게임 규칙/연출/영구 PlayerPrefs 보존.
+
+## 2026-10-09 — 자동 저장/이어하기 검증 완료
+563 assertions, 콜드 Editor 프로세스 복원, 핵심 회귀14개, Missing Script0 PASS. 최신 Development APK Warning/Error0로 SM-S942N 설치. 실제 두 Piece/Score50 복원 및 Score1000 QA fixture HOME 복귀, Clear 직후 force-stop→1110/545 1회 복원 PASS. 사용자 원래 모든 PlayerPrefs(535/15930/Version2) 복원 및 QA Run 제거 후 HOME 실행. 신규 게임 예외0; 기존 AssetPackManager ClassNotFound 환경 로그6회는 남음. Commit/Push는 이번 요청에 포함되지 않아 수행하지 않음.

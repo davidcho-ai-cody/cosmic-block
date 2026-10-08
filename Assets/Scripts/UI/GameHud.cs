@@ -21,7 +21,8 @@ namespace CosmicBlock.UI {
   public GameObject GameOverRoot=>gameOverPanel;
   public PlanetRestorationView PlanetView=>planetView;
   GameSession session; readonly HashSet<int> reachedThisRun=new HashSet<int>(); Coroutine feedbackRoutine;
-  public void Configure(Text score,Text combo,GameObject panel,Text finalScore,Button retry,Button ad){scoreText=score;comboText=combo;gameOverPanel=panel;finalScoreText=finalScore;retryButton=retry;adPlaceholderButton=ad;}
+  public void HideGameOverForHome(){if(gameOverPanel!=null)gameOverPanel.SetActive(false);}
+        public void Configure(Text score,Text combo,GameObject panel,Text finalScore,Button retry,Button ad){scoreText=score;comboText=combo;gameOverPanel=panel;finalScoreText=finalScore;retryButton=retry;adPlaceholderButton=ad;}
   public void ConfigureJourney(Text journey,Image fill,CanvasGroup feedback,Text feedbackText){journeyText=journey;journeyFill=fill;reachedFeedback=feedback;reachedText=feedbackText;}
   public void ConfigurePlanet(PlanetRestorationView view){planetView=view;}
   public void Connect(GameSession owner){if(session!=null)retryButton.onClick.RemoveListener(session.Retry);session=owner;retryButton.onClick.AddListener(session.Retry);adPlaceholderButton.interactable=false;reachedThisRun.Clear();}

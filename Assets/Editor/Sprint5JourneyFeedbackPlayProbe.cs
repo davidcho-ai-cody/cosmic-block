@@ -41,19 +41,19 @@ public static class Sprint5JourneyFeedbackPlayProbe
                 safe=GameObject.Find("GameCanvas").transform.Find("SafeArea");
                 int overlays=0;foreach(Transform child in safe)if(child.name=="ReachedFeedback")overlays++;
                 Require(overlays==1,"exactly one Journey overlay");
-                flow.Play();session.DebugSetScore(3000);waitStarted=EditorApplication.timeSinceStartup;stage=1;return;
+                flow.StartNewRun();session.DebugSetScore(3000);waitStarted=EditorApplication.timeSinceStartup;stage=1;return;
             }
             if(stage==1)
             {
                 if(EditorApplication.timeSinceStartup-waitStarted<.12)return;
                 AssertHidden("A retired milestone");
-                flow.ShowHome();AssertHidden("A Home");flow.Play();AssertFreshHidden("A PLAY");
-                session.DebugSetScore(1000);session.DebugForceGameOver();flow.ShowHome();flow.Play();AssertFreshHidden("B GameOver HOME PLAY");
+                flow.ShowHome();AssertHidden("A Home");flow.StartNewRun();AssertFreshHidden("A PLAY");
+                session.DebugSetScore(1000);session.DebugForceGameOver();flow.ShowHome();flow.StartNewRun();AssertFreshHidden("B GameOver HOME PLAY");
                 session.DebugSetScore(1000);session.DebugForceGameOver();safe.Find("GameOverPanel/Card/RetryButton").GetComponent<Button>().onClick.Invoke();AssertFreshHidden("C GameOver RETRY");
                 for(int i=0;i<10;i++)
                 {
                     session.DebugSetScore(1000);session.DebugForceGameOver();
-                    if((i&1)==0){flow.ShowHome();AssertHidden("E Home "+i);flow.Play();}
+                    if((i&1)==0){flow.ShowHome();AssertHidden("E Home "+i);flow.StartNewRun();}
                     else safe.Find("GameOverPanel/Card/RetryButton").GetComponent<Button>().onClick.Invoke();
                     AssertFreshHidden("E fresh "+i);
                 }

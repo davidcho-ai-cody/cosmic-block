@@ -1,10 +1,10 @@
 # COSMIC BLOCK / 별빛 블록
 
-Android Portrait 8×8 블록 퍼즐. HOME → GAME 또는 행성 도감으로 진입하며, Best Score와 행성 01 복원도는 PlayerPrefs에 보존합니다.
+Android Portrait 8×8 블록 퍼즐. HOME → GAME 또는 행성 도감으로 진입하며, Best Score와 행성별 복원도는 PlayerPrefs에, 진행 중인 Run은 별도 파일에 보존합니다.
 
 ## 현재 상태
 
-Sprint 9.4: 푸른 별 완성 후 크리스탈리아를 도감에서 선택하여 실제 퍼즐로 복원합니다. 선택은 HOME으로 돌아가며 PLAY에서 새 Run을 시작합니다. 기존 Board/Drag/Score/Combo/별빛 보상과 Sprint 9.3 피드백 수치는 유지합니다.
+Sprint 9.4: 푸른 별 완성 후 크리스탈리아를 도감에서 선택하여 실제 퍼즐로 복원합니다. 선택은 HOME으로 돌아갑니다. 저장된 Run이 있으면 메인 버튼은 이어하기로 바뀌며, 별도 새 게임 확인 후에만 현재 선택 행성의 새 Run을 시작합니다. 기존 Board/Drag/Score/Combo/별빛 보상과 Sprint 9.3 피드백 수치는 유지합니다.
 
 ## 실행
 
@@ -46,3 +46,7 @@ Android Development APK는 COSMIC BLOCK/Build/Android Development APK 또는 And
 ## Sprint 9.3 피드백 수치
 
 Clear Burst 기준 Rect 59→80, 대표 실제 렌더 46×53→63×71px. Small/Medium/Large 변주, 12/Line·Pool48 유지. Planet Flight Rect140, 이동0.72초와 기존 stagger0.022초, 도착 Pulse1.07·0.25초, Bar0.30초. 중앙 Stage 전환의 기존 연출 시간은 유지합니다. BEST Frame330×110→412.5×137.5(+25%), 숫자 최대 Font37→53.65(+45%), 큰 값은 AutoSize입니다.
+
+## 자동 저장 및 이어하기
+
+HOME 이동·앱 Pause/Quit·확정 턴에서 단일 Run을 persistentDataPath/current-run.json에 저장합니다. 점수/Combo/보드 색상/대기 블록 및 소비 상태/Run 행성을 복원하며, 행성 별빛과 BEST의 기존 PlayerPrefs는 보존합니다. Game Over는 Run 저장을 종료합니다. HOME의 게임 시작/이어하기 PNG는 같은 위치·크기로 표시하며 새 게임은 확인창을 거칩니다. 파일 저장은 임시 파일 Flush와 원자 교체를 사용합니다. 자세한 안정성 및 검증은 docs/CURRENT_TASK.md를 참고합니다.

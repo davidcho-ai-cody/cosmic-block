@@ -10,6 +10,7 @@ namespace CosmicBlock.Blocks
     public sealed class BlockPiece : MonoBehaviour
     {
         private static int paletteIndex;
+        public static int NextAppearanceIndex => paletteIndex % 3;
         private static readonly Vector2Int CatalogBounds = GetCatalogBounds();
         private static Vector2Int GetCatalogBounds() { var bounds = Vector2Int.one; foreach (var shape in BlockCatalog.Shapes) { bounds.x = Mathf.Max(bounds.x, shape.Width); bounds.y = Mathf.Max(bounds.y, shape.Height); } return bounds; }
         private static readonly Color[] Palette = { new Color(.30f,.58f,.96f), new Color(.60f,.42f,.91f), new Color(.94f,.69f,.30f) };
@@ -24,11 +25,12 @@ namespace CosmicBlock.Blocks
         private static readonly Color RestOutlineColor = new Color(1f, 1f, 1f, .20f);
         public BlockShape Shape { get; private set; }
         public Sprite AppearanceSprite { get; private set; }
+        public int AppearanceIndex { get; private set; }
         public bool IsConsumed { get; private set; }
         public RectTransform Rect => (RectTransform)transform;
         public Vector3 OriginWorld => Rect.TransformPoint(new Vector3(Rect.rect.xMin + cellSize / 2,
                                                                       Rect.rect.yMax - cellSize / 2));
-        public void Initialize(BlockShape shape, BoardView board, RectTransform dragLayer, GameSession session)
+        public void Initialize(BlockShape shape, BoardView board, RectTransform dragLayer, GameSession session, int appearance = -1)
         {
             GetComponent<BlockDragHandler>().ResetForReuse();
             if (visuals != null) foreach (var visual in visuals)
@@ -38,7 +40,8 @@ namespace CosmicBlock.Blocks
                 Destroy(visual.gameObject);
             }
             Shape = shape; IsConsumed = false;
-            AppearanceSprite = board.BlockSprite(paletteIndex);
+            AppearanceIndex = appearance < 0 ? paletteIndex % 3 : appearance;
+            AppearanceSprite = board.BlockSprite(AppearanceIndex);
             GetComponent<Image>().color = new Color(0, 0, 0, .001f);
             GetComponent<Image>().raycastTarget = true;
             visuals = new Image[shape.Cells.Count];
@@ -51,7 +54,7 @@ namespace CosmicBlock.Blocks
                 visuals[i] = rect.gameObject.AddComponent<Image>();
                 visuals[i].sprite = AppearanceSprite;
                 visuals[i].preserveAspect = true;
-                visuals[i].color = AppearanceSprite != null ? Color.white : Palette[paletteIndex % Palette.Length];
+                visuals[i].color = AppearanceSprite != null ? Color.white : Palette[AppearanceIndex % Palette.Length];
                 visuals[i].raycastTarget = false;
                 if(board.SpriteVisualScale != 1) rect.gameObject.AddComponent<CosmicBlock.UI.CellSpriteDensity>().Configure(board.SpriteVisualScale);
                 var highlight = rect.gameObject.AddComponent<Outline>();

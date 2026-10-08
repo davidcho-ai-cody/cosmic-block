@@ -32,6 +32,7 @@ namespace CosmicBlock.UI
         public bool QuitRequested { get; private set; }
         public GameObject HomeRoot => homeRoot;
         public GameObject[] GameRoots => gameRoots;
+        public bool HasSavedRun => RunSaveStore.Load()!=null;
         public bool HomeConfirmVisible => homeConfirmPanel != null && homeConfirmPanel.activeSelf;
         public HomeViewController HomeView => homeView;
 
@@ -69,19 +70,28 @@ namespace CosmicBlock.UI
 
         public void Play()
         {
-            if (session == null) return;
-            if (collectionView != null) collectionView.gameObject.SetActive(false);
-            HideHomeConfirmation();
-            session.ResetTransientFeedback();
-            session.LoadSelectedPlanet(); homeRoot.SetActive(false); SetGameVisible(true); session.Retry(); Screen=FlowScreen.Game; QuitRequested=false;
+            if(session==null)return;
+            if(HasSavedRun){EnterGame();if(session.ResumeSavedRun())return;}
+            StartNewRun();
         }
-
+        public void StartNewRun()
+        {
+            if(session==null)return;
+            RunSaveStore.Delete();session.LeaveForHome();RunSaveStore.Delete();
+            session.LoadSelectedPlanet();EnterGame();session.Retry();
+        }
+        private void EnterGame()
+        {
+            if(collectionView!=null)collectionView.gameObject.SetActive(false);
+            HideHomeConfirmation();homeView?.HideTransient();homeRoot.GetComponent<HomeRunControls>()?.CancelNewGame();
+            homeRoot.SetActive(false);SetGameVisible(true);Screen=FlowScreen.Game;QuitRequested=false;
+        }
         public void ShowHome()
         {
-            if (collectionView != null) collectionView.gameObject.SetActive(false);
-            HideHomeConfirmation(); homeView?.HideTransient();
-            if (session != null) { session.ResetTransientFeedback(); session.Retry(); }
-            SetGameVisible(false); RefreshHome(); homeRoot.SetActive(true); Screen=FlowScreen.Home;
+            if(collectionView!=null)collectionView.gameObject.SetActive(false);
+            HideHomeConfirmation();homeView?.HideTransient();
+            if(session!=null){session.LeaveForHome();session.ResetTransientFeedback();session.LoadSelectedPlanet();}
+            SetGameVisible(false);RefreshHome();homeRoot.SetActive(true);Screen=FlowScreen.Home;
         }
 
         public void RequestHome()
@@ -112,6 +122,7 @@ namespace CosmicBlock.UI
             if (Screen == FlowScreen.Collection) { ReturnFromCollection(); return; }
             if (Screen == FlowScreen.Home)
             {
+                if(homeRoot.GetComponent<HomeRunControls>()?.NewGameVisible==true){homeRoot.GetComponent<HomeRunControls>().CancelNewGame();return;}
                 RequestQuit();
             }
             else if (session != null && session.State == GameState.GameOver) ShowHome();
@@ -120,6 +131,7 @@ namespace CosmicBlock.UI
         public void RefreshHome()
         {
             if(session==null)return; int best=session.BestScore;
+            homeRoot.GetComponent<HomeRunControls>()?.Refresh();
             if(homeView!=null){homeView.Refresh(session);return;}
             if(homeBest!=null)homeBest.text="최고 점수  "+best.ToString("N0",CultureInfo.InvariantCulture);
             if(homeJourney!=null)homeJourney.text=session.Restoration.IsRestored?session.Restoration.Definition.Name+" · 복원 완료 ✓":session.Restoration.Definition.Name+" · 복원 단계 "+session.Restoration.Stage+" / 5";
