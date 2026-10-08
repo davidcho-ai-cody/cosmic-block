@@ -1,0 +1,559 @@
+fileFormatVersion: 2
+guid: eaf23b0bebbee92458ba81467cd52f08
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 3542195152515523849
+    second: planet05_stage02_sprout_0
+  - first:
+      213: -1954945991087908398
+    second: planet05_stage02_sprout_1
+  - first:
+      213: -8678009512208952320
+    second: planet05_stage02_sprout_2
+  - first:
+      213: 2943697961353819917
+    second: planet05_stage02_sprout_3
+  - first:
+      213: 6327211325709760739
+    second: planet05_stage02_sprout_4
+  - first:
+      213: -3351592885816837751
+    second: planet05_stage02_sprout_5
+  - first:
+      213: -7229068499537392917
+    second: planet05_stage02_sprout_6
+  - first:
+      213: -4445624613500694678
+    second: planet05_stage02_sprout_7
+  - first:
+      213: -3652573249744609583
+    second: planet05_stage02_sprout_8
+  - first:
+      213: -900283106243269981
+    second: planet05_stage02_sprout_9
+  - first:
+      213: 5731774659908561468
+    second: planet05_stage02_sprout_10
+  - first:
+      213: -7610974577436292521
+    second: planet05_stage02_sprout_11
+  - first:
+      213: -4787542779961211097
+    second: planet05_stage02_sprout_12
+  - first:
+      213: 2855922868061729015
+    second: planet05_stage02_sprout_13
+  - first:
+      213: 8271382074507130724
+    second: planet05_stage02_sprout_14
+  - first:
+      213: -2773608286030216711
+    second: planet05_stage02_sprout_15
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: planet05_stage02_sprout_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 1254
+        height: 1251
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9056cce49b7682130800000000000000
+      internalID: 3542195152515523849
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: planet05_stage02_sprout_1
+      rect:
+        serializedVersion: 2
+        x: 713
+        y: 1223
+        width: 10
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2d991269af2aed4e0800000000000000
+      internalID: -1954945991087908398
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: planet05_stage02_sprout_2
+      rect:
+        serializedVersion: 2
+        x: 1053
+        y: 1221
+        width: 13
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0041353a354819780800000000000000
+      internalID: -8678009512208952320
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: planet05_stage02_sprout_3
+      rect:
+        serializedVersion: 2
+        x: 1063
+        y: 1225
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d07398013bd1ad820800000000000000
+      internalID: 2943697961353819917
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: planet05_stage02_sprout_4
+      rect:
+        serializedVersion: 2
+        x: 151
+        y: 1213
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3e832cf7d25cec750800000000000000
+      internalID: 6327211325709760739
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: planet05_stage02_sprout_5
+      rect:
+        serializedVersion: 2
+        x: 713
+        y: 1195
+        width: 8
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 98939212700cc71d0800000000000000
+      internalID: -3351592885816837751
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: planet05_stage02_sprout_6
+      rect:
+        serializedVersion: 2
+        x: 804
+        y: 1197
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bea8b1c30803dab90800000000000000
+      internalID: -7229068499537392917
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: planet05_stage02_sprout_7
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 278
+        width: 11
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a6fce8bc7f7fd42c0800000000000000
+      internalID: -4445624613500694678
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: planet05_stage02_sprout_8
+      rect:
+        serializedVersion: 2
+        x: 233
+        y: 51
+        width: 7
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1ded0e44bf37f4dc0800000000000000
+      internalID: -3652573249744609583
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: planet05_stage02_sprout_9
+      rect:
+        serializedVersion: 2
+        x: 247
+        y: 49
+        width: 9
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3aaa517e84d8183f0800000000000000
+      internalID: -900283106243269981
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: planet05_stage02_sprout_10
+      rect:
+        serializedVersion: 2
+        x: 1155
+        y: 53
+        width: 18
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c3a6f685faa5b8f40800000000000000
+      internalID: 5731774659908561468
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: planet05_stage02_sprout_11
+      rect:
+        serializedVersion: 2
+        x: 1123
+        y: 19
+        width: 29
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 75a816d42f2606690800000000000000
+      internalID: -7610974577436292521
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: planet05_stage02_sprout_12
+      rect:
+        serializedVersion: 2
+        x: 1147
+        y: 35
+        width: 25
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7270d65053b3f8db0800000000000000
+      internalID: -4787542779961211097
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: planet05_stage02_sprout_13
+      rect:
+        serializedVersion: 2
+        x: 1027
+        y: 7
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7f0fbb897b642a720800000000000000
+      internalID: 2855922868061729015
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: planet05_stage02_sprout_14
+      rect:
+        serializedVersion: 2
+        x: 1139
+        y: 7
+        width: 12
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 467f7805c2ad9c270800000000000000
+      internalID: 8271382074507130724
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: planet05_stage02_sprout_15
+      rect:
+        serializedVersion: 2
+        x: 1077
+        y: 0
+        width: 35
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9f1c61585f92289d0800000000000000
+      internalID: -2773608286030216711
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      planet05_stage02_sprout_0: 3542195152515523849
+      planet05_stage02_sprout_1: -1954945991087908398
+      planet05_stage02_sprout_10: 5731774659908561468
+      planet05_stage02_sprout_11: -7610974577436292521
+      planet05_stage02_sprout_12: -4787542779961211097
+      planet05_stage02_sprout_13: 2855922868061729015
+      planet05_stage02_sprout_14: 8271382074507130724
+      planet05_stage02_sprout_15: -2773608286030216711
+      planet05_stage02_sprout_2: -8678009512208952320
+      planet05_stage02_sprout_3: 2943697961353819917
+      planet05_stage02_sprout_4: 6327211325709760739
+      planet05_stage02_sprout_5: -3351592885816837751
+      planet05_stage02_sprout_6: -7229068499537392917
+      planet05_stage02_sprout_7: -4445624613500694678
+      planet05_stage02_sprout_8: -3652573249744609583
+      planet05_stage02_sprout_9: -900283106243269981
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
