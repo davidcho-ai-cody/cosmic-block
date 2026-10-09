@@ -240,3 +240,14 @@ HOME 이동 시 Run을 자동 폐기하던 정책을 단일 Run 디스크 저장
 ## 2026-10-09 USB 재연결 후 실기기 검증 완료
 
 최신 APK install-r/실행 및 행성 전환 Run 보존, HOME/실제 프로세스 종료 복원, 별빛 분리, 도감 선택, 힌트 사용 제한, 최종 행성, GameOver/Retry, 세 해상도 검사 PASS. 원본 PlayerPrefs/Run/해상도 복원 검증 완료. Crash/게임 예외0, Unity Warning0. 기존 AssetPackManager 오류 21회로 전체 Error0은 아님. 상세 docs/SPRINT1021_DEVICE_QA.md. 위 미실행 기록은 이전 연결 중단 시점의 이력입니다.
+
+## 2026-10-09 — Sprint10.2.2 BGM
+- 두 BGM 에셋을 실제 HOME/GAME 경로에 연결. 도감 HOME 유지, 행성 전환/완료/GameOver GAME 유지.
+- 독립 두 AudioSource의 1.5초 크로스페이드/동일 음악 연속/중단 복귀.
+- BGM ON/OFF·35% 기본·Slider 및 SFX ON/OFF 독립 저장. 기존 SFX 볼륨과 게임 로직 유지.
+- 오디오 Editor 테스트 PASS. 실기기/빌드/Commit/Push 없음. 상세 docs/SPRINT1022_REPORT.md.
+- 최종 기존 회귀 전부/설정 화면 3해상도 PASS, Compiler/일반 Runtime Warning·Error0/Missing Script0. 의도적 저장 실패 Warning 별도.
+
+## 2026-10-09 추가 요청 — Android 실기기 / Git 반영
+
+사용자 요청으로 Development APK 빌드·설치·실기기 검증 완료. HOME/도감/GAME 크로스페이드, OFF/볼륨/SFX 설정 실제 재실행 복원, 빠른 왕복, 백그라운드, 완료/행성 전환/GameOver/Retry 음악 유지 PASS. 원본 PlayerPrefs/Run 재실행 동일 복원 완료. Build Error0/기존 TMP Warning3, Crash·게임 예외0/Unity Warning0. 기존 AssetPackManager 오류10회는 남음. 음질·체감은 사용자 확인 대기. 상세 docs/SPRINT1022_DEVICE_QA.md. 이전 실기기/Commit 미실행 문구는 최초 요청 시점의 이력입니다. 두 BGM 음원은 이번 적용 요청에 따라 함께 Git 반영 대상이며 원본 파일 자체 변경 없음.

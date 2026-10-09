@@ -1,5 +1,5 @@
-# 현재 작업 — Sprint 10.2.1
+# 현재 작업 — Sprint 10.2.2
 
-실기기 APK 업데이트 및 기능 검증 완료. 행성 전환 Run 유지/저장 복원/별빛 분리/도감/Retry/3해상도 PASS. 원본 데이터와 해상도 복원 완료. Crash0/Unity Warning0, 기존 AssetPackManager 오류 남음.
+HOME/도감·GAME BGM과 오디오 설정 구현, Editor/3해상도/실기기 기능 검증 PASS. Android Development 빌드·설치·실행 완료. 원본 PlayerPrefs/Run 복원 및 재실행 동일 확인.
 
-구현 c43ae78 origin/main 반영. BGM 제외·보존. 상세 docs/SPRINT1021_DEVICE_QA.md.
+Compiler/일반 Editor Runtime Warning·Error0/Missing Script0. Android Crash·게임 예외0/Unity Warning0, 기존 AssetPackManager 오류10회·TMP Build Warning3 남음. 사용자 승인으로 일반 Commit/Push 진행. 상세 docs/SPRINT1022_DEVICE_QA.md.
