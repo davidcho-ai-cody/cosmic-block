@@ -272,3 +272,11 @@ HOME 이동 시 Run을 자동 폐기하던 정책을 단일 Run 디스크 저장
 ### 2026-10-10 APK 설치 완료
 
 POLISH-001/002 Development APK 빌드 성공(Error 0, 기존 TMP IL2CPP Warning 3). SM-S942N(Android 16)에 install-r 성공. PlayerPrefs/이어하기 파일 보존 확인. 앱 실행 및 실기기 테스트는 사용자 요청에 따라 생략. 일반 Commit/Push 승인 반영.
+
+## 2026-10-10 L자 블록 4방향
+
+A/B 기존 Shape 및 저장 인덱스 유지. C=l_small_top(8), D=reverse_l_small_top(9) 추가. 균등 랜덤 공급 10종. 실제 드래그/프리뷰/라인 제거/힌트/새로고침/저장 이어하기/Game Over 전용 검사와 기존 4개 회귀·진단 PASS. Warning/Error/Missing Script 0. Android/Commit/Push 미실행. 사용자 확인 대기.
+
+### L자 4방향 Android 후속 검증
+
+사용자 승인으로 Development 빌드·설치·실기기 A/B/C/D 터치와 재실행 이어하기 PASS. 원본 Run/Prefs 원복 및 재실행 동일 확인. Build Error0/기존 TMP Warning3, Crash·게임 예외0/Unity Warning0, 기존 AssetPackManager Error10. 일반 Commit/Push 반영.

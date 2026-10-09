@@ -15,7 +15,10 @@ namespace CosmicBlock.Blocks
             new BlockShape("vertical_3", new Vector2Int(0, 0), new Vector2Int(0, 1), new Vector2Int(0, 2)),
             new BlockShape("square_2", new Vector2Int(0, 0), new Vector2Int(1, 0), new Vector2Int(0, 1), new Vector2Int(1, 1)),
             new BlockShape("l_small", new Vector2Int(0, 0), new Vector2Int(0, 1), new Vector2Int(1, 1)),
-            new BlockShape("reverse_l_small", new Vector2Int(1, 0), new Vector2Int(0, 1), new Vector2Int(1, 1))
+            new BlockShape("reverse_l_small", new Vector2Int(1, 0), new Vector2Int(0, 1), new Vector2Int(1, 1)),
+            // Append only: run saves persist catalog indices.
+            new BlockShape("l_small_top", new Vector2Int(0, 0), new Vector2Int(1, 0), new Vector2Int(0, 1)),
+            new BlockShape("reverse_l_small_top", new Vector2Int(0, 0), new Vector2Int(1, 0), new Vector2Int(1, 1))
         });
     }
 
