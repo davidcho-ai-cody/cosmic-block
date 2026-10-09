@@ -1,3 +1,3 @@
 # 다음 작업
 
-실기기 최신 BGM APK 설치 완료. 사용자 청취 확인: HOME/GAME 음질·체감 음량·전환 청감·BGM OFF 중 SFX·Haptic. Android 메모리/CPU 및 Release 설치는 미검증. 기존 AssetPackManager 오류와 TMP Warning은 별도 조사 대상입니다.
+POLISH-001 Editor 표시 변경은 사용자 승인으로 Git 반영합니다. 사용자 요청 후 Android 빌드·설치·실기기 가독성을 검증합니다. 현재 APK에는 BGM Sprint10.2.2까지 포함됩니다. 기존 AssetPackManager/TMP 이슈는 별도입니다.

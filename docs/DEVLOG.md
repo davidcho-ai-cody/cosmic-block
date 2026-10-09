@@ -572,3 +572,10 @@ HOME 이동 시 Run을 자동 폐기하던 정책을 단일 Run 디스크 저장
 ## 2026-10-09 추가 요청 — Android 실기기 / Git 반영
 
 사용자 요청으로 Development APK 빌드·설치·실기기 검증 완료. HOME/도감/GAME 크로스페이드, OFF/볼륨/SFX 설정 실제 재실행 복원, 빠른 왕복, 백그라운드, 완료/행성 전환/GameOver/Retry 음악 유지 PASS. 원본 PlayerPrefs/Run 재실행 동일 복원 완료. Build Error0/기존 TMP Warning3, Crash·게임 예외0/Unity Warning0. 기존 AssetPackManager 오류10회는 남음. 음질·체감은 사용자 확인 대기. 상세 docs/SPRINT1022_DEVICE_QA.md. 이전 실기기/Commit 미실행 문구는 최초 요청 시점의 이력입니다. 두 BGM 음원은 이번 적용 요청에 따라 함께 Git 반영 대상이며 원본 파일 자체 변경 없음.
+
+## 2026-10-09 — POLISH-001
+- 라인 점수 팝업에 SCORE 표시, 실제 적립 별빛 텍스트 추가.
+- 별빛은 턴 실제 증가량을 라인별 순차 표시로 분배하며 완료 행성 +0/부분 적립 처리. 규칙·저장 로직 변경 없음.
+- 신규 Editor/3해상도 PASS, 기존 회귀 검증 진행. Android/Commit/Push 없음. docs/POLISH001_REPORT.md.
+- 최종 점수/순차 클리어/Run 유지 전환/자동 저장/오디오 회귀 모두 PASS. Compiler/일반 Runtime Warning·Error0/Missing Script0. 의도적 저장 실패 Warning 별도.
+- 사용자 추가 요청으로 POLISH-001 일반 Commit/Push 반영. Android 검증은 미실행 상태 유지.

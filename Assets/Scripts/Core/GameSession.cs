@@ -138,7 +138,9 @@ namespace CosmicBlock.Core
         {
             var step=pendingPlan.Steps[nextLine++];LineComboIndex=nextLine;
             // Copy source sprites while their original occupied view still exists.
-            if(present && feedback!=null)feedback.PlayClear(step.Result,ScoreRules.LinePoints(LineComboIndex),LineComboIndex);
+            if(present && feedback!=null)feedback.PlayClear(step.Result,ScoreRules.LinePoints(LineComboIndex),LineComboIndex,
+                Mathf.Min(clearEnergyAfter-clearEnergyBefore,PlanetRestoration.AwardForLines(LineComboIndex))-
+                Mathf.Min(clearEnergyAfter-clearEnergyBefore,PlanetRestoration.AwardForLines(LineComboIndex-1)));
             Model.ClearCells(step.Cells);AddScore(ScoreRules.LinePoints(LineComboIndex));
         }
         private void AddScore(int points)
