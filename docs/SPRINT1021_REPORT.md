@@ -85,3 +85,7 @@ APK SHA256: `a39740fdfd052a3f0c32bc71735355ec2b92401f58992985b0408e0d685360ff`, 
 사용자가 새로 추가한 Assets/Audio/BGM/cosmic_block_main_bgm.mp3 및 관련 meta는 명시적 요청에 따라 이번 커밋에서 제외하고 보존합니다. BGM 연결/재생 로직 변경 없음.
 
 기존 검증된 Sprint10~10.2.1 미커밋 소스·에셋 설정·테스트·문서를 일반 Commit/Push 대상으로 정리했습니다. APK/Validation/Unity 임시 캐시는 제외합니다. 오래된 빈 index.lock은 실행 중인 Git이 없는 것을 확인하고 제거했습니다. Remote 변경/Force Push 없음. Git 최종 해시 및 동기화 결과는 완료 응답에 기록합니다.
+
+## 2026-10-09 USB 재연결 후 실기기 검증 완료
+
+최신 APK install-r/실행 및 행성 전환 Run 보존, HOME/실제 프로세스 종료 복원, 별빛 분리, 도감 선택, 힌트 사용 제한, 최종 행성, GameOver/Retry, 세 해상도 검사 PASS. 원본 PlayerPrefs/Run/해상도 복원 검증 완료. Crash/게임 예외0, Unity Warning0. 기존 AssetPackManager 오류 21회로 전체 Error0은 아님. 상세 docs/SPRINT1021_DEVICE_QA.md. 위 미실행 기록은 이전 연결 중단 시점의 이력입니다.

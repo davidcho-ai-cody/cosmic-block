@@ -557,3 +557,7 @@ HOME 이동 시 Run을 자동 폐기하던 정책을 단일 Run 디스크 저장
 - 시작 시 SM-S942N 연결/새 원본 백업 완료. 빌드 종료 후 ADB 기기가 없어 install-r 실패, 설치·실기기·Logcat NOT RUN. 재연결 질문 대기.
 - 이번 원본 Run은 행성03/SCORE0/별빛0. fixture 미적용으로 데이터 변경 없음.
 - 검증된 미커밋 소스·에셋·테스트·문서를 일반 Commit/Push 대상으로 정리. 사용자가 새 BGM 제외 요청, 음원·meta 보존. Remote 변경/Force Push 없음.
+
+## 2026-10-09 USB 재연결 후 실기기 검증 완료
+
+최신 APK install-r/실행 및 행성 전환 Run 보존, HOME/실제 프로세스 종료 복원, 별빛 분리, 도감 선택, 힌트 사용 제한, 최종 행성, GameOver/Retry, 세 해상도 검사 PASS. 원본 PlayerPrefs/Run/해상도 복원 검증 완료. Crash/게임 예외0, Unity Warning0. 기존 AssetPackManager 오류 21회로 전체 Error0은 아님. 상세 docs/SPRINT1021_DEVICE_QA.md. 위 미실행 기록은 이전 연결 중단 시점의 이력입니다.
