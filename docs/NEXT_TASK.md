@@ -1,3 +1,3 @@
 # 다음 작업
 
-POLISH-001 Editor 표시 변경은 사용자 승인으로 Git 반영합니다. 사용자 요청 후 Android 빌드·설치·실기기 가독성을 검증합니다. 현재 APK에는 BGM Sprint10.2.2까지 포함됩니다. 기존 AssetPackManager/TMP 이슈는 별도입니다.
+POLISH-001/002 APK 업데이트 후 실제 가독성·하단 기능 버튼 접근성은 사용자가 확인합니다. 이번 요청에서 자동 실기기 테스트는 진행하지 않습니다. 기존 AssetPackManager/TMP 이슈는 별도입니다.

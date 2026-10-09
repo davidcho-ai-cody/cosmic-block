@@ -1,3 +1,3 @@
-# 현재 작업 — POLISH-001
+# 현재 작업 — POLISH-002 완료
 
-라인별 +숫자 SCORE / 별빛 +숫자를 분리. 실제 별빛 적립 증가량으로 표시하며 완료 행성은 +0. 계산·보드·저장·SFX/Haptic·Fade 정책 유지. 신규 Editor 및 3해상도 PASS, 기존 회귀 모두 PASS. Compiler/일반 Runtime Warning·Error0/Missing Script0. Android 검증 미실행. 사용자 추가 승인으로 Commit/일반 Push 반영. 상세 docs/POLISH001_REPORT.md.
+GAME 새로고침/힌트 버튼을 슬롯 바로 아래로 배치. Editor 3해상도 및 회귀 PASS. Android Development 빌드 성공(Error 0, 기존 TMP Warning 3), SM-S942N install-r 성공 및 저장 데이터 보존 확인. 실기기 앱 테스트는 사용자 담당. 승인된 Commit/Push 반영. docs/POLISH002_REPORT.md.

@@ -579,3 +579,17 @@ HOME 이동 시 Run을 자동 폐기하던 정책을 단일 Run 디스크 저장
 - 신규 Editor/3해상도 PASS, 기존 회귀 검증 진행. Android/Commit/Push 없음. docs/POLISH001_REPORT.md.
 - 최종 점수/순차 클리어/Run 유지 전환/자동 저장/오디오 회귀 모두 PASS. Compiler/일반 Runtime Warning·Error0/Missing Script0. 의도적 저장 실패 Warning 별도.
 - 사용자 추가 요청으로 POLISH-001 일반 Commit/Push 반영. Android 검증은 미실행 상태 유지.
+
+## 2026-10-09 — POLISH-002
+- 기능 버튼/무료 횟수를 슬롯 그룹 하단 기준으로 이동. Board/Slot/Button 크기·에셋·기능 유지.
+- 전후 3해상도 24렌더 및 Hit Rect 비겹침/Safe Area/카운트 검증 PASS.
+- Android/Commit/Push 미실행. docs/POLISH002_REPORT.md.
+- 최종 새로고침/힌트·저장·오디오·POLISH-001 회귀 및 Missing Script 모두 PASS. Compiler Warning·Error0/Runtime Error0/Missing Script0.
+
+## 2026-10-10 — POLISH-002 설치/Git 승인
+- 최신 Development APK 빌드·install-r 및 일반 Commit/Push 요청.
+- 실기기 테스트는 사용자 담당이며 자동 실행/게임 조작/Logcat 기능 검사는 하지 않음.
+
+### 2026-10-10 APK 설치 완료
+
+POLISH-001/002 Development APK 빌드 성공(Error 0, 기존 TMP IL2CPP Warning 3). SM-S942N(Android 16)에 install-r 성공. PlayerPrefs/이어하기 파일 보존 확인. 앱 실행 및 실기기 테스트는 사용자 요청에 따라 생략. 일반 Commit/Push 승인 반영.
