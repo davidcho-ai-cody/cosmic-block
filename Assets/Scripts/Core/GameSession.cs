@@ -33,6 +33,36 @@ namespace CosmicBlock.Core
         private int clearEnergyBefore,clearEnergyAfter;
         private RunSnapshot preparedSupply;
         public bool RunActive { get; private set; }
+        public bool ModalInputBlocked { get; set; }
+        public int RefreshUses{get;private set;}public int HintUses{get;private set;}
+        public int RefreshRemaining=>1-RefreshUses;public int HintRemaining=>3-HintUses;
+        public bool HintVisible=>ActiveHint!=null;public PlacementHint ActiveHint{get;private set;}
+        public event Action AssistChanged;
+        private bool assistBusy,applicationPaused;private float hintUntil,nextAssistTime;
+        private GameAssistView assistView;
+        public void ConfigureAssists(GameAssistView view)=>assistView=view;
+        public bool CanUseAssist=>!applicationPaused&&(assistView==null||assistView.AllowsInteraction)&&RunActive&&State==GameState.Playing&&!ModalInputBlocked&&activeDrag==null&&!assistBusy&&Time.unscaledTime>=nextAssistTime;
+        public void ClearHint(){ActiveHint=null;hintUntil=0;if(assistView!=null)assistView.ClearHint();AssistChanged?.Invoke();}
+        void Update(){if(HintVisible&&Time.unscaledTime>=hintUntil)ClearHint();}
+        public bool TryHint(){
+            if(!CanUseAssist||HintRemaining<=0||HintVisible)return false;assistBusy=true;
+            try{var hint=PlacementHint.Find(Model,slots);if(hint==null)return false;
+                if(assistView==null||!assistView.ShowHint(hint))return false;
+                ActiveHint=hint;hintUntil=Time.unscaledTime+4;HintUses++;nextAssistTime=Time.unscaledTime+.25f;SaveCheckpoint();AssistChanged?.Invoke();return true;
+            }finally{assistBusy=false;}
+        }
+        public bool TryRefreshBlocks(){
+            if(!CanUseAssist||RefreshRemaining<=0)return false;assistBusy=true;
+            try{int first=-1;for(int i=0;i<slots.Length;i++)if(!slots[i].IsConsumed){first=i;break;}if(first<0)return false;
+                var placeable=new List<BlockShape>();foreach(var shape in BlockCatalog.Shapes)if(Model.CanPlaceAnywhere(shape))placeable.Add(shape);
+                if(placeable.Count==0){EvaluateGameOver();return false;}ClearHint();var supply=new BlockShape[slots.Length];bool anyFits=false;
+                for(int i=0;i<slots.Length;i++)if(!slots[i].IsConsumed){var shape=generator.Next();if(shape==slots[i].Shape){int n=0;for(int j=0;j<BlockCatalog.Shapes.Count;j++)if(BlockCatalog.Shapes[j]==shape)n=j;shape=BlockCatalog.Shapes[(n+1)%BlockCatalog.Shapes.Count];}supply[i]=shape;anyFits|=Model.CanPlaceAnywhere(shape);}
+                if(!anyFits){var options=placeable.FindAll(shape=>shape!=slots[first].Shape);supply[first]=options.Count>0?options[0]:placeable[0];}
+                for(int i=0;i<slots.Length;i++)if(supply[i]!=null)slots[i].Initialize(supply[i],board,dragLayer,this);
+                RefreshUses++;nextAssistTime=Time.unscaledTime+.25f;EvaluateGameOver();AssistChanged?.Invoke();return true;
+            }finally{assistBusy=false;}
+        }
+        public void SaveCurrentRun()=>SaveCheckpoint();
         private bool initializing;
         public int LineComboIndex { get; private set; }
         public bool ClearSequenceActive => pendingPlan != null;
@@ -66,17 +96,17 @@ namespace CosmicBlock.Core
         private void Start() { if (hud != null) hud.Connect(this); if(!RunActive){initializing=true; Retry(); initializing=false; RunActive=false;} }
         public bool TryBeginDrag(BlockDragHandler handler)
         {
-            if (State != GameState.Playing || activeDrag != null) return false;
-            activeDrag = handler; return true;
+            if (ModalInputBlocked || State != GameState.Playing || activeDrag != null) return false;
+            ClearHint();activeDrag = handler; return true;
         }
         public void ReleaseDrag(BlockDragHandler handler) { if (activeDrag == handler) activeDrag = null; }
 
         // This is the only gameplay placement entry point. The handler finishes its drag first.
         public bool TryPlacePiece(BlockPiece piece, int x, int y)
         {
-            if (State != GameState.Playing || activeDrag != null || piece == null || piece.IsConsumed ||
+            if (ModalInputBlocked || State != GameState.Playing || activeDrag != null || piece == null || piece.IsConsumed ||
                 slots == null || Array.IndexOf(slots, piece) < 0 || !Model.CanPlace(piece.Shape, x, y)) return false;
-            ++turnToken;
+            ClearHint();++turnToken;
             State = GameState.Resolving;
             board.ClearPreview();
             if (!Model.TryPlace(piece.Shape, x, y)) { State = GameState.Playing; return false; }
@@ -186,6 +216,7 @@ namespace CosmicBlock.Core
             if (State == GameState.Resolving) return;
             if (activeDrag != null) activeDrag.CancelDrag();
             State = GameState.Resolving;
+            RefreshUses=HintUses=0;nextAssistTime=0;ClearHint();
             board.ClearPreview(); Model.Clear();
             Score = Combo = BlockSetNumber = LineComboIndex = 0;
             LastClear = LineClearResult.Empty;
@@ -198,7 +229,7 @@ namespace CosmicBlock.Core
 
         private RunSnapshot Capture(bool projected)
         {
-            var s=new RunSnapshot{planetId=restoration.PlanetId,planetEnergy=restoration.CurrentEnergy,score=Score,combo=Combo,blockSetNumber=BlockSetNumber,cells=board.CaptureCells(),shapes=new int[3],appearances=new int[3],consumed=new bool[3]};
+            var s=new RunSnapshot{refreshUses=RefreshUses,hintUses=HintUses,planetId=restoration.PlanetId,planetEnergy=restoration.CurrentEnergy,score=Score,combo=Combo,blockSetNumber=BlockSetNumber,cells=board.CaptureCells(),shapes=new int[3],appearances=new int[3],consumed=new bool[3]};
             for(int i=0;i<3;i++){for(int n=0;n<BlockCatalog.Shapes.Count;n++)if(slots[i].Shape==BlockCatalog.Shapes[n])s.shapes[i]=n;s.appearances[i]=slots[i].AppearanceIndex;s.consumed[i]=slots[i].IsConsumed;}
             if(projected&&pendingPlan!=null){for(int n=nextLine;n<pendingPlan.Steps.Count;n++){foreach(var c in pendingPlan.Steps[n].Cells)s.cells[c.y*8+c.x]=-1;s.score=(int)Math.Min(int.MaxValue,(long)s.score+ScoreRules.LinePoints(n+1));}s.planetEnergy=Math.Min(restoration.Total,clearEnergyBefore+PlanetRestoration.AwardForLines(LastClear.LineCount));
                 if(s.consumed[0]&&s.consumed[1]&&s.consumed[2]){s.blockSetNumber++;for(int i=0;i<3;i++){var shape=generator.Next();for(int n=0;n<BlockCatalog.Shapes.Count;n++)if(shape==BlockCatalog.Shapes[n])s.shapes[i]=n;s.appearances[i]=(BlockPiece.NextAppearanceIndex+i)%3;s.consumed[i]=false;}preparedSupply=s;}}
@@ -218,6 +249,30 @@ namespace CosmicBlock.Core
             ResetTransientFeedback();FinishTurn();
         }
         public void LeaveForHome(){SuspendAndSave();RunActive=false;if(hud!=null)hud.HideGameOverForHome();}
+        public bool TrySwitchRunPlanet(int id,int acknowledgedPlanet=0)
+        {
+            if(id<1||id>5||!PlanetDefinitions.Get(id).ContentReady||!PlanetDefinitions.IsUnlocked(id))return false;
+            if(RunActive&&(State!=GameState.Playing||activeDrag!=null||pendingPlan!=null||applicationPaused))return false;
+            var candidate=RunActive?Capture(false):RunSaveStore.Load();
+            if(candidate==null)return false;
+            if(candidate.planetId==id){if(!RunActive)return ResumeSavedRun();return true;}
+            if(acknowledgedPlanet==0&&candidate.planetEnergy>=PlanetDefinitions.Get(candidate.planetId).Total&&PlanetCompletionNotice.Pending(candidate.planetId))acknowledgedPlanet=candidate.planetId;
+            candidate.planetId=id;
+            candidate.planetEnergy=Mathf.Clamp(PlayerPrefs.GetInt(PlanetDefinitions.Get(id).EnergyKey,0),0,PlanetDefinitions.Get(id).Total);
+            if(acknowledgedPlanet>0)candidate.completionAcknowledgedPlanet=acknowledgedPlanet;
+            // Commit the complete snapshot before changing either the live model or selected preference.
+            // A process interruption resumes this exact Run, without replaying the previous energy award.
+            if(!RunSaveStore.Valid(candidate)||!RunSaveStore.Write(candidate))return false;
+            PlanetSelection.Select(id);
+            if(!RunActive)return ResumeSavedRun();
+            ResetTransientFeedback();
+            restoration=new PlanetRestoration(PlanetDefinitions.Get(id).EnergyKey,PlanetRestoration.VersionKey,id);
+            energyCommitted=true;clearEnergyBefore=clearEnergyAfter=restoration.CurrentEnergy;
+            LastClear=LineClearResult.Empty;preparedSupply=null;
+            if(acknowledgedPlanet>0)PlanetCompletionNotice.Acknowledge(acknowledgedPlanet);
+            return true;
+        }
+        public void RefreshPlanetHud(){if(hud!=null)hud.Render(this);}
         public bool ResumeSavedRun()
         {
             var s=RunSaveStore.Load();if(s==null)return false;
@@ -225,18 +280,22 @@ namespace CosmicBlock.Core
             restoration=new PlanetRestoration(PlanetDefinitions.Get(s.planetId).EnergyKey,PlanetRestoration.VersionKey,s.planetId);
             // Recover a committed turn if the process died between the run file and PlayerPrefs flush.
             // This sets an absolute durable amount; it never replays an award or its feedback.
-            if(restoration.CurrentEnergy<s.planetEnergy)restoration.SetEnergy(s.planetEnergy);
+            if(restoration.CurrentEnergy<s.planetEnergy)restoration.RestoreCheckpointEnergy(s.planetEnergy);
+            if(s.completionAcknowledgedPlanet>0)PlanetCompletionNotice.Acknowledge(s.completionAcknowledgedPlanet);
+            PlanetSelection.Select(s.planetId);
+            RefreshUses=s.refreshUses;HintUses=s.hintUses;nextAssistTime=0;ClearHint();
             Score=s.score;Combo=s.combo;BlockSetNumber=s.blockSetNumber;LineComboIndex=0;LastClear=LineClearResult.Empty;
             if(Score>BestScore){BestScore=Score;PlayerPrefs.SetInt(bestScoreKey,BestScore);PlayerPrefs.Save();}
             generator=new BlockGenerator(useFixedSeed?(int?)fixedSeed:null);board.RestoreCells(s.cells);
             for(int i=0;i<3;i++){slots[i].Initialize(BlockCatalog.Shapes[s.shapes[i]],board,dragLayer,this,s.appearances[i]);if(s.consumed[i])slots[i].Consume();}
             State=GameState.Playing;RunActive=true;if(hud!=null)hud.Render(this);return true;
         }
-        void OnApplicationPause(bool paused){if(paused)SuspendAndSave();}
+        void OnApplicationPause(bool paused){applicationPaused=paused;if(paused)SuspendAndSave();}
         void OnApplicationQuit(){SuspendAndSave();}
 
         public void ResetTransientFeedback()
         {
+            ClearHint();
             CancelResolution();
             if (hud != null) hud.ResetJourneyFeedback();
             if (feedback != null) feedback.ResetFeedback();

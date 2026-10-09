@@ -20920,6 +20920,8 @@ GameObject:
   - component: {fileID: 1239301983}
   - component: {fileID: 1239301986}
   - component: {fileID: 1239301987}
+  - component: {fileID: 1239301988}
+  - component: {fileID: 1239301989}
   m_Layer: 0
   m_Name: GameCanvas
   m_TagString: Untagged
@@ -21074,6 +21076,37 @@ MonoBehaviour:
   confirmHomeButton: {fileID: 1868230302}
   homeView: {fileID: 597035420}
   collectionView: {fileID: 1730702009}
+--- !u!114 &1239301988
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1239301981}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e969faacbdee4e43b184c4ae8e6a334, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::CosmicBlock.UI.PlanetCompletionPopup
+  flow: {fileID: 1239301987}
+  session: {fileID: 2048069185}
+--- !u!114 &1239301989
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1239301981}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa51a62c0cfe4a8ba4a6640d703ee422, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::CosmicBlock.UI.GameAssistView
+  session: {fileID: 2048069185}
+  flow: {fileID: 1239301987}
+  board: {fileID: 2050233815}
+  refreshSprite: {fileID: 21300000, guid: a79188f11cd0436faa6eca6522cbc18b, type: 3}
+  hintSprite: {fileID: 21300000, guid: b17eccc67e6f412fbd2161f8daf9a387, type: 3}
 --- !u!1 &1241896079
 GameObject:
   m_ObjectHideFlags: 0

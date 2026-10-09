@@ -26,10 +26,12 @@ namespace CosmicBlock.Core {
    // Legacy migration remains 500 -> 400, never rescaled to the new 1500 target.
    if(planetNumber==1&&PlayerPrefs.GetInt(versionKey,0)<CurrentVersion){stored=stored>500?Mathf.Clamp(stored,0,RequiredEnergy):Mathf.RoundToInt(Mathf.Clamp(stored,0,500)/500f*400);PlayerPrefs.SetInt(versionKey,CurrentVersion);PlayerPrefs.SetInt(key,stored);PlayerPrefs.Save();}
    CurrentEnergy=Mathf.Clamp(stored,0,TotalRequired(planetNumber));
+   if(key==Definition.EnergyKey)PlanetCompletionNotice.InitializeLegacy(planetNumber,CurrentEnergy);
    if(CurrentEnergy!=stored)Save();else if(key==Definition.EnergyKey&&IsRestored&&planetNumber<5&&PlayerPrefs.GetInt(PlanetDefinitions.Get(planetNumber+1).UnlockKey,0)!=1)Save();
   }
   public void Save(){PlayerPrefs.SetInt(key,CurrentEnergy);if(planetNumber==1)PlayerPrefs.SetInt(versionKey,CurrentVersion);if(key==Definition.EnergyKey&&IsRestored&&planetNumber<5)PlayerPrefs.SetInt(PlanetDefinitions.Get(planetNumber+1).UnlockKey,1);PlayerPrefs.Save();}
-  public int AddEnergy(int amount){int before=CurrentEnergy;LastUnlockedPlanetId=0;bool nextUnlocked=planetNumber<5&&PlanetDefinitions.IsUnlocked(planetNumber+1);CurrentEnergy=(int)System.Math.Min(TotalRequired(planetNumber),(long)CurrentEnergy+Mathf.Max(0,amount));if(CurrentEnergy!=before){Save();if(key==Definition.EnergyKey&&before<Total&&IsRestored&&planetNumber<5&&!nextUnlocked)LastUnlockedPlanetId=planetNumber+1;}return CurrentEnergy-before;}
+  public int AddEnergy(int amount){int before=CurrentEnergy;LastUnlockedPlanetId=0;bool nextUnlocked=planetNumber<5&&PlanetDefinitions.IsUnlocked(planetNumber+1);CurrentEnergy=(int)System.Math.Min(TotalRequired(planetNumber),(long)CurrentEnergy+Mathf.Max(0,amount));if(CurrentEnergy!=before){if(key==Definition.EnergyKey&&before<Total&&IsRestored)PlanetCompletionNotice.Queue(planetNumber);Save();if(key==Definition.EnergyKey&&before<Total&&IsRestored&&planetNumber<5&&!nextUnlocked)LastUnlockedPlanetId=planetNumber+1;}return CurrentEnergy-before;}
+  public void RestoreCheckpointEnergy(int value){if(CurrentEnergy<Total&&value>=Total&&key==Definition.EnergyKey)PlanetCompletionNotice.Queue(planetNumber);SetEnergy(value);}
   public void SetEnergy(int value){LastUnlockedPlanetId=0;CurrentEnergy=Mathf.Clamp(value,0,TotalRequired(planetNumber));Save();}
   public static int AwardForLines(int lines)=>lines<=0?0:lines==1?10:lines==2?25:lines==3?45:70;
   public static int TotalRequired(int planet=1)=>PlanetDefinitions.Get(planet).Total;

@@ -11,6 +11,13 @@ namespace CosmicBlock.UI {
   static readonly float[] SourceX={0,250,470,830,1049,1299};
   static readonly float[] SourceY={0,230,465,745,981,1211};
   public void SetDecorationScale(float value){if(Mathf.Approximately(value,decorationScale))return;decorationScale=value;graphic.SetVerticesDirty();}
+  public Vector2 PlanetTrackHorizontalAnchors(){
+   var r=((Image)graphic).rectTransform.rect;float scale=r.height/779;
+   float[] sx={0,620,1060,1320,1720,2018};float[] x={0,620*scale,r.width*.59f-130*scale,r.width*.59f+130*scale,r.width-298*scale,r.width};
+   // Inner track pixels 982..1858 of the original 2048-wide HUD art; borders stay outside.
+   return new Vector2(Map(982f/2048*2018,sx,x)/r.width,Map(1858f/2048*2018,sx,x)/r.width);
+  }
+  static float Map(float value,float[] source,float[] target){for(int i=0;i<source.Length-1;i++)if(value<=source[i+1])return Mathf.Lerp(target[i],target[i+1],(value-source[i])/(source[i+1]-source[i]));return target[target.Length-1];}
   public override void ModifyMesh(VertexHelper mesh){
    if(!IsActive())return;var image=(Image)graphic;var sprite=image.sprite;if(sprite==null)return;
    Rect r=image.rectTransform.rect,uv=sprite.textureRect;float scale=decorationScale;

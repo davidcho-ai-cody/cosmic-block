@@ -60,7 +60,7 @@ namespace CosmicBlock.UI
             if(known&&id!=1)FitHero(id);
             message.text=known?(id==1?(PreviewStage==5&&!restoration.IsRestored?PlanetCollectionData.FinalProgressMessage:PlanetCollectionData.StageMessages[PreviewStage-1]):definition.Name+" · "+(restoration.IsRestored?"복원 완료":definition.StageLabel(PreviewStage,restoration.CurrentEnergy))+"\n별빛 "+restoration.CurrentEnergy+" / "+restoration.Total):PlanetDefinitions.IsUnlocked(id)?"콘텐츠 준비 중입니다.":"이전 행성을 완성하면 해금됩니다.";
             status.text=known?(restoration.IsRestored?"복원 완료":CurrentStage+"단계 · "+restoration.StageName+" · 별빛 "+restoration.CurrentEnergy+" / "+restoration.Total):PlanetDefinitions.IsUnlocked(id)?"콘텐츠 준비 중":"아직 잠겨 있습니다.";status.gameObject.SetActive(true);
-            if(select!=null){select.interactable=known;select.GetComponentInChildren<Text>().text=known?(PlanetSelection.Current==id?"선택됨 · 홈으로":"이 행성 선택"):"선택 불가";}
+            if(select!=null){select.interactable=known;select.GetComponentInChildren<Text>().text=known?(flow.HasSavedRun?"이 행성에서 이어하기":PlanetSelection.Current==id?"선택됨 · 홈으로":"이 행성 선택"):"선택 불가";}
             percentage.text=restoration.Percent+"%";progressFrame.SetActive(known);
             progress.transform.parent.gameObject.SetActive(known);progress.rectTransform.anchorMax=new Vector2(known?restoration.OverallProgress:0,1);
             for(int i=0;i<5;i++)

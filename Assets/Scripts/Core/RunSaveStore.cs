@@ -7,6 +7,9 @@ namespace CosmicBlock.Core {
  [Serializable] public sealed class RunSnapshot {
   public int version=1,planetId,score,combo,blockSetNumber,planetEnergy;
   public bool active=true;
+  public int refreshUses,hintUses,refreshAdUses,hintAdUses;
+  public string[] confirmedRewardIds; // future idempotency receipts; no SDK/reward path in 10.2.
+  public int completionAcknowledgedPlanet; // optional v1 transaction receipt; legacy files default to 0.
   // -1 is empty; 0/1/2 identify the existing palette, never UI text or Sprite names.
   public int[] cells,shapes,appearances;public bool[] consumed;
  }
@@ -14,7 +17,7 @@ namespace CosmicBlock.Core {
   public static string PathOverride;
   public static string SavePath=>PathOverride??Path.Combine(Application.persistentDataPath,"current-run.json");
   public static bool Valid(RunSnapshot s){
-   if(s==null||s.version!=1||!s.active||s.planetId<1||s.planetId>5||!PlanetDefinitions.Get(s.planetId).ContentReady||!PlanetDefinitions.IsUnlocked(s.planetId)||s.score<0||s.combo<0||s.blockSetNumber<1||s.planetEnergy<0||s.planetEnergy>PlanetDefinitions.Get(s.planetId).Total||s.cells==null||s.cells.Length!=64||s.shapes==null||s.shapes.Length!=3||s.appearances==null||s.appearances.Length!=3||s.consumed==null||s.consumed.Length!=3)return false;
+   if(s==null||s.refreshUses<0||s.refreshUses>1||s.hintUses<0||s.hintUses>3||s.refreshAdUses!=0||s.hintAdUses!=0||(s.confirmedRewardIds!=null&&s.confirmedRewardIds.Length!=0)||s.completionAcknowledgedPlanet<0||s.completionAcknowledgedPlanet>5||s.version!=1||!s.active||s.planetId<1||s.planetId>5||!PlanetDefinitions.Get(s.planetId).ContentReady||!PlanetDefinitions.IsUnlocked(s.planetId)||s.score<0||s.combo<0||s.blockSetNumber<1||s.planetEnergy<0||s.planetEnergy>PlanetDefinitions.Get(s.planetId).Total||s.cells==null||s.cells.Length!=64||s.shapes==null||s.shapes.Length!=3||s.appearances==null||s.appearances.Length!=3||s.consumed==null||s.consumed.Length!=3)return false;
    var board=new CosmicBlock.Board.BoardModel();for(int i=0;i<64;i++){if(s.cells[i]<-1||s.cells[i]>2)return false;if(s.cells[i]>=0)board.SetOccupied(i%8,i/8,true);}if(board.SnapshotCompletedLines().LineCount!=0)return false;
    bool placeable=false;for(int i=0;i<3;i++){if(s.shapes[i]<0||s.shapes[i]>=BlockCatalog.Shapes.Count||s.appearances[i]<0||s.appearances[i]>2)return false;if(!s.consumed[i]&&board.CanPlaceAnywhere(BlockCatalog.Shapes[s.shapes[i]]))placeable=true;}return placeable;
   }

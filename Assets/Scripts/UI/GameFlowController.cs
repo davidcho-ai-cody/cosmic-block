@@ -1,4 +1,5 @@
 using System.Globalization;
+using System.Collections;
 using CosmicBlock.Core;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -30,6 +31,8 @@ namespace CosmicBlock.UI
 
         public FlowScreen Screen { get; private set; }
         public bool QuitRequested { get; private set; }
+        public bool PlanetSwitchActive=>planetSwitchRoutine!=null;
+        Coroutine planetSwitchRoutine;CanvasGroup planetSwitchGroup;
         public GameObject HomeRoot => homeRoot;
         public GameObject[] GameRoots => gameRoots;
         public bool HasSavedRun => RunSaveStore.Load()!=null;
@@ -58,7 +61,12 @@ namespace CosmicBlock.UI
             collectionView.gameObject.SetActive(true); collectionView.Open(session.Restoration);
             Screen = FlowScreen.Collection;
         }
-        public bool SelectCollectionPlanet(int id){if(Screen!=FlowScreen.Collection||!PlanetSelection.Select(id))return false;if(session.Restoration.PlanetId!=id||session.Restoration.CurrentEnergy!=Mathf.Clamp(PlayerPrefs.GetInt(PlanetDefinitions.Get(id).EnergyKey,0),0,PlanetDefinitions.Get(id).Total)){session.ResetTransientFeedback();session.LoadSelectedPlanet();}ReturnFromCollection();return true;}
+        public bool SelectCollectionPlanet(int id){
+            if(Screen!=FlowScreen.Collection||PlanetSwitchActive||!PlanetDefinitions.Get(id).ContentReady||!PlanetDefinitions.IsUnlocked(id))return false;
+            if(HasSavedRun)return TrySwitchRunPlanet(id);
+            if(!PlanetSelection.Select(id))return false;
+            session.ResetTransientFeedback();session.LoadSelectedPlanet();ReturnFromCollection();return true;
+        }
         public void ReturnFromCollection()
         {
             if (Screen != FlowScreen.Collection) return;
@@ -77,17 +85,47 @@ namespace CosmicBlock.UI
         public void StartNewRun()
         {
             if(session==null)return;
+            FinishPlanetSwitch();
             RunSaveStore.Delete();session.LeaveForHome();RunSaveStore.Delete();
             session.LoadSelectedPlanet();EnterGame();session.Retry();
         }
+        public bool TrySwitchRunPlanet(int id,int acknowledgedPlanet=0){
+            if(session==null||PlanetSwitchActive||HomeConfirmVisible)return false;
+            int old=session.RunActive?session.Restoration.PlanetId:(RunSaveStore.Load()?.planetId??0);
+            if(!session.TrySwitchRunPlanet(id,acknowledgedPlanet))return false;
+            EnterGame();
+            if(old==id){session.RefreshPlanetHud();return true;}
+            session.ModalInputBlocked=true;
+            var view=Object.FindAnyObjectByType<GameHud>().PlanetView;
+            planetSwitchGroup=view.GetComponent<CanvasGroup>();
+            if(planetSwitchGroup==null)planetSwitchGroup=view.gameObject.AddComponent<CanvasGroup>();
+            planetSwitchRoutine=StartCoroutine(FadePlanetSwitch());return true;
+        }
+        IEnumerator FadePlanetSwitch(){
+            for(float t=0;t<.28f;t+=Time.unscaledDeltaTime){planetSwitchGroup.alpha=1-Mathf.Clamp01(t/.28f);yield return null;}
+            planetSwitchGroup.alpha=0;session.RefreshPlanetHud();
+            for(float t=0;t<.28f;t+=Time.unscaledDeltaTime){planetSwitchGroup.alpha=Mathf.Clamp01(t/.28f);yield return null;}
+            planetSwitchGroup.alpha=1;planetSwitchRoutine=null;session.ModalInputBlocked=false;
+        }
+        void FinishPlanetSwitch(bool refresh=true){
+            if(planetSwitchRoutine!=null)StopCoroutine(planetSwitchRoutine);planetSwitchRoutine=null;
+            if(planetSwitchGroup!=null)planetSwitchGroup.alpha=1;
+            if(session!=null){session.ModalInputBlocked=false;if(refresh)session.RefreshPlanetHud();}
+        }
+        void OnApplicationPause(bool paused){if(paused&&PlanetSwitchActive)FinishPlanetSwitch();}
+        void OnDestroy(){FinishPlanetSwitch(false);RemoveListeners();}
+        void CloseCompletion(){var popup=GetComponent<PlanetCompletionPopup>();if(popup!=null)popup.CloseTransient();}
         private void EnterGame()
         {
+            CloseCompletion();
             if(collectionView!=null)collectionView.gameObject.SetActive(false);
             HideHomeConfirmation();homeView?.HideTransient();homeRoot.GetComponent<HomeRunControls>()?.CancelNewGame();
             homeRoot.SetActive(false);SetGameVisible(true);Screen=FlowScreen.Game;QuitRequested=false;
         }
         public void ShowHome()
         {
+            FinishPlanetSwitch();
+            CloseCompletion();
             if(collectionView!=null)collectionView.gameObject.SetActive(false);
             HideHomeConfirmation();homeView?.HideTransient();
             if(session!=null){session.LeaveForHome();session.ResetTransientFeedback();session.LoadSelectedPlanet();}
@@ -96,7 +134,7 @@ namespace CosmicBlock.UI
 
         public void RequestHome()
         {
-            if (Screen != FlowScreen.Game || homeConfirmPanel == null) return;
+            if (Screen != FlowScreen.Game || homeConfirmPanel == null || PlanetSwitchActive) return;
             homeConfirmPanel.SetActive(true);
         }
 
@@ -119,6 +157,7 @@ namespace CosmicBlock.UI
 
         public void HandleBack()
         {
+            var completion=GetComponent<PlanetCompletionPopup>();if(completion!=null&&completion.Visible){completion.Back();return;}
             if (Screen == FlowScreen.Collection) { ReturnFromCollection(); return; }
             if (Screen == FlowScreen.Home)
             {
@@ -169,6 +208,6 @@ namespace CosmicBlock.UI
             if(confirmHomeButton!=null)confirmHomeButton.onClick.RemoveListener(ConfirmHome);
         }
         void HideHomeConfirmation(){if(homeConfirmPanel!=null)homeConfirmPanel.SetActive(false);}
-        void OnDestroy()=>RemoveListeners();
+
     }
 }

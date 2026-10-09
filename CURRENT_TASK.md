@@ -1,5 +1,7 @@
-# Current Task — 자동 저장 및 이어하기 완료
+# 현재 작업 — Sprint 10.2.1
 
-단일 Run 파일 저장/이어하기, 명시적 새 게임 확인창, HOME 버튼 에셋 전환을 구현했습니다. Editor 563 assertions 및 핵심 회귀 14개 PASS, Android Development Build Warning/Error 0. SM-S942N 설치·HOME/백그라운드/강제 종료/라인 제거 중 종료 복원 검증 완료. 원래 별빛535/BEST15930/Version2와 전체 PlayerPrefs를 복원하고 HOME 실행 중입니다.
+Run 유지 행성 전환 구현 및 전체 Editor 회귀/3해상도 Render PASS. 최종 Compiler/일반 Play Warning·Error0/Missing Script0.
 
-상세 결과: [docs/CURRENT_TASK.md](docs/CURRENT_TASK.md).
+사용자 추가 요청으로 최신 Development APK 빌드 완료. Build Error0/기존 TMP Warning3, APK CRC PASS. 설치 시 ADB 기기가 사라져 설치/실기기/Logcat NOT RUN; USB 재연결 요청 대기. 원본 Run은 이번 백업 기준 행성03/SCORE0/별빛0이며 fixture 미적용.
+
+승인된 소스·에셋·테스트·문서를 일반 Commit/Push로 반영. 새 BGM 음원은 사용자 요청으로 제외·보존. 원격 설정 변경/Force Push 없음. 상세 docs/SPRINT1021_REPORT.md.

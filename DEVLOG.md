@@ -186,3 +186,53 @@ HOME 이동 시 Run을 자동 폐기하던 정책을 단일 Run 디스크 저장
 
 ## 2026-10-09 — 자동 저장/이어하기 검증 완료
 563 assertions, 콜드 Editor 프로세스 복원, 핵심 회귀14개, Missing Script0 PASS. 최신 Development APK Warning/Error0로 SM-S942N 설치. 실제 두 Piece/Score50 복원 및 Score1000 QA fixture HOME 복귀, Clear 직후 force-stop→1110/545 1회 복원 PASS. 사용자 원래 모든 PlayerPrefs(535/15930/Version2) 복원 및 QA Run 제거 후 HOME 실행. 신규 게임 예외0; 기존 AssetPackManager ClassNotFound 환경 로그6회는 남음. Commit/Push는 이번 요청에 포함되지 않아 수행하지 않음.
+
+## 2026-10-09 — Sprint 10 Five Planets Integration
+5행성/25 Sprite를 공통 카탈로그에 연결하고03~05를 기존 순차해금으로 활성화. 목표1500/3000/6000/12000/24000 및 기존 단계 구간 유지. 5단계 이미지를 보여도100% 전에는 완료 처리하지 않음. HOME01 고정아트/PNG/게임규칙/점수/별빛/Fragment/중앙전환 타이밍/저장 키·버전 보존. 이전2000 별빛 절대량과 기존해금 보존.
+신규25회 실제 전환과5행성 이어하기 PASS, 점수79/자동저장563 assertions PASS, Sprint2/92/94/66/5NewRunGameOver/8Collection PASS, 최종Responsive63 렌더 PASS, MissingScript0/C#Compiler·PlayModeWarning/Error0. Android Development Build 성공/Error0/Warning3(기존TMP 큰메서드 C++ 분할 알림). 사용자가 기기연결 불가:실기기NOT RUN. 원격Push 없음. 상세 docs/SPRINT10_REPORT.md.
+
+## 2026-10-09 — Sprint10 SM-S942N QA
+기존최신APK install-r/launch. 실제25경계/점수+110/overflow/해금/이어하기/force-stop/잠금선택/GameOver/Retry PASS. 원래전체Prefs와SCORE19000 Run bytes 복원. Crash/Java/Null/MissingRef0, UnityWarning0, 기존AssetPack EUnity31/다른EUnity0. 체감QA는사용자대기. docs/SPRINT10_DEVICE_QA.md. 코드변경/Commit/Push없음.
+
+
+## 2026-10-09 — Sprint 10.1 진행
+
+완료 알림의 대기/확인 상태 영구 저장, 기존 완료 데이터 호환, 기존 연출 후 완료 팝업, 계속 플레이 및 다음 행성 확인/원자적 새 Run 저장을 구현했습니다. GAME 게이지의 고정 부모 앵커와 구간별 HUD 메시 불일치를 수정했습니다. 5행성×6복원도×3해상도 실제 금색 픽셀 90개 검사 PASS. 기존 점수/자동저장 및 25개 행성 경계 회귀 PASS; 나머지 회귀/Android 빌드 진행 중. Commit/Push 없음. 상세 docs/SPRINT101_REPORT.md.
+
+
+### Sprint 10.1 최종 결과
+
+전체 회귀, 실제 Button 이벤트/저장 실패 보호, 90개 게이지 픽셀 및6개 팝업 렌더 PASS. 최종 Development APK 성공(152001968 bytes, SHA256 8d60b13361b8ce45e32c68cc0e5ecfe354a26673a927874f3dad9f5e35ff1dc4), CRC PASS. Compiler·일반 Runtime Warning/Error0, MissingScript0, Build Error0/Warning3 기존 TMP IL2CPP 알림. 의도된 I/O 테스트 Warning1 별도. ADB 기기 없어 설치/실기기 QA NOT RUN. 생성 설정/.utmp 정리, 기존 작업 보존, Commit/Push 없음. 상세 docs/SPRINT101_REPORT.md.
+
+
+## 2026-10-09 — Sprint10.1 SM-S942N QA 완료
+
+최신APK install-r/실행, 5행성 완료·취소·다음Run·05도감·강제종료 알림 복구·Continue/HOME/재실행·GameOver/Retry PASS. 실제게이지30픽셀/Android3비율 PASS. 새백업 원래SCORE0/Planet01 Energy330 Run바이트/기존Prefs/해상도 복원, HOME실행. Crash/게임예외0/UnityWarning0, 기존AssetPackManager환경Error잔존. 감각QA 사용자대기. 코드/재빌드/Commit/Push없음. docs/SPRINT101_DEVICE_QA.md.
+
+## 2026-10-09 — Sprint 10.2
+- 제공 RGBA PNG 원본 보존, Texture2D Sprite Single/FullRect 및 실제 Sprite reference 적용.
+- Playing 하단 새로고침/힌트, 무료 1/3 및 snapshot 저장/legacy 호환 구현.
+- 미사용 슬롯 교체/배치 가능 보장, 결정적 합법 위치 추천/4초 cleanup, 입력 guard.
+- 광고 타입/provider 인터페이스만 준비; SDK/가짜 보상/부활 없음.
+- Sprint102 및 기존 회귀 PASS, 3해상도 12렌더 PASS, Compiler/일반 Play Warning·Error 0/Missing Script 0.
+- 짧은 화면은 새 버튼 공간에 맞춰 보드 자동 축소. 게임 규칙 변경 없음.
+- 사용자 요청대로 실기기 QA 및 APK 빌드/설치 미실행. Commit/Push 없음. docs/SPRINT102_REPORT.md.
+
+## 2026-10-09 — Sprint 10.2 Android QA
+- 최신 Development APK 빌드/SM-S942N install -r/실행 성공. 실제 Assist/라인 제거/횟수 복원/제한/GameOver/Retry/3해상도 PASS.
+- Crash0/기타 게임 Error0/Unity Warning0, 기존 AssetPackManager Error9/TMP BuildWarning3.
+- 원본 Run/Prefs/BEST/해상도 복원 확인, HOME 실행. 게임 코드 변경 및 Commit/Push 없음. docs/SPRINT102_DEVICE_QA.md.
+
+## 2026-10-09 — Sprint 10.2.1
+- 완료 팝업이 새 Run snapshot을 만들던 원인을 제거하고 현재 Run 행성 전환으로 교체.
+- SCORE/BEST/보드·색상/슬롯·Consumed/Combo/무료 횟수 보존. 대상 별빛 분리, 이전 callback 무효화, 원자적 저장·영수증 복구.
+- 추가 새 게임 확인 객체 제거, 약0.56초 HUD Fade/입력 잠금, 도감 선택 연결. HOME의 새 게임 확인/Retry 보존.
+- Fade 동안 표시 행성과 복원도 계산을 일치시킴.
+- 신규 전환 및 기존 회귀 전부 PASS. 3해상도12렌더/기존 보조 버튼12렌더 PASS, 최종 Compiler/일반 Play Warning·Error0/Missing Script0. 의도적 저장 실패 Warning 별도.
+- 문서 지시대로 APK 빌드/설치/실기기 및 Commit/Push 없음. 현재 APK10.2. docs/SPRINT1021_REPORT.md.
+
+## 2026-10-09 — Sprint10.2.1 Android 빌드 / Git 반영 요청
+- 최신 Development APK 성공/CRC PASS, Build Error0/기존 TMP Warning3.
+- 시작 시 SM-S942N 연결/새 원본 백업 완료. 빌드 종료 후 ADB 기기가 없어 install-r 실패, 설치·실기기·Logcat NOT RUN. 재연결 질문 대기.
+- 이번 원본 Run은 행성03/SCORE0/별빛0. fixture 미적용으로 데이터 변경 없음.
+- 검증된 미커밋 소스·에셋·테스트·문서를 일반 Commit/Push 대상으로 정리. 사용자가 새 BGM 제외 요청, 음원·meta 보존. Remote 변경/Force Push 없음.

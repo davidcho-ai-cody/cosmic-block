@@ -1,11 +1,7 @@
-# Next Task
+# 다음 작업
 
-Sprint9.4의 행성02 목표는3000입니다. 푸른 별1500 / 크리스탈리아3000 / 이그니스6000 / 글라시아12000 / 루미나24000 정의를 유지합니다.
-03~05는 현재 ContentReady=false로 선택 불가입니다. 후속 구현에는 해당 정의 승인, 실제 PNG alpha 검사, Sprite 연결/본체 중심·지름 보정, 경계·저장·회귀 검증이 필요합니다. 아트 파일이 존재해도 자동으로 콘텐츠를 활성화하지 않습니다.
+SM-S942N USB 재연결 후 이미 빌드된 최신 Sprint10.2.1 APK를 install -r로 설치하고 실기기 검증을 재개합니다. 다시 빌드할 필요는 없습니다.
 
-실기기 Touch/SFX/Haptic/화면 가독성의 주관적 평가는 사용자 확인 대기입니다. 설치는 update install로 진행하며 기존 사용자 진행도와 설정을 보존합니다.
+확인: 행성01→02/02→03 SCORE·보드색상·Consumed·Combo·무료횟수 유지, HUD Fade/입력 잠금, 새 별빛만 적립, 도감 선택, HOME/실제 process 종료 복구, GameOver/Retry 및 Logcat.
 
-## 자동 저장/이어하기 실기기 QA
-ADB 연결 후 최신 APK에서 HOME→이어하기 점수/보드/소비된 Piece/Combo 동일 여부, 앱 강제 종료 후 복원, Clear 중 백그라운드 진입, 새 게임 취소/확인, Game Over 무효화, Run 행성과 HOME 선택 행성 분리를 확인합니다. 현재 03~05는 준비되지 않아 선택할 수 없습니다.
-
-2026-10-09 완료: SM-S942N에 최신 APK 설치. HOME/백그라운드/프로세스 종료/라인 연출 중 종료 복원, 새 게임 확인은 자동 실기기 검증 PASS. 원래 진행도535/BEST15930/Version2 복원. 남은 사용자 확인: Touch/SFX/Haptic 체감과 보조 버튼 편의. 기존 AssetPackManager 환경 로그는 별도 후속 과제입니다.
+현재 최신 APK 설치/실기기 PASS는 미확인입니다. 새 BGM 음원은 이번 커밋에서 제외했으며 다음 작업용으로 보존합니다. 기존 AssetPackManager 오류/TMP Warning은 별도 사항.

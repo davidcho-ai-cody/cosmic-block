@@ -51,6 +51,63 @@ MonoBehaviour:
     - {x: 0.501, y: 0.537}
     - {x: 0.509, y: 0.545}
     - {x: 0.517, y: 0.543}
+  - planetId: 3
+    stages:
+    - {fileID: 21300000, guid: 9d863e303a6f0234695c7d1950b45313, type: 3}
+    - {fileID: 21300000, guid: 37debfc4b8d5e75409ee781dbfa077d5, type: 3}
+    - {fileID: 21300000, guid: 28cc8b0b646758846869a2a6804c9884, type: 3}
+    - {fileID: 21300000, guid: 5bc8a49c1c21f97428a7182cdda77cae, type: 3}
+    - {fileID: 21300000, guid: 7a8e9b7f068660c41ac34885dc9659e3, type: 3}
+    scales:
+    - 1.195
+    - 1.238
+    - 1.22
+    - 1.203
+    - 1.222
+    bodyCenters:
+    - {x: 0.515, y: 0.53}
+    - {x: 0.508, y: 0.523}
+    - {x: 0.521, y: 0.515}
+    - {x: 0.525, y: 0.538}
+    - {x: 0.526, y: 0.547}
+  - planetId: 4
+    stages:
+    - {fileID: 21300000, guid: 6414dea6f081cad45a86163cd75faeda, type: 3}
+    - {fileID: 21300000, guid: 45a78c01a60dfd046ad9d8f36973ce59, type: 3}
+    - {fileID: 21300000, guid: 984aa161540db274ea162ef636b8194c, type: 3}
+    - {fileID: 21300000, guid: 3988d95c5260cf343916321d213b166a, type: 3}
+    - {fileID: 21300000, guid: 9651bfa5a4660b2429e630717f54c099, type: 3}
+    scales:
+    - 1.207
+    - 1.206
+    - 1.179
+    - 1.168
+    - 1.281
+    bodyCenters:
+    - {x: 0.511, y: 0.482}
+    - {x: 0.514, y: 0.509}
+    - {x: 0.522, y: 0.506}
+    - {x: 0.526, y: 0.511}
+    - {x: 0.532, y: 0.536}
+  - planetId: 5
+    stages:
+    - {fileID: 21300000, guid: 914408c26266b2e45b01fa8529a5aade, type: 3}
+    - {fileID: 21300000, guid: eaf23b0bebbee92458ba81467cd52f08, type: 3}
+    - {fileID: 21300000, guid: 96beddbab66664544a844dc2967944b8, type: 3}
+    - {fileID: 21300000, guid: 8597851639431dc4fa1d2fdc2510040f, type: 3}
+    - {fileID: 21300000, guid: 2d303475b0e50894ab1c2d53e9e2b150, type: 3}
+    scales:
+    - 1.012
+    - 1.109
+    - 1.098
+    - 1.014
+    - 1.071
+    bodyCenters:
+    - {x: 0.506, y: 0.501}
+    - {x: 0.518, y: 0.506}
+    - {x: 0.515, y: 0.499}
+    - {x: 0.515, y: 0.529}
+    - {x: 0.514, y: 0.498}
   lockedPlanet: {fileID: 21300000, guid: b184e561c904fe94eb9289fad87f0902, type: 3}
   smallLock: {fileID: 21300000, guid: 92654e9cc7164964f91ed7c875263d84, type: 3}
   homeBrand: {fileID: 21300000, guid: 88a96359557383743a8d6bb27476a36e, type: 3}
