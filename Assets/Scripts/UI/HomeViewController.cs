@@ -91,7 +91,7 @@ namespace CosmicBlock.UI
         public void CloseSettings(){settingsPanel.SetActive(false);}
         public void ShowQuit(){quitPanel.SetActive(true);}
         public void CancelQuit(){quitPanel.SetActive(false);}
-        public void ConfirmQuit(){quitPanel.SetActive(false);flow?.RequestQuit();}
+        public void ConfirmQuit(){if(!QuitVisible)return;quitPanel.SetActive(false);flow?.RequestQuit();}
 
         public void HideTransient()
         {

@@ -601,3 +601,11 @@ A/B 기존 Shape 및 저장 인덱스 유지. C=l_small_top(8), D=reverse_l_smal
 ### L자 4방향 Android 후속 검증
 
 사용자 승인으로 Development 빌드·설치·실기기 A/B/C/D 터치와 재실행 이어하기 PASS. 원본 Run/Prefs 원복 및 재실행 동일 확인. Build Error0/기존 TMP Warning3, Crash·게임 예외0/Unity Warning0, 기존 AssetPackManager Error10. 일반 Commit/Push 반영.
+
+## 2026-10-10 Sprint 10.3 HOME 종료 팝업
+
+Cosmic PNG 3종과 한국어 TMP Font Asset을 적용. 기존 QuitConfirmPanel/Card 참조·저장/종료 정책 유지. 중복 ConfirmQuit 가드, Safe Area 3:2 프레임과 전체 화면 Dim. 종료/취소/입력 차단/데이터·BGM 보존/3해상도·관련 회귀 PASS. PNG 원본 불변. Android/Commit/Push 미실행. 상세 docs/SPRINT103_REPORT.md.
+
+### Sprint 10.3 APK 설치 및 Git 승인 반영
+
+Development APK 빌드 성공(Error0/기존 TMP Warning3). SM-S942N(Android16)에 install-r 성공 및 원본 Run/Prefs 동일 확인. 실기기 앱 테스트는 사용자 담당으로 미실행. 일반 Commit/Push 승인 반영.
