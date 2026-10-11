@@ -43,3 +43,14 @@
 
 사용자 저장 데이터는 전용 Run/notice 테스트 경로와 PlayerPrefs 백업·복원으로 보호합니다. Run/SCORE/BEST/행성/BGM/SFX 및 기존 종료·취소·저장·이어하기 로직 변경 없음.
 APK 빌드·설치·실기기 테스트 및 Git Commit/Push는 이번 디자인 피드백 작업에서 수행하지 않습니다. 기존 설치 APK에는 이 미커밋 변경이 아직 포함되지 않습니다.
+
+## 사용자 승인 후 Git / Android 빌드
+
+- 구현 커밋 ec2ff70, origin/main 일반 Push 완료.
+- Development APK Build Succeeded, Error0, Warning3, Unity exit0.
+- 경고: TMP_TextParsingUtilities.cctor / TextMeshPro.GenerateTextMesh / TextMeshProUGUI.GenerateTextMesh의 대형 메서드 별도 CPP 생성 안내.
+- APK: Builds/Android/Development/CosmicBlock-dev.apk, 152,179,670 bytes.
+- SHA256: CF4753B6599E1B6D83FBDA1DCAD370A2238A5B355C810B85CF04D4DAF0DBE10B
+- 빌드 로그: Validation/popup-polish_android_build.log.
+- 자동 변경된 URP/프로젝트 설정을 원복하고 빌드 임시 파일은 Validation에 보존했습니다. Remote 변경/Force Push 없음.
+- 사용자 요청대로 기기 설치 및 실기기 테스트는 수행하지 않았습니다.

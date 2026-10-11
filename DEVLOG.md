@@ -319,3 +319,7 @@ Development APK 빌드 성공(Error0/기존 TMP Warning3). SM-S942N(Android16)�
 
 ## 2026-10-11 — 팝업 Typography / 메시 입체감 승인
 - 사용자 디자인 승인. 공통 팝업 글꼴·크기·메시 효과를 Commit/Push하고 Development APK를 빌드합니다. 설치·실기기 테스트는 진행하지 않습니다.
+
+## 2026-10-11 — 팝업 Typography Development 빌드 완료
+- 구현 ec2ff70 커밋·origin/main 일반 Push 완료. Development 빌드 성공(Error0, TMP IL2CPP 안내 Warning3), APK 152,179,670 bytes.
+- 빌드 자동 설정 변경 원복. 설치·실기기 테스트는 사용자 별도 요청까지 보류.
