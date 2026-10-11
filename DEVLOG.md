@@ -311,3 +311,11 @@ Development APK 빌드 성공(Error0/기존 TMP Warning3). SM-S942N(Android16)�
 - 사용자 요청으로 현재 UI 변경과 교체 PNG 보존본을 커밋·일반 Push 진행.
 - Android Development 빌드 Succeeded, Error0, TMP IL2CPP 대형 메서드 CPP 분리 안내 Warning3. APK 152,167,076 bytes.
 - 기기 설치·실기기 테스트는 수행하지 않음. 상세: docs/MESH_UI_ANDROID_BUILD_REPORT.md.
+
+## 2026-10-11 — 팝업 Typography / 메시 입체감
+- 실기기 피드백에 따라 HOME 종료/GAME → HOME 팝업에 공통 Medium/SemiBold 폰트와 제목26/본문18/버튼21 기준 적용.
+- Auto Size 대신 패널 폭에 비례한 공통 글자 크기. 메시 하이라이트·외곽 빛·그림자 추가. PNG·게임·저장 로직 유지.
+- 상세: docs/POPUP_TYPOGRAPHY_DEPTH_REPORT.md. APK/Commit/Push 없음.
+
+## 2026-10-11 — 팝업 Typography / 메시 입체감 승인
+- 사용자 디자인 승인. 공통 팝업 글꼴·크기·메시 효과를 Commit/Push하고 Development APK를 빌드합니다. 설치·실기기 테스트는 진행하지 않습니다.
