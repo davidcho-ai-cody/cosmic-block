@@ -1,10 +1,10 @@
-# 현재 작업 — HOME / 행성 도감 / GAME 메시 디자인
+# 현재 작업 — 메시 UI Commit/Push 및 Development APK 완료
 
-HOME·도감의 승인 시안 적용을 보존하고 GAME 화면도 같은 메시 디자인으로 교체했다. 상단 HOME/BEST·행성 HUD·게이지·보드 프레임/빈 셀·슬롯·새로고침/힌트를 네이비·시안 메시와 공통 TMP로 구성했다. 기존 보석/행성/배경 PNG, Board/Cell/Slot 입력 크기, 게임·저장·오디오 로직은 유지했다.
+HOME·행성 도감·GAME 메시 디자인을 5ab1bdf로 커밋하고 origin/main에 일반 Push한 뒤 Android Development APK를 빌드했다. UI/게임 회귀 PASS, Missing Script 0. Android Build Succeeded, Error 0, 기존 TMP 대형 메서드 C++ 분리 안내 Warning 3.
 
-GAME 전용 339항목 및 세 해상도 렌더 PASS, Runtime Warning/Error 0. 점수·콤보·보조 기능·Run 저장/이어하기·HOME 회귀 PASS. 도감·오디오 회귀 PASS, Compiler 및 정상 Runtime Warning/Error 0, Missing Script 0. 최종 슬롯 빈 공간 실제 Raycast까지 재검증 PASS.
+APK: Builds/Android/Development/CosmicBlock-dev.apk (152,238,580 bytes).
+SHA-256: C797D6C802CCA2307A23197E31E15BCA1C54AE8DD8EF15CE6E92093AE2F56F6E.
+
+기존 패키지/Portrait/ARM64/IL2CPP 유지. 실기기 설치·테스트는 사용자 요청 전까지 진행하지 않는다. 원본 PNG와 사용자 저장 데이터는 유지했다.
 
 상세: docs/GAME_MESH_REPORT.md, docs/COLLECTION_MESH_REPORT.md, docs/HOME_MENU_MESH_REPORT.md.
-APK 빌드·설치·실기기 테스트·Commit/Push는 별도 요청 대기. 기존 미커밋 변경과 사용자 데이터를 보존했으며 PNG 일괄 정리는 하지 않았다.
-
-2026-10-11 사용자 요청으로 HOME·도감·GAME 메시 작업의 Commit/Push와 Android Development APK 빌드를 진행한다. 실기기 설치·테스트는 진행하지 않는다.

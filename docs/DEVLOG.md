@@ -667,3 +667,14 @@ Development APK 빌드 성공(Error0/기존 TMP Warning3). SM-S942N(Android16)�
 승인 시안대로 HOME/BEST/행성 HUD·게이지/보드 프레임·빈 셀/슬롯/새로고침·힌트를 메시와 공통 TMP로 교체했다. 기존 Board/Cell/Slot 입력 크기·보석/행성/배경 PNG·점수/콤보/별빛/전환/저장/오디오 로직을 유지했다. 원본 PNG는 변경·삭제하지 않았다.
 GAME 339항목 및 세 해상도 렌더 PASS, 기존 보조 기능/점수/콤보/저장/HOME/도감/오디오 회귀 PASS, Compiler 및 정상 Runtime Warning/Error 0, Missing Script 0. 기존 핵심 씬 데이터 및 이벤트 연결 불변을 별도 비교했다. 슬롯 선택은 메시 골드 테두리에 반영하고 빈 셀/슬롯은 상태 변경 때만 메시를 갱신한다.
 실기기/빌드/Commit/Push는 미진행. 기존 HOME·도감 미커밋 변경을 보존했다. 상세: docs/GAME_MESH_REPORT.md.
+
+## 2026-10-11 후속 Commit/Push 및 Android 빌드
+- UI 구현 커밋: 5ab1bdf806e3dabe2daa074147fde55380910619 (feat: unify home collection and game mesh UI).
+- origin/main 일반 Push 성공 후 Development 빌드 수행. Remote/Force Push 변경 없음.
+- Unity BuildResult Succeeded, Build Error 0, Build Warning 3.
+- Warning은 기존 TMP_TextParsingUtilities.cctor / TextMeshPro.GenerateTextMesh / TextMeshProUGUI.GenerateTextMesh의 대형 메서드 C++ 파일 분리 안내.
+- APK: Builds/Android/Development/CosmicBlock-dev.apk, 152,238,580 bytes.
+- SHA-256: C797D6C802CCA2307A23197E31E15BCA1C54AE8DD8EF15CE6E92093AE2F56F6E.
+- 빌드 로그: Validation/mesh-ui-android-build.log.
+- Portrait/ARM64/IL2CPP 및 기존 Package Name 유지.
+- 실기기 설치·테스트 미진행. APK와 디버그 심볼은 Git 제외.

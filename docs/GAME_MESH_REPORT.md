@@ -60,3 +60,14 @@ Compiler Warning/Error 및 정상 Runtime Warning/Error 0. 저장 실패를 의�
 
 ## 미진행
 Android APK 빌드·실기기 설치/테스트·Git Commit/Push는 진행하지 않았다. 기기의 실제 가독성·터치 느낌은 사용자 확인이 필요하다.
+
+## 2026-10-11 후속 Commit/Push 및 Android 빌드
+- UI 구현 커밋: 5ab1bdf806e3dabe2daa074147fde55380910619 (feat: unify home collection and game mesh UI).
+- origin/main 일반 Push 성공 후 Development 빌드 수행. Remote/Force Push 변경 없음.
+- Unity BuildResult Succeeded, Build Error 0, Build Warning 3.
+- Warning은 기존 TMP_TextParsingUtilities.cctor / TextMeshPro.GenerateTextMesh / TextMeshProUGUI.GenerateTextMesh의 대형 메서드 C++ 파일 분리 안내.
+- APK: Builds/Android/Development/CosmicBlock-dev.apk, 152,238,580 bytes.
+- SHA-256: C797D6C802CCA2307A23197E31E15BCA1C54AE8DD8EF15CE6E92093AE2F56F6E.
+- 빌드 로그: Validation/mesh-ui-android-build.log.
+- Portrait/ARM64/IL2CPP 및 기존 Package Name 유지.
+- 실기기 설치·테스트 미진행. APK와 디버그 심볼은 Git 제외.
