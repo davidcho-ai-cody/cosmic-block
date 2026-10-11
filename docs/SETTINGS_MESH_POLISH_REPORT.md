@@ -47,4 +47,13 @@ AudioSettingsView에 TMP_Text용 Configure와 Caption 연결을 추가했습니�
 - 사용자 저장 데이터는 기존 테스트 격리 경로·설정 백업/복원으로 보호합니다.
 
 화면: Validation/settings_mesh_1920.png / settings_mesh_2400.png / settings_mesh_1440.png.
-APK 빌드/설치·실기기 테스트 및 Git Commit/Push는 이번 요청에서 수행하지 않았습니다. 설치된 APK는 기존 버전이며 설정 개선은 아직 포함되지 않습니다.
+최초 디자인 요청에서는 빌드·설치·Commit/Push를 생략했고, 이후 사용자 승인으로 아래 Git 및 빌드 작업을 진행했습니다.
+
+## 승인 후 Git 및 Android 빌드
+
+설정 창 구현 커밋: `76019fc` (origin/main 일반 Push 완료).
+Android Development 빌드 성공, Build Error 0, Build Warning 3. Warning은 기존 TMP의 큰 메서드를 별도 C++ 파일로 분리한다는 IL2CPP 안내이며 신규 C# 경고는 없습니다.
+APK: Builds/Android/Development/CosmicBlock-dev.apk (152,168,224 bytes).
+SHA-256: 4C68D56AF8CC47152C353CFDBE28DE5015056281A69B586695D407AF98D43BF9.
+로그: Validation/settings-polish-android-build.log.
+실기기 설치·테스트는 사용자 별도 요청 대기입니다.
