@@ -17,8 +17,10 @@ namespace CosmicBlock.UI {
   // All measurements are Canvas units within the existing Safe Area.
   void LayoutMatched(){
    var area=(RectTransform)board.parent;float w=area.rect.width,h=area.rect.height,q=Mathf.Min(w/1080f,h/1920f);q=Mathf.Max(.1f,q);
-   // Keep the SCORE rect, font size and total vertical inset; move its baseline 8 units below the enlarged crown.
-   score.fontSizeMin=best.fontSizeMin=Mathf.Min(15,15*q);score.margin=new Vector4(6,14,6,-2)*q;best.margin=new Vector4(1,1,1,1)*q;
+   // Preserve central SCORE font and size; lower its baseline to clear the enlarged crown.
+   score.fontSizeMin=best.fontSizeMin=Mathf.Min(15,15*q);score.margin=new Vector4(6,14,6,-2)*q;best.margin=new Vector4(9,4,9,4)*q;
+   // Reserve breathing room under the baked title; keep the font ceiling unchanged.
+   best.rectTransform.anchorMin=new Vector2(.43f,.20f);best.rectTransform.anchorMax=new Vector2(.88f,.55f);best.rectTransform.offsetMin=best.rectTransform.offsetMax=Vector2.zero;
    float statusW=w*.96f,statusH=260*q;
    float slotH=324*q,headerH=220*q,gapHud=12*q,gapBoard=16*q,gapSlot=16*q,bottomMargin=36*q;
    var assists=GetComponentInParent<Canvas>().GetComponent<GameAssistView>();if(assists!=null){bottomMargin=GameAssistView.ReservedHeight(w,q)+8*q;}
@@ -30,9 +32,9 @@ namespace CosmicBlock.UI {
    Place((RectTransform)area.Find("BlockArea"),w/2,frameTop-frameH-gapSlot-slotH/2,w*.98f,slotH);
    assists?.Layout(w,q);
    Place((RectTransform)area.Find("PlayingHomeButton"),100*q,h-90*q,160*q,160*q);
-   Place((RectTransform)transform.Find("BestFrameArea"),w-206.25f*q,h-68.75f*q,412.5f*q,137.5f*q);
+   Place((RectTransform)transform.Find("BestFrameArea"),w-243f*q,h-79f*q,462f*q,154f*q);
    Place((RectTransform)transform.Find("ScoreLabel"),w/2,h-55*q,w*.30f,40*q);
-   Place(score.rectTransform,w/2,h-145*q,w*.46f,132*q);
+   Place(score.rectTransform,w/2,h-169*q,w*.46f,132*q);
    var grid=board.GetComponent<GridLayoutGroup>();float cell=Mathf.Max(0,(side-grid.padding.horizontal-grid.spacing.x*7)/8);grid.cellSize=new Vector2(cell,cell);
   }
   static void Place(RectTransform r,float x,float y,float width,float height){var area=(RectTransform)r.parent;r.anchorMin=r.anchorMax=new Vector2(.5f,.5f);r.pivot=new Vector2(.5f,.5f);r.sizeDelta=new Vector2(width,height);r.anchoredPosition=new Vector2(x-area.rect.width/2,y-area.rect.height/2);}

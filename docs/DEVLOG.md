@@ -609,3 +609,26 @@ Cosmic PNG 3종과 한국어 TMP Font Asset을 적용. 기존 QuitConfirmPanel/C
 ### Sprint 10.3 APK 설치 및 Git 승인 반영
 
 Development APK 빌드 성공(Error0/기존 TMP Warning3). SM-S942N(Android16)에 install-r 성공 및 원본 Run/Prefs 동일 확인. 실기기 앱 테스트는 사용자 담당으로 미실행. 일반 Commit/Push 승인 반영.
+
+## 2026-10-10 Sprint 10.3 새 종료 프레임
+
+사용자 신규 popup_exit_frame(2:1) 및 Blue/Gold 교체본을 그대로 적용. 종료 TMP 글자색 남색, 실제 Sprite 비율 레이아웃. 기존 이벤트/저장/음악/다른 UI 코드 불변. Editor 47항목·3해상도·저장 회귀·MissingScript PASS, Error/Warning0. Android/Commit/Push 없음. docs/SPRINT103_EXIT_REDESIGN_REPORT.md.
+
+## 2026-10-11 HOME 종료 팝업 메시 적용
+
+사용자 선택 절제된 코스믹 시안 적용. 네이비/얇은 Gold 테두리/Blue 취소/Gold 종료/작은 궤도를 메시로 생성. 기존 이벤트·저장 유지. 최종 53항목·3해상도·Run 저장 회귀·MissingScript PASS, Error/Warning0. PNG 전체 보존, Android/Commit/Push 없음. docs/HOME_EXIT_MESH_REPORT.md.
+
+## 2026-10-11 — GAME → HOME 팝업 메시 적용
+- 사용자 승인 시안으로 팝업 전용 메시 패널/버튼/집 아이콘과 TMP 한국어 안내 적용.
+- 기존 취소·저장·이어하기 이벤트 유지. 새 팝업 227항목·3해상도·저장 회귀 PASS.
+- PNG 보존. Android/Commit/Push 없음. 상세: docs/GAME_HOME_MESH_REPORT.md.
+
+## 2026-10-11 — GAME 최고점수 표시 여백 개선
+- 최고점수 패널 12% 확대·숫자 여백 확보. 중앙 점수 숫자 Y만 24q 조정하여 확대 왕관과 간격 확보.
+- 15,930/99,999/999,999를 3해상도에서 전후 렌더 비교. 기존 저장 회귀 PASS, Missing Script 0.
+- 점수 규칙·저장·PNG 원본 유지. Android/Commit/Push 없음.
+
+## 2026-10-11 — 메시 팝업·최고점수 UI 빌드 및 Git 반영
+- 사용자 요청으로 현재 UI 변경과 교체 PNG 보존본을 커밋·일반 Push 진행.
+- Android Development 빌드 Succeeded, Error0, TMP IL2CPP 대형 메서드 CPP 분리 안내 Warning3. APK 152,167,076 bytes.
+- 기기 설치·실기기 테스트는 수행하지 않음. 상세: docs/MESH_UI_ANDROID_BUILD_REPORT.md.
