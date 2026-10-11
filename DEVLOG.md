@@ -323,3 +323,8 @@ Development APK 빌드 성공(Error0/기존 TMP Warning3). SM-S942N(Android16)�
 ## 2026-10-11 — 팝업 Typography Development 빌드 완료
 - 구현 ec2ff70 커밋·origin/main 일반 Push 완료. Development 빌드 성공(Error0, TMP IL2CPP 안내 Warning3), APK 152,179,670 bytes.
 - 빌드 자동 설정 변경 원복. 설치·실기기 테스트는 사용자 별도 요청까지 보류.
+
+## 2026-10-11 — HOME 설정 창 디자인 통일
+- 승인된 메시 패널/버튼/폰트 규격을 설정에 적용. 기존 BGM/SFX/볼륨 저장 유지.
+- Slider의 FillArea/HandleArea를 분리하여 얇은 트랙과 원형 손잡이 유지. 진동은 기존 안내 그대로.
+- 기존 두 팝업·저장 회귀 PASS. 상세: docs/SETTINGS_MESH_POLISH_REPORT.md. APK/Commit/Push 없음.
