@@ -12,6 +12,7 @@ namespace CosmicBlock.UI
         void LateUpdate()=>Apply();
         public void Apply()
         {
+            var mesh=GetComponent<HomeMenuMeshLayout>();if(mesh!=null){mesh.Apply();return;}
             if(home==null||play==null||home.rect.width<=0)return;
             float unit=home.rect.width/1080f;
             var image=play.GetComponent<Image>();

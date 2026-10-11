@@ -655,3 +655,15 @@ Development APK 빌드 성공(Error0/기존 TMP Warning3). SM-S942N(Android16)�
 - 연속 라인 클리어 콤보: 배치별 줄 번호와 저장 Combo의 불일치를 수정. 기존 100/50 점수 가산 공식·별빛 지급 정책은 유지하며 연속 제거 줄 수를 점수/피드백/중간 저장에 연결했습니다.
 
 - 연속 콤보 수정 4c80d46 일반 Push 완료. Android Development APK 빌드 성공(Error 0 / 기존 TMP 안내 Warning 3). 실기기 설치는 별도 요청 대기.
+
+- HOME 메뉴 메시 디자인 적용: 네이비 반투명 면·골드/시안 테두리·약한 빛·선형 메시 아이콘·공통 TMP 폰트. 기존 PNG 원본 및 배경/로고/행성/이벤트/저장 정책 보존. HOME 최종 363항목 및 관련 전체 회귀 PASS. 세 해상도 실제 렌더 확인, Compiler/Runtime Warning 및 Error 0, Missing Script 0.
+
+- 행성 도감 메시 디자인 적용: 이름 프레임 제거, 네이비 메시 패널·시안 테두리·선형 화살표와 메시 잠금 아이콘·공통 TMP. 기존 행성 Sprite/배경/로고/복원·해금·미리보기·선택·저장 로직 유지. 도감 1,370항목 및 다섯 행성 회귀 PASS.
+
+- 도감 최종 검증: 1,370항목 및 다섯 행성·Run 전환/선택·HOME·설정 회귀 PASS, Missing Script 0. 완료 팝업 회귀는 Legacy 자동 닫기 설정을 해제해 재검증했습니다. 원형 버튼 중앙 정렬 후 재검증 PASS.
+
+
+## 2026-10-11 — GAME 메시 디자인 적용
+승인 시안대로 HOME/BEST/행성 HUD·게이지/보드 프레임·빈 셀/슬롯/새로고침·힌트를 메시와 공통 TMP로 교체했다. 기존 Board/Cell/Slot 입력 크기·보석/행성/배경 PNG·점수/콤보/별빛/전환/저장/오디오 로직을 유지했다. 원본 PNG는 변경·삭제하지 않았다.
+GAME 339항목 및 세 해상도 렌더 PASS, 기존 보조 기능/점수/콤보/저장/HOME/도감/오디오 회귀 PASS, Compiler 및 정상 Runtime Warning/Error 0, Missing Script 0. 기존 핵심 씬 데이터 및 이벤트 연결 불변을 별도 비교했다. 슬롯 선택은 메시 골드 테두리에 반영하고 빈 셀/슬롯은 상태 변경 때만 메시를 갱신한다.
+실기기/빌드/Commit/Push는 미진행. 기존 HOME·도감 미커밋 변경을 보존했다. 상세: docs/GAME_MESH_REPORT.md.
