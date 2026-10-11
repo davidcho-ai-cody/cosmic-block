@@ -330,3 +330,5 @@ Development APK 빌드 성공(Error0/기존 TMP Warning3). SM-S942N(Android16)�
 - 기존 두 팝업·저장 회귀 PASS. 상세: docs/SETTINGS_MESH_POLISH_REPORT.md. APK/Commit/Push 없음.
 
 - 설정 창 승인 후 구현 커밋 76019fc 일반 Push 및 Android Development 빌드 완료. Error 0 / 기존 TMP IL2CPP 안내 Warning 3. 설치는 별도 요청 대기. 자동 생성된 무관한 프로젝트 설정은 복원했습니다.
+
+- 연속 라인 클리어 콤보: 배치별 줄 번호와 저장 Combo의 불일치를 수정. 기존 100/50 점수 가산 공식·별빛 지급 정책은 유지하며 연속 제거 줄 수를 점수/피드백/중간 저장에 연결했습니다.

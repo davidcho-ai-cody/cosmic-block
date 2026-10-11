@@ -28,7 +28,7 @@ namespace CosmicBlock.Core
         public const float ClearLineInterval = .32f;
         private SequentialClearPlan pendingPlan;
         private Coroutine clearRoutine;
-        private int nextLine, turnToken;
+        private int nextLine, turnToken, clearComboStart;
         private bool energyCommitted;
         private int clearEnergyBefore,clearEnergyAfter;
         private RunSnapshot preparedSupply;
@@ -112,7 +112,8 @@ namespace CosmicBlock.Core
             if (!Model.TryPlace(piece.Shape, x, y)) { State = GameState.Playing; return false; }
             board.PaintPlacement(piece.Shape, x, y, piece.AppearanceSprite);
             LastClear = Model.SnapshotCompletedLines();
-            Combo = LastClear.LineCount > 0 ? (int)Math.Min(int.MaxValue, (long)Combo + 1) : 0;
+            clearComboStart = LastClear.LineCount > 0 ? Combo : 0;
+            Combo = LastClear.LineCount > 0 ? (int)Math.Min(int.MaxValue, (long)Combo + LastClear.LineCount) : 0;
             AddScore(piece.Shape.Cells.Count * ScoreRules.PointsPerPlacedCell);
             piece.Consume(); LineComboIndex=0;
             if (LastClear.LineCount==0) { FinishTurn(); return true; }
@@ -137,12 +138,14 @@ namespace CosmicBlock.Core
         private void ResolveLine(bool present)
         {
             var step=pendingPlan.Steps[nextLine++];LineComboIndex=nextLine;
+            int comboIndex = ClearComboAt(LineComboIndex);
             // Copy source sprites while their original occupied view still exists.
-            if(present && feedback!=null)feedback.PlayClear(step.Result,ScoreRules.LinePoints(LineComboIndex),LineComboIndex,
+            if(present && feedback!=null)feedback.PlayClear(step.Result,ScoreRules.LinePoints(comboIndex),comboIndex,
                 Mathf.Min(clearEnergyAfter-clearEnergyBefore,PlanetRestoration.AwardForLines(LineComboIndex))-
                 Mathf.Min(clearEnergyAfter-clearEnergyBefore,PlanetRestoration.AwardForLines(LineComboIndex-1)));
-            Model.ClearCells(step.Cells);AddScore(ScoreRules.LinePoints(LineComboIndex));
+            Model.ClearCells(step.Cells);AddScore(ScoreRules.LinePoints(comboIndex));
         }
+        private int ClearComboAt(int line) => (int)Math.Min(int.MaxValue, (long)clearComboStart + line);
         private void AddScore(int points)
         {
             int before=Score;Score=(int)Math.Min(int.MaxValue,(long)Score+points);
@@ -233,7 +236,7 @@ namespace CosmicBlock.Core
         {
             var s=new RunSnapshot{refreshUses=RefreshUses,hintUses=HintUses,planetId=restoration.PlanetId,planetEnergy=restoration.CurrentEnergy,score=Score,combo=Combo,blockSetNumber=BlockSetNumber,cells=board.CaptureCells(),shapes=new int[3],appearances=new int[3],consumed=new bool[3]};
             for(int i=0;i<3;i++){for(int n=0;n<BlockCatalog.Shapes.Count;n++)if(slots[i].Shape==BlockCatalog.Shapes[n])s.shapes[i]=n;s.appearances[i]=slots[i].AppearanceIndex;s.consumed[i]=slots[i].IsConsumed;}
-            if(projected&&pendingPlan!=null){for(int n=nextLine;n<pendingPlan.Steps.Count;n++){foreach(var c in pendingPlan.Steps[n].Cells)s.cells[c.y*8+c.x]=-1;s.score=(int)Math.Min(int.MaxValue,(long)s.score+ScoreRules.LinePoints(n+1));}s.planetEnergy=Math.Min(restoration.Total,clearEnergyBefore+PlanetRestoration.AwardForLines(LastClear.LineCount));
+            if(projected&&pendingPlan!=null){for(int n=nextLine;n<pendingPlan.Steps.Count;n++){foreach(var c in pendingPlan.Steps[n].Cells)s.cells[c.y*8+c.x]=-1;s.score=(int)Math.Min(int.MaxValue,(long)s.score+ScoreRules.LinePoints(ClearComboAt(n+1)));}s.planetEnergy=Math.Min(restoration.Total,clearEnergyBefore+PlanetRestoration.AwardForLines(LastClear.LineCount));
                 if(s.consumed[0]&&s.consumed[1]&&s.consumed[2]){s.blockSetNumber++;for(int i=0;i<3;i++){var shape=generator.Next();for(int n=0;n<BlockCatalog.Shapes.Count;n++)if(shape==BlockCatalog.Shapes[n])s.shapes[i]=n;s.appearances[i]=(BlockPiece.NextAppearanceIndex+i)%3;s.consumed[i]=false;}preparedSupply=s;}}
             return s;
         }

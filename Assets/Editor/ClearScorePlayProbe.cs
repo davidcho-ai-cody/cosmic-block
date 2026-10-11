@@ -43,16 +43,29 @@ public static class ClearScorePlayProbe {
   }
   Prepare(BlockCatalog.Shapes[0],true,false);session.TryPlacePiece(session.Slots[0],3,3);yield return new WaitForSecondsRealtime(.9f);
   session.DebugPrepareNextRow();Req(session.TryPlacePiece(session.Slots[0],3,3),"placement combo2");yield return new WaitForSecondsRealtime(.9f);yield return null;
-  Req(session.Combo==2,"placement combo2 state");Verify(220,"two successive single-line clears, +110 each");
-  flow.RequestHome();flow.ConfirmHome();flow.Play();yield return null;Verify(220,"HOME resume");
-  session.DebugPrepareNextRow();session.TryPlacePiece(session.Slots[0],3,3);yield return new WaitForSecondsRealtime(.9f);yield return null;Verify(330,"clear after HOME resume");
+  Req(session.Combo==2,"placement combo2 state");Verify(270,"연속 한 줄: +110 다음 +160");
+  flow.RequestHome();flow.ConfirmHome();flow.Play();yield return null;Verify(270,"HOME resume");
+  session.DebugPrepareNextRow();session.TryPlacePiece(session.Slots[0],3,3);yield return new WaitForSecondsRealtime(.9f);yield return null;Verify(480,"이어하기 후 3콤보 +210");
   Prepare(BlockCatalog.Shapes[0],true,true);session.TryPlacePiece(session.Slots[0],3,3);
   Req(session.Score==110&&RunSaveStore.Load().score==260,"first frame actual110 vs complete checkpoint260");
   session.SendMessage("OnApplicationPause",true);Req(session.Score==260,"pause settles pending second line");
   flow.ShowHome();flow.Play();yield return new WaitForSecondsRealtime(1.2f);yield return null;Verify(260,"immediate clear save and resume no duplicate or overwrite");
   Prepare(BlockCatalog.Shapes[0],true,false);session.TryPlacePiece(session.Slots[0],3,3);
   flow.RequestHome();flow.ConfirmHome();flow.Play();yield return new WaitForSecondsRealtime(1.2f);yield return null;Verify(110,"HOME during CLEAR resumes full score");
-  results.Add("RULES UNCHANGED: 1 cell/no clear10; 1 cell/1 line110; 2 cells/1 line120; 1 cell/2 lines260; placement Combo2 adds110.");
+  Prepare(BlockCatalog.Shapes[4],false,false);
+  for(int y=3;y<=5;y++)for(int x=0;x<8;x++)if(x!=3)board.Model.SetOccupied(x,y,true);
+  Req(session.TryPlacePiece(session.Slots[0],3,3),"3줄 동시 제거");
+  Req(RunSaveStore.Load().score==480&&RunSaveStore.Load().combo==3,"중간 저장 3콤보/480");
+  session.DebugCompleteTurnForProbe();yield return null;Verify(480,"3줄 제거");Req(session.Combo==3&&session.Feedback.LastCombo==3,"3콤보 표시");
+  session.DebugPrepareNextRow();session.TryPlacePiece(session.Slots[0],3,3);
+  Req(session.Feedback.LastCombo==4&&session.Feedback.LastScoreDelta==250,"다음 한 줄 4콤보/+250");
+  session.DebugCompleteTurnForProbe();yield return null;Verify(740,"3줄 다음 한 줄 +260");
+  flow.RequestHome();flow.ConfirmHome();flow.Play();yield return null;Req(session.Combo==4,"저장/복원 콤보 유지");
+  session.DebugPrepareNextRow();session.TryPlacePiece(session.Slots[0],3,3);session.DebugCompleteTurnForProbe();yield return null;Verify(1050,"복원 후 5콤보 +310");
+  session.Model.Clear();Req(session.TryPlacePiece(session.Slots[1],0,0),"클리어 없는 배치");Req(session.Combo==0,"클리어 없으면 콤보 해제");
+  session.DebugPrepareNextRow();session.TryPlacePiece(session.Slots[0],3,3);session.DebugCompleteTurnForProbe();Req(session.Combo==1&&session.Feedback.LastScoreDelta==100,"다시 1콤보 시작");
+  flow.StartNewRun();Req(session.Combo==0,"새 Run 초기화");
+  results.Add("기존 단일 배치 점수 유지: 1 cell/no clear10; 1 cell/1 line110; 2 cells/1 line120; 1 cell/2 lines260; 연속 Combo2는 +160.");
  }
  static void Prepare(BlockShape shape,bool row,bool col){flow.StartNewRun();session.DebugSetPlanetEnergy(1500);
   var layer=GameObject.Find("GameCanvas").transform.Find("DragLayer")as RectTransform;foreach(var piece in session.Slots)piece.Initialize(shape,board,layer,session);
