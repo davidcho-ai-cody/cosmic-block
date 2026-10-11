@@ -19,4 +19,13 @@ ClearScorePlayProbe 106항목 PASS: 단일/복수 줄, 3줄→1줄=4콤보, 이�
 Polish001PlayProbe PASS: 연속 클리어의 SCORE 표시와 별빛 실제 적립 일치, 완료 행성 +0, overflow, 정리.
 Sprint92PlayProbe 1,545항목 PASS(순서/타이밍/입력잠금/원본 Sprite/별빛/정리/공급/Home/Retry/설정/3해상도). RunSavePlayProbe 563항목 PASS. Missing Script 0, 신규 Compiler Warning/Error 0, 테스트 Runtime Warning/Error 0. 최종 회귀 결과: Validation/combo-fix-summary.txt.
 
-APK 빌드·실기기 설치·Commit/Push는 이번 요청에서 수행하지 않습니다.
+최초 수정 요청에서는 APK 빌드·설치·Commit/Push를 생략했습니다. 이후 사용자 승인으로 아래 작업을 수행했습니다.
+
+## 승인 후 Git 및 Android 빌드
+
+구현 커밋 `4c80d46`, 기존 origin/main 일반 Push 완료.
+Unity 6000.5.8f1 Android Development 빌드 성공, Build Error 0, Build Warning 3(기존 TMP 큰 메서드의 별도 C++ 파일 분리 안내). 신규 C# Compiler Warning/Error 없음.
+APK: Builds/Android/Development/CosmicBlock-dev.apk, 152,156,112 bytes, 2026-10-11 17:54:56.
+SHA-256: 21E4C008E13F776EF7246CDDD8C7B595121FBEB66BA0FAA92694C585C03B0A1E.
+빌드 로그: Validation/continuous-combo-android-build.log.
+실기기 설치·테스트는 사용자 별도 요청 대기입니다. Unity가 자동 변경한 무관한 프로젝트 설정은 복원했습니다.
